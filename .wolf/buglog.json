@@ -1,4 +1,37 @@
 {
   "version": 1,
-  "bugs": []
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-05-25T11:20:15.997Z",
+      "error_message": "CSS fix: --font-sans",
+      "file": "app/globals.css",
+      "root_cause": "--font-sans: 'Cairo', 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif → var(--font-cairo, 'Cairo'), 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif",
+      "fix": "Changed --font-sans: 'Cairo', 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif → var(--font-cairo, 'Cairo'), 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T11:20:15.997Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-05-25T11:37:01.936Z",
+      "error_message": "Null/undefined access in ",
+      "file": "proxy.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T11:37:01.936Z"
+    }
+  ]
 }
