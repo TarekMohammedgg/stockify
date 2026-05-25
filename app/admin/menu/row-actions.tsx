@@ -18,7 +18,7 @@ export function MenuRowActions({
   const [pending, start] = useTransition();
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 opacity-60 transition-opacity group-hover:opacity-100">
       <button
         type="button"
         title={isAvailable ? "إخفاء" : "إظهار"}
@@ -28,7 +28,7 @@ export function MenuRowActions({
             await toggleMenuItemAvailability(id, !isAvailable);
           })
         }
-        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] disabled:opacity-50"
+        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] disabled:opacity-50 transition-colors"
       >
         {isAvailable ? (
           <Eye className="h-4 w-4" />
@@ -38,7 +38,7 @@ export function MenuRowActions({
       </button>
       <Link
         href={`/admin/menu/${id}`}
-        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)]"
+        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-colors"
         title="تعديل"
       >
         <Pencil className="h-4 w-4" />
@@ -53,7 +53,7 @@ export function MenuRowActions({
             await deleteMenuItem(id);
           });
         }}
-        className="rounded-lg p-2 text-red-600 hover:bg-red-500/10 disabled:opacity-50"
+        className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors"
       >
         <Trash2 className="h-4 w-4" />
       </button>

@@ -1,22 +1,42 @@
-import Link from "next/link";
-import { UtensilsCrossed } from "lucide-react";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { signOut } from "@/lib/actions/auth";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  const { data: role } = await supabase.rpc("current_user_role");
+
+  if (role === "admin") redirect("/admin");
+  if (role === "cashier") redirect("/cashier");
+
+  const { data: profile } = await supabase
+    .from("users")
+    .select("name")
+    .eq("id", user.id)
+    .single();
+
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-[var(--surface-bg)] px-4">
-      <div className="flex items-center gap-3">
-        <UtensilsCrossed className="h-12 w-12 text-primary-500" />
-        <h1 className="text-4xl font-bold text-[var(--text-primary)]">Stockify</h1>
-      </div>
-      <p className="text-center text-lg text-[var(--text-muted)]">
-        منيو المطعم والطلبات — سيتم بناؤها في المرحلة الرابعة
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-[var(--surface-bg)] px-4 text-center">
+      <h1 className="font-display text-3xl text-[var(--text-primary)]">
+        مرحباً {profile?.name ?? ""}
+      </h1>
+      <p className="text-[var(--text-muted)]">
+        منيو العميل سيتم بناؤه في المرحلة الرابعة.
       </p>
-      <Link
-        href="/login"
-        className="rounded-xl bg-primary-500 px-8 py-3 text-sm font-semibold text-white hover:bg-primary-600 transition-colors"
-      >
-        تسجيل الدخول
-      </Link>
+      <form action={signOut}>
+        <button
+          type="submit"
+          className="rounded-full border border-[var(--surface-border)] px-5 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--surface-input)] transition-colors"
+        >
+          تسجيل الخروج
+        </button>
+      </form>
     </div>
   );
 }

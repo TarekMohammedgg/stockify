@@ -16,31 +16,21 @@ export async function GET(request: NextRequest) {
       } = await supabase.auth.getUser();
 
       if (user) {
+        const { data: role } = await supabase.rpc("current_user_role");
+
+        if (role === "admin") {
+          return NextResponse.redirect(`${origin}/admin`);
+        }
+        if (role === "cashier") {
+          return NextResponse.redirect(`${origin}/cashier`);
+        }
+
         const { data: profile } = await supabase
           .from("users")
-          .select("role, profile_complete")
+          .select("profile_complete")
           .eq("id", user.id)
           .single();
 
-        const provider = user.app_metadata?.provider;
-
-        // Block Google OAuth for staff roles — admin/cashier must use email/password
-        if (
-          provider === "google" &&
-          (profile?.role === "admin" || profile?.role === "cashier")
-        ) {
-          await supabase.auth.signOut();
-          return NextResponse.redirect(
-            `${origin}/login?error=oauth_not_allowed_for_staff`,
-          );
-        }
-
-        if (profile?.role === "admin") {
-          return NextResponse.redirect(`${origin}/admin`);
-        }
-        if (profile?.role === "cashier") {
-          return NextResponse.redirect(`${origin}/cashier`);
-        }
         if (!profile?.profile_complete) {
           return NextResponse.redirect(`${origin}/complete-profile`);
         }

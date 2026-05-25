@@ -12,41 +12,55 @@ export default async function AdminEmployeesPage() {
     .eq("role", "cashier")
     .order("created_at", { ascending: false });
 
+  const active = (cashiers ?? []).filter((c) => c.is_active).length;
+
   return (
-    <div className="mx-auto max-w-5xl p-6 space-y-6">
-      <header className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)]">الموظفون</h1>
-          <p className="text-sm text-[var(--text-muted)]">
-            {cashiers?.length ?? 0} كاشير
-          </p>
-        </div>
+    <div className="mx-auto max-w-5xl px-6 py-10 space-y-10">
+      <header className="rise-in">
+        <p className="eyebrow mb-3">إدارة الفريق</p>
+        <h1 className="font-display text-4xl md:text-5xl text-[var(--text-primary)] leading-tight">
+          الموظفون
+        </h1>
+        <p className="mt-3 text-sm text-[var(--text-secondary)]">
+          <span className="numeric text-[var(--text-primary)]">
+            {cashiers?.length ?? 0}
+          </span>{" "}
+          كاشير ·{" "}
+          <span className="numeric text-emerald-700 dark:text-emerald-400">
+            {active}
+          </span>{" "}
+          نشطون الآن
+        </p>
       </header>
 
-      {!cashiers || cashiers.length === 0 ? (
-        <EmptyState />
-      ) : null}
-
-      <EmployeesManager
-        cashiers={
-          (cashiers ?? []).map((c) => ({
-            id: c.id,
-            name: c.name,
-            email: c.email ?? "",
-            phone: c.phone ?? "",
-            is_active: c.is_active,
-          }))
-        }
-      />
-    </div>
-  );
-}
-
-function EmptyState() {
-  return (
-    <div className="rounded-2xl border border-dashed border-[var(--surface-border)] p-12 text-center">
-      <Users className="mx-auto h-10 w-10 text-[var(--text-muted)]" />
-      <p className="mt-3 text-sm text-[var(--text-muted)]">لا يوجد كاشير بعد</p>
+      <div className="rise-in" style={{ animationDelay: "100ms" }}>
+        {!cashiers || cashiers.length === 0 ? (
+          <div className="rounded-3xl border border-dashed border-[var(--surface-border)] bg-[var(--surface-card)] p-16 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-500/10">
+              <Users className="h-6 w-6 text-primary-600" />
+            </div>
+            <p className="font-display text-lg text-[var(--text-primary)]">
+              لا يوجد كاشير بعد
+            </p>
+            <p className="mt-2 text-sm text-[var(--text-muted)]">
+              أضف حساب الكاشير الأول لإدارة الطلبات
+            </p>
+            <div className="mt-6">
+              <EmployeesManager cashiers={[]} />
+            </div>
+          </div>
+        ) : (
+          <EmployeesManager
+            cashiers={(cashiers ?? []).map((c) => ({
+              id: c.id,
+              name: c.name,
+              email: c.email ?? "",
+              phone: c.phone ?? "",
+              is_active: c.is_active,
+            }))}
+          />
+        )}
+      </div>
     </div>
   );
 }

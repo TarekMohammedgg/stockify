@@ -8,6 +8,9 @@
 
 <!-- How the user likes things done. Code style, tools, patterns, communication. -->
 
+- **Aesthetic direction (admin):** "Suq Editorial" — warm paper canvas, saffron + terracotta + ink ink, Reem Kufi (display) + Fraunces (numeric serif) + Cairo (body). Editorial hierarchy: eyebrow small-caps labels, large display headings, serif numeric stats, ornamental hairline dividers. Confirmed 2026-05-25.
+- User confirmed "Full visual overhaul" for admin and approved this aesthetic over dark/minimal alternatives.
+
 ## Key Learnings
 
 - **Project:** stockify

@@ -32,6 +32,118 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-25T11:37:01.936Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-05-25T19:37:42.360Z",
+      "error_message": "CSS fix: hover",
+      "file": "app/admin/menu/row-actions.tsx",
+      "root_cause": "hover: bg-red-500/10 disabled:opacity-50\" → bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors\"",
+      "fix": "Changed hover: bg-red-500/10 disabled:opacity-50\" → bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T19:37:42.360Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-05-25T19:46:47.288Z",
+      "error_message": "CSS fix: hover",
+      "file": "app/admin/menu/[id]/page.tsx",
+      "root_cause": "hover: text-[var(--text-primary)]\" → text-primary-600 transition-colors\"",
+      "fix": "Changed hover: text-[var(--text-primary)]\" → text-primary-600 transition-colors\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T19:46:47.288Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-05-25T21:16:27.928Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/auth/callback/route.ts",
+      "root_cause": "13 lines replaced/restructured",
+      "fix": "Rewrote 30→20 lines (13 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T21:16:27.928Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-05-25T21:34:56.529Z",
+      "error_message": "CSS fix: subsets, variable",
+      "file": "app/layout.tsx",
+      "root_cause": "subsets: [\"arabic\", \"latin\"], → [\"arabic\"],; variable: \"--font-cairo\", → \"--font-almarai\",",
+      "fix": "Changed subsets: [\"arabic\", \"latin\"], → [\"arabic\"],; variable: \"--font-cairo\", → \"--font-almarai\",",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T21:34:56.529Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-05-25T21:36:00.896Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/layout.tsx",
+      "root_cause": "Had `${cairo.variable} ${reemKufi.variable} ${fraunces",
+      "fix": "Changed to `${almarai.variable} ${reemKufi.variable} ${fraunc",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T21:36:00.896Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-05-25T21:37:09.406Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/globals.css",
+      "root_cause": "Had 'Cairo'",
+      "fix": "Changed to 'Almarai'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T21:37:09.406Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-05-25T21:45:27.788Z",
+      "error_message": "Missing guard clause",
+      "file": "components/admin/sidebar.tsx",
+      "root_cause": "No early return/throw for edge case: !pending",
+      "fix": "Added guard clause: if (!pending)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T21:45:27.788Z"
     }
   ]
 }

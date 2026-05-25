@@ -122,3 +122,61 @@
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+| 22:32 | Created app/layout.tsx | — | ~288 |
+| 22:33 | Created app/globals.css | — | ~1683 |
+| 22:34 | Created components/admin/sidebar.tsx | — | ~1803 |
+| 22:35 | Created app/admin/page.tsx | — | ~2632 |
+| 22:36 | Created app/admin/menu/page.tsx | — | ~1828 |
+| 22:37 | Edited app/admin/menu/row-actions.tsx | CSS: group-hover | ~405 |
+| 22:39 | Created app/admin/ingredients/page.tsx | — | ~880 |
+| 22:40 | Created app/admin/ingredients/manager.tsx | — | ~3257 |
+| 22:41 | Created app/admin/employees/page.tsx | — | ~679 |
+| 22:43 | Created app/admin/employees/manager.tsx | — | ~2694 |
+| 22:45 | Created app/admin/menu/new/page.tsx | — | ~502 |
+| 22:46 | Edited app/admin/menu/[id]/page.tsx | CSS: md, animationDelay | ~237 |
+| 22:48 | Created app/admin/menu/menu-form.tsx | — | ~2923 |
+| 14:30 | Suq Editorial redesign of admin UI (fonts: Reem Kufi + Fraunces, paper-warm palette, ornamental shell + dashboard + menu + ingredients + employees + forms) | app/layout.tsx, app/globals.css, components/admin/sidebar.tsx, app/admin/page.tsx, app/admin/menu/**, app/admin/ingredients/**, app/admin/employees/** | typecheck clean | ~9k |
+| 22:52 | Session end: 13 writes across 7 files (layout.tsx, globals.css, sidebar.tsx, page.tsx, row-actions.tsx) | 16 reads | ~38003 tok |
+| 22:58 | Edited app/layout.tsx | 7→6 lines | ~35 |
+| 23:12 | Session end: 14 writes across 7 files (layout.tsx, globals.css, sidebar.tsx, page.tsx, row-actions.tsx) | 16 reads | ~38038 tok |
+| 23:15 | Session end: 14 writes across 7 files (layout.tsx, globals.css, sidebar.tsx, page.tsx, row-actions.tsx) | 16 reads | ~38038 tok |
+
+## Session: 2026-05-25 23:26
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 23:27 | Created app/page.tsx | — | ~31 |
+| 23:27 | Edited app/layout.tsx | 1→3 lines | ~30 |
+| 23:27 | Session end: 2 writes across 2 files (page.tsx, layout.tsx) | 1 reads | ~293 tok |
+| 23:48 | Created app/page.tsx | — | ~155 |
+| 23:49 | Created app/page.tsx | — | ~359 |
+| 23:50 | Session end: 4 writes across 2 files (page.tsx, layout.tsx) | 3 reads | ~1711 tok |
+| 00:11 | Created app/page.tsx | — | ~371 |
+| 00:13 | Edited app/admin/layout.tsx | 9→10 lines | ~77 |
+| 00:13 | Edited lib/actions/auth.ts | 11→14 lines | ~110 |
+| 00:16 | Edited app/auth/callback/route.ts | signOut() → rpc() | ~169 |
+| 00:16 | Session end: 8 writes across 4 files (page.tsx, layout.tsx, auth.ts, route.ts) | 6 reads | ~3901 tok |
+| 00:29 | Session end: 8 writes across 4 files (page.tsx, layout.tsx, auth.ts, route.ts) | 6 reads | ~3901 tok |
+| 00:34 | Edited app/layout.tsx | Cairo() → Almarai() | ~66 |
+| 00:36 | Edited app/layout.tsx | "${cairo.variable} ${reemK" → "${almarai.variable} ${ree" | ~26 |
+| 00:37 | Edited app/globals.css | 2→2 lines | ~53 |
+| 00:39 | Session end: 11 writes across 5 files (page.tsx, layout.tsx, auth.ts, route.ts, globals.css) | 7 reads | ~5729 tok |
+| 00:42 | Created app/admin/loading.tsx | — | ~134 |
+| 00:42 | Created app/admin/menu/loading.tsx | — | ~459 |
+| 00:42 | Created app/admin/ingredients/loading.tsx | — | ~318 |
+| 00:43 | Created app/admin/employees/loading.tsx | — | ~395 |
+| 00:45 | Edited components/admin/sidebar.tsx | added 1 condition(s) | ~124 |
+| 00:46 | Edited components/admin/sidebar.tsx | 6→7 lines | ~133 |
+| 00:47 | Edited components/admin/sidebar.tsx | 6→7 lines | ~81 |
+| 00:49 | Session end: 18 writes across 7 files (page.tsx, layout.tsx, auth.ts, route.ts, globals.css) | 8 reads | ~9176 tok |
+
+## Session: 2026-05-25 00:53
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 00:57 | Created app/admin/loading.tsx | — | ~647 |
+| 00:58 | Created app/admin/menu/loading.tsx | — | ~648 |
+| 00:58 | Created app/admin/ingredients/loading.tsx | — | ~682 |
+| 00:58 | Created app/admin/employees/loading.tsx | — | ~502 |
+| 01:00 | Created loading.tsx skeleton UIs for all 4 admin routes (home, menu, ingredients, employees) — enables instant sidebar navigation via Next.js Suspense | app/admin/loading.tsx, app/admin/menu/loading.tsx, app/admin/ingredients/loading.tsx, app/admin/employees/loading.tsx | created | ~2000 |
+| 01:00 | Session end: 4 writes across 1 files (loading.tsx) | 7 reads | ~9112 tok |

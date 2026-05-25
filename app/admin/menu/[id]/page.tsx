@@ -34,20 +34,24 @@ export default async function EditMenuItemPage({
   if (!item) notFound();
 
   return (
-    <div className="mx-auto max-w-3xl p-6 space-y-6">
+    <div className="mx-auto max-w-3xl px-6 py-10 space-y-8">
       <Link
         href="/admin/menu"
-        className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+        className="inline-flex items-center gap-2 text-xs eyebrow text-[var(--text-muted)] hover:text-primary-600 transition-colors"
       >
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight className="h-3.5 w-3.5" />
         رجوع للمنيو
       </Link>
-      <header>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
-          تعديل: {item.name_ar}
+      <header className="rise-in">
+        <p className="eyebrow mb-3">تعديل صنف</p>
+        <h1 className="font-display text-4xl md:text-5xl text-[var(--text-primary)] leading-tight">
+          {item.name_ar}
         </h1>
+        <p className="mt-3 text-sm text-[var(--text-secondary)]" dir="ltr">
+          {item.name_en}
+        </p>
       </header>
-      <div className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface-card)] p-6">
+      <div className="rise-in rounded-3xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-8" style={{ animationDelay: "100ms" }}>
         <MenuForm
           item={item}
           categories={categories ?? []}

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-25T14:00:52.589Z
-> Files: 35 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-25T21:58:55.148Z
+> Files: 39 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -22,9 +22,9 @@
 
 ## app/
 
-- `globals.css` — Styles: 3 rules, 37 vars (~736 tok)
-- `layout.tsx` — cairo (~173 tok)
-- `page.tsx` — HomePage (~232 tok)
+- `globals.css` — Styles: 17 rules, 53 vars (~1684 tok)
+- `layout.tsx` — almarai (~300 tok)
+- `page.tsx` — HomePage — renders form (~371 tok)
 
 ## app/(auth)/complete-profile/
 
@@ -40,36 +40,40 @@
 
 ## app/admin/
 
-- `layout.tsx` — AdminLayout (~278 tok)
-- `page.tsx` — toneStyles (~1552 tok)
+- `layout.tsx` — AdminLayout (~293 tok)
+- `loading.tsx` — Loading (~647 tok)
+- `page.tsx` — AdminHomePage (~2632 tok)
 
 ## app/admin/employees/
 
-- `manager.tsx` — EmployeesManager — renders form, table (~2392 tok)
-- `page.tsx` — dynamic (~439 tok)
+- `loading.tsx` — Loading (~502 tok)
+- `manager.tsx` — initials — renders form (~2694 tok)
+- `page.tsx` — dynamic (~679 tok)
 
 ## app/admin/ingredients/
 
-- `manager.tsx` — UNIT_LABELS — renders form, table (~2690 tok)
-- `page.tsx` — dynamic (~670 tok)
+- `loading.tsx` — Loading (~682 tok)
+- `manager.tsx` — UNIT_LABELS — renders form (~3257 tok)
+- `page.tsx` — dynamic (~880 tok)
 
 ## app/admin/menu/
 
-- `menu-form.tsx` — MenuForm — renders form (~2445 tok)
-- `page.tsx` — dynamic — renders table (~1362 tok)
-- `row-actions.tsx` — MenuRowActions (~463 tok)
+- `loading.tsx` — Loading (~648 tok)
+- `menu-form.tsx` — MenuForm — renders form (~2923 tok)
+- `page.tsx` — dynamic (~1828 tok)
+- `row-actions.tsx` — MenuRowActions (~518 tok)
 
 ## app/admin/menu/[id]/
 
-- `page.tsx` — EditMenuItemPage (~611 tok)
+- `page.tsx` — EditMenuItemPage (~691 tok)
 
 ## app/admin/menu/new/
 
-- `page.tsx` — NewMenuItemPage (~429 tok)
+- `page.tsx` — NewMenuItemPage (~502 tok)
 
 ## app/auth/callback/
 
-- `route.ts` — Next.js API route: GET (~476 tok)
+- `route.ts` — Next.js API route: GET (~365 tok)
 
 ## app/cashier/
 
@@ -78,7 +82,7 @@
 
 ## components/admin/
 
-- `sidebar.tsx` — nav — renders form (~1320 tok)
+- `sidebar.tsx` — PendingDot — renders form (~1880 tok)
 
 ## docs/
 
@@ -88,7 +92,7 @@
 ## lib/actions/
 
 - `admin.ts` — API routes: GET (19 endpoints) (~2482 tok)
-- `auth.ts` — API routes: GET (8 endpoints) (~785 tok)
+- `auth.ts` — API routes: GET (8 endpoints) (~798 tok)
 
 ## lib/supabase/
 

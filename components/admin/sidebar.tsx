@@ -8,34 +8,57 @@ import {
   Carrot,
   Users,
   LogOut,
-  ChefHat,
 } from "lucide-react";
 import { signOut } from "@/lib/actions/auth";
 
 const nav = [
-  { href: "/admin", label: "الرئيسية", icon: LayoutDashboard, exact: true },
-  { href: "/admin/menu", label: "المنيو", icon: UtensilsCrossed },
-  { href: "/admin/ingredients", label: "المخزون", icon: Carrot },
-  { href: "/admin/employees", label: "الموظفون", icon: Users },
+  { href: "/admin", label: "الرئيسية", en: "Overview", icon: LayoutDashboard, exact: true },
+  { href: "/admin/menu", label: "المنيو", en: "Menu", icon: UtensilsCrossed },
+  { href: "/admin/ingredients", label: "المخزون", en: "Stock", icon: Carrot },
+  { href: "/admin/employees", label: "الموظفون", en: "Staff", icon: Users },
 ];
+
+function Mark({ className = "" }: { className?: string }) {
+  // 8-point star monogram — a single ornamental glyph for Stockify
+  return (
+    <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
+      <g fill="none" stroke="currentColor" strokeWidth="1.4">
+        <rect x="5" y="5" width="22" height="22" transform="rotate(0 16 16)" rx="2" />
+        <rect x="5" y="5" width="22" height="22" transform="rotate(45 16 16)" rx="2" />
+        <circle cx="16" cy="16" r="2.4" fill="currentColor" stroke="none" />
+      </g>
+    </svg>
+  );
+}
 
 export function AdminSidebar({ name }: { name: string }) {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex md:w-64 md:flex-col bg-[var(--surface-card)] border-s border-[var(--surface-border)]">
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-[var(--surface-border)]">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-500/10 text-primary-600">
-          <ChefHat className="h-5 w-5" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-[var(--text-primary)]">Stockify</p>
-          <p className="text-xs text-[var(--text-muted)]">لوحة المدير</p>
+    <aside className="hidden md:flex md:w-72 md:flex-col bg-[var(--surface-canvas)] border-s border-[var(--surface-border-soft)] relative">
+      {/* Vertical hairline accent */}
+      <div className="absolute inset-y-0 start-0 w-px bg-gradient-to-b from-transparent via-primary-500/30 to-transparent" />
+
+      <div className="px-7 pt-8 pb-6">
+        <div className="flex items-center gap-3">
+          <Mark className="h-9 w-9 text-primary-600" />
+          <div className="leading-tight">
+            <p className="font-display text-xl text-[var(--text-primary)] tracking-tight">
+              Stockify
+            </p>
+            <p className="eyebrow">لوحة المدير</p>
+          </div>
         </div>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3 py-4">
-        {nav.map((item) => {
+      <div className="px-7 pb-5">
+        <div className="rule-ornament text-[var(--surface-border)]">
+          <span aria-hidden className="font-display text-primary-500/70">٭</span>
+        </div>
+      </div>
+
+      <nav className="flex-1 px-4 space-y-0.5">
+        {nav.map((item, i) => {
           const active = item.exact
             ? pathname === item.href
             : pathname.startsWith(item.href);
@@ -44,33 +67,37 @@ export function AdminSidebar({ name }: { name: string }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              className={`group flex items-center gap-4 rounded-xl px-4 py-3 text-sm transition-all relative ${
                 active
-                  ? "bg-primary-500/10 text-primary-700 dark:text-primary-300"
-                  : "text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)]"
+                  ? "bg-[var(--surface-card)] text-[var(--text-primary)] shadow-[0_1px_0_oklch(0.85_0.025_70)]"
+                  : "text-[var(--text-secondary)] hover:bg-[var(--surface-card)]/50 hover:text-[var(--text-primary)]"
               }`}
             >
-              <Icon className="h-4 w-4" />
-              {item.label}
+              {active && (
+                <span className="absolute inset-y-2 start-0 w-0.5 rounded-full bg-primary-500" />
+              )}
+              <Icon className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-primary-600" : "text-[var(--text-muted)] group-hover:text-[var(--text-secondary)]"}`} />
+              <span className="flex-1 font-medium">{item.label}</span>
+              <span className="font-display text-[10px] tracking-[0.18em] text-[var(--text-faint)]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
             </Link>
           );
         })}
       </nav>
 
-      <div className="border-t border-[var(--surface-border)] px-3 py-4 space-y-3">
-        <div className="px-3">
-          <p className="text-xs text-[var(--text-muted)]">مرحباً</p>
-          <p className="truncate text-sm font-medium text-[var(--text-primary)]">
-            {name}
-          </p>
-        </div>
+      <div className="mx-4 mb-5 mt-6 rounded-2xl bg-[var(--surface-card)] border border-[var(--surface-border-soft)] p-4">
+        <p className="eyebrow mb-1.5">مرحباً</p>
+        <p className="font-display text-base text-[var(--text-primary)] truncate mb-3">
+          {name}
+        </p>
         <form action={signOut}>
           <button
             type="submit"
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] transition-colors"
+            className="flex w-full items-center justify-between gap-2 rounded-lg bg-[var(--surface-input)] px-3 py-2 text-xs font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-canvas)] hover:text-accent-600 transition-colors"
           >
-            <LogOut className="h-4 w-4" />
-            تسجيل الخروج
+            <span>تسجيل الخروج</span>
+            <LogOut className="h-3.5 w-3.5" />
           </button>
         </form>
       </div>
@@ -85,10 +112,10 @@ export function AdminTopbar({ name }: { name: string }) {
   );
 
   return (
-    <header className="md:hidden flex items-center justify-between px-4 py-3 bg-[var(--surface-card)] border-b border-[var(--surface-border)]">
-      <div className="flex items-center gap-2">
-        <ChefHat className="h-5 w-5 text-primary-600" />
-        <span className="text-sm font-semibold text-[var(--text-primary)]">
+    <header className="md:hidden flex items-center justify-between px-4 py-3 bg-[var(--surface-canvas)] border-b border-[var(--surface-border-soft)]">
+      <div className="flex items-center gap-2.5">
+        <Mark className="h-6 w-6 text-primary-600" />
+        <span className="font-display text-base text-[var(--text-primary)]">
           {current?.label ?? "Stockify"}
         </span>
       </div>
@@ -109,7 +136,7 @@ export function AdminTopbar({ name }: { name: string }) {
 export function MobileTabBar() {
   const pathname = usePathname();
   return (
-    <nav className="md:hidden fixed inset-x-0 bottom-0 z-20 bg-[var(--surface-card)] border-t border-[var(--surface-border)] flex">
+    <nav className="md:hidden fixed inset-x-0 bottom-0 z-20 bg-[var(--surface-canvas)] border-t border-[var(--surface-border-soft)] flex backdrop-blur-md">
       {nav.map((item) => {
         const active = item.exact
           ? pathname === item.href
@@ -119,14 +146,17 @@ export function MobileTabBar() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex-1 flex flex-col items-center gap-1 py-2.5 text-xs ${
+            className={`flex-1 flex flex-col items-center gap-1 py-2.5 text-[11px] relative ${
               active
                 ? "text-primary-600"
                 : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             }`}
           >
+            {active && (
+              <span className="absolute top-0 inset-x-6 h-0.5 rounded-full bg-primary-500" />
+            )}
             <Icon className="h-5 w-5" />
-            {item.label}
+            <span className="font-medium">{item.label}</span>
           </Link>
         );
       })}
