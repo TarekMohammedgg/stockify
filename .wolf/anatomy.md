@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-25T12:05:46.916Z
-> Files: 24 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-25T14:00:52.589Z
+> Files: 35 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -10,7 +10,7 @@
 - `CLAUDE.md` — OpenWolf (~513 tok)
 - `next.config.ts` — Declares nextConfig with Unsplash remotePatterns (~68 tok)
 - `proxy.ts` — Exports proxy (~626 tok)
-- `tasks.md` — Stockify — Build Tasks (~2018 tok)
+- `tasks.md` — Stockify — Build Tasks (~2044 tok)
 
 ## .claude/
 
@@ -32,7 +32,7 @@
 
 ## app/(auth)/login/
 
-- `page.tsx` — LoginPage — renders form (~1796 tok)
+- `page.tsx` — LoginPage — renders form (~1847 tok)
 
 ## app/(auth)/register/
 
@@ -40,17 +40,45 @@
 
 ## app/admin/
 
-- `layout.tsx` — AdminLayout (~153 tok)
-- `page.tsx` — AdminHomePage — renders form (~246 tok)
+- `layout.tsx` — AdminLayout (~278 tok)
+- `page.tsx` — toneStyles (~1552 tok)
+
+## app/admin/employees/
+
+- `manager.tsx` — EmployeesManager — renders form, table (~2392 tok)
+- `page.tsx` — dynamic (~439 tok)
+
+## app/admin/ingredients/
+
+- `manager.tsx` — UNIT_LABELS — renders form, table (~2690 tok)
+- `page.tsx` — dynamic (~670 tok)
+
+## app/admin/menu/
+
+- `menu-form.tsx` — MenuForm — renders form (~2445 tok)
+- `page.tsx` — dynamic — renders table (~1362 tok)
+- `row-actions.tsx` — MenuRowActions (~463 tok)
+
+## app/admin/menu/[id]/
+
+- `page.tsx` — EditMenuItemPage (~611 tok)
+
+## app/admin/menu/new/
+
+- `page.tsx` — NewMenuItemPage (~429 tok)
 
 ## app/auth/callback/
 
-- `route.ts` — Next.js API route: GET (~350 tok)
+- `route.ts` — Next.js API route: GET (~476 tok)
 
 ## app/cashier/
 
 - `layout.tsx` — CashierLayout (~154 tok)
 - `page.tsx` — CashierHomePage — renders form (~246 tok)
+
+## components/admin/
+
+- `sidebar.tsx` — nav — renders form (~1320 tok)
 
 ## docs/
 
@@ -59,6 +87,7 @@
 
 ## lib/actions/
 
+- `admin.ts` — API routes: GET (19 endpoints) (~2482 tok)
 - `auth.ts` — API routes: GET (8 endpoints) (~785 tok)
 
 ## lib/supabase/

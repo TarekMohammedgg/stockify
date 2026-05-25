@@ -41,7 +41,10 @@ export default function LoginPage() {
         {/* Error banner */}
         {(fieldError || urlError) && (
           <div className="rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">
-            {fieldError ?? "حدث خطأ، حاول مجدداً"}
+            {fieldError ??
+              (urlError === "oauth_not_allowed_for_staff"
+                ? "حسابات المديرين والكاشير لا تدعم تسجيل الدخول بجوجل، استخدم البريد وكلمة المرور"
+                : "حدث خطأ، حاول مجدداً")}
           </div>
         )}
 

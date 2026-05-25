@@ -51,3 +51,74 @@
 | 14:58 | Session end: 22 writes across 11 files (globals.css, next.config.ts, .prettierrc, client.ts, server.ts) | 6 reads | ~16619 tok |
 | 15:05 | Edited proxy.ts | modified if() | ~156 |
 | 15:07 | Session end: 23 writes across 11 files (globals.css, next.config.ts, .prettierrc, client.ts, server.ts) | 7 reads | ~17414 tok |
+
+## Session: 2026-05-25 15:17
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-25 16:13
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-25 16:13
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:10 | updated tasks.md statuses based on codebase state | tasks.md | Phase 1.1/1.3 mostly done, 2.1 partial, 6.1 tokens done | ~500 |
+
+## Session: 2026-05-25 16:21
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-25 16:22
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 16:33 | Edited app/auth/callback/route.ts | added 1 condition(s) | ~280 |
+| 16:37 | Edited app/(auth)/login/page.tsx | 6→9 lines | ~138 |
+| 16:38 | Edited tasks.md | 7→7 lines | ~160 |
+| 16:38 | Edited tasks.md | inline fix | ~13 |
+| 12:55 | Applied Stockify schema (tables, enums, triggers) | supabase migration | success | ~600 |
+| 12:58 | Created 5 views (v_menu, v_item_ingredients, v_item_allergens, v_orders, v_low_stock) | supabase migration | ~400 |
+| 13:02 | Seeded categories/allergens/ingredients/menu_items + junctions (hex UUIDs) | supabase migration | ~1200 |
+| 13:05 | Applied RLS policies for users/orders/menu/insights with current_user_role() helper | supabase migration | ~800 |
+| 13:08 | Edited app/auth/callback/route.ts | block Google OAuth for admin/cashier | ~120 |
+| 13:10 | Edited login page | surfaced oauth_not_allowed_for_staff message | ~30 |
+| 13:12 | Hardened security: security_invoker on all views, locked helper functions, dropped orphan functions | supabase migrations | ~200 |
+| 13:13 | Session end: phase 1.2 complete; 1.3 OAuth gate done; only Admin pre-seed pending (manual dashboard step) | tasks.md | ✓ |
+| 16:40 | Session end: 4 writes across 3 files (route.ts, page.tsx, tasks.md) | 4 reads | ~12144 tok |
+| 16:49 | Created components/admin/sidebar.tsx | — | ~1320 |
+| 16:49 | Created app/admin/layout.tsx | — | ~278 |
+| 16:50 | Created app/admin/page.tsx | — | ~1552 |
+| 16:52 | Created lib/actions/admin.ts | — | ~2482 |
+| 16:52 | Created app/admin/menu/page.tsx | — | ~1362 |
+| 16:52 | Created app/admin/menu/row-actions.tsx | — | ~463 |
+| 16:54 | Created app/admin/menu/menu-form.tsx | — | ~2445 |
+| 16:54 | Created app/admin/menu/new/page.tsx | — | ~429 |
+| 16:54 | Created app/admin/menu/[id]/page.tsx | — | ~611 |
+| 16:55 | Created app/admin/ingredients/page.tsx | — | ~670 |
+| 16:56 | Created app/admin/ingredients/manager.tsx | — | ~2690 |
+| 16:57 | Created app/admin/employees/page.tsx | — | ~439 |
+| 16:58 | Created app/admin/employees/manager.tsx | — | ~2392 |
+| 17:00 | Edited tasks.md | 23→23 lines | ~237 |
+
+## Session: 2026-05-25 17:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:00 | Built admin shell (sidebar, topbar, mobile tab bar) | components/admin/sidebar.tsx, app/admin/layout.tsx | RTL nav | ~900 |
+| 17:05 | Built admin dashboard with 5 quick stats + low-stock list | app/admin/page.tsx | ~1100 |
+| 17:15 | Built menu CRUD: list, form, new/edit pages, row actions | app/admin/menu/* | ~2800 |
+| 17:25 | Built ingredients manager: list + side form + used-in count | app/admin/ingredients/* | ~2100 |
+| 17:35 | Built employees manager: list + dialog + create/update/deactivate/delete | app/admin/employees/* | ~1900 |
+| 17:36 | Server actions for menu/ingredients/employees | lib/actions/admin.ts | uses SUPABASE_SERVICE_ROLE_KEY for cashier auth.admin.createUser/deleteUser | ~2000 |
+| 17:40 | Phase 2 complete: tsc clean | tasks.md | ✓ |
+| 17:01 | Session end: 18 writes across 9 files (route.ts, page.tsx, tasks.md, sidebar.tsx, layout.tsx) | 9 reads | ~31624 tok |
+
+## Session: 2026-05-25 22:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

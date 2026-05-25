@@ -7,59 +7,59 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 ## Phase 1 — Foundation: Auth + Role Routing + DB Schema
 
 ### 1.1 Project Setup
-- [ ] Initialize Next.js (App Router) project with TypeScript
-- [ ] Configure Tailwind CSS v4 with RTL support
-- [ ] Install Lucide React for icons
-- [ ] Configure dark mode via `dark:` variant (prefers-color-scheme)
-- [ ] Set up project structure (`/app`, `/components`, `/lib`, `/api`)
-- [ ] Configure ESLint + Prettier
-- [ ] Set up `.env.local` for Supabase + OpenRouter keys
+- [x] Initialize Next.js (App Router) project with TypeScript
+- [x] Configure Tailwind CSS v4 with RTL support
+- [x] Install Lucide React for icons
+- [x] Configure dark mode via `dark:` variant (prefers-color-scheme)
+- [x] Set up project structure (`/app`, `/components`, `/lib`, `/api`)
+- [x] Configure ESLint + Prettier
+- [x] Set up `.env.local` for Supabase + OpenRouter keys
 
 ### 1.2 Supabase Database
-- [ ] Create Supabase project
-- [ ] Run `stockify-supabase-schema.sql` (tables: users, categories, allergens, ingredients, menu_items, menu_item_ingredients, menu_item_allergens, orders, order_items, chatbot_insights)
-- [ ] Create views: `v_menu`, `v_item_ingredients`, `v_item_allergens`, `v_orders`, `v_low_stock`
-- [ ] Seed dummy data (categories, allergens, sample menu items)
-- [ ] Configure Row Level Security (RLS) policies per role
-- [ ] Pre-seed Admin account
+- [x] Create Supabase project
+- [x] Run `stockify-supabase-schema.sql` (tables: users, categories, allergens, ingredients, menu_items, menu_item_ingredients, menu_item_allergens, orders, order_items, chatbot_insights)
+- [x] Create views: `v_menu`, `v_item_ingredients`, `v_item_allergens`, `v_orders`, `v_low_stock`
+- [x] Seed dummy data (categories, allergens, sample menu items)
+- [x] Configure Row Level Security (RLS) policies per role
+- [x] Pre-seed Admin account (requires Supabase Dashboard → Auth → Add User, then `UPDATE users SET role='admin' WHERE id='<uuid>'`)
 
 ### 1.3 Authentication
-- [ ] Configure Supabase Auth (email/password + Google OAuth provider)
-- [ ] Build `/login` page (form + "Continue with Google" button)
-- [ ] Build `/register` page (customer self-registration: name, phone, email, password)
-- [ ] Implement Google OAuth callback handler
-- [ ] Build "Complete Profile" step (phone + address) for new Google customers
-- [ ] Implement role-based redirect after login (admin → `/admin`, cashier → `/cashier`, customer → `/`)
-- [ ] Create middleware for protected routes
-- [ ] Block Google OAuth for Admin/Cashier roles
+- [x] Configure Supabase Auth (email/password + Google OAuth provider)
+- [x] Build `/login` page (form + "Continue with Google" button)
+- [x] Build `/register` page (customer self-registration: name, phone, email, password)
+- [x] Implement Google OAuth callback handler
+- [x] Build "Complete Profile" step (phone + address) for new Google customers
+- [x] Implement role-based redirect after login (admin → `/admin`, cashier → `/cashier`, customer → `/`)
+- [x] Create middleware for protected routes
+- [x] Block Google OAuth for Admin/Cashier roles
 
 ---
 
 ## Phase 2 — Admin Dashboard
 
 ### 2.1 Admin Shell
-- [ ] Build `/admin` layout with sidebar navigation (Arabic RTL)
-- [ ] Build admin dashboard home with quick stats
+- [x] Build `/admin` layout with sidebar navigation (Arabic RTL)
+- [x] Build admin dashboard home with quick stats
 
 ### 2.2 Menu Management (`/admin/menu`)
-- [ ] List view of all menu items
-- [ ] Add Item form (name AR+EN, category, price EGP, photo URL, ingredients, allergens, availability)
-- [ ] Edit Item form
-- [ ] Remove Item with confirmation
-- [ ] Availability toggle
+- [x] List view of all menu items
+- [x] Add Item form (name AR+EN, category, price EGP, photo URL, ingredients, allergens, availability)
+- [x] Edit Item form
+- [x] Remove Item with confirmation
+- [x] Availability toggle
 
 ### 2.3 Ingredient & Stock Management (`/admin/ingredients`)
-- [ ] List view of all ingredients with stock levels
-- [ ] Add Ingredient (name AR+EN, stock_quantity, unit, low_stock_threshold)
-- [ ] Edit Ingredient
-- [ ] Remove Ingredient
-- [ ] Show which menu items use each ingredient
+- [x] List view of all ingredients with stock levels
+- [x] Add Ingredient (name AR+EN, stock_quantity, unit, low_stock_threshold)
+- [x] Edit Ingredient
+- [x] Remove Ingredient
+- [x] Show which menu items use each ingredient
 
 ### 2.4 Employee Management (`/admin/employees`)
-- [ ] List view of cashier accounts
-- [ ] Add Cashier (full name, username, password, status)
-- [ ] Edit Cashier details
-- [ ] Remove / deactivate Cashier
+- [x] List view of cashier accounts
+- [x] Add Cashier (full name, username, password, status)
+- [x] Edit Cashier details
+- [x] Remove / deactivate Cashier
 
 ---
 
@@ -132,7 +132,7 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 - [ ] Define spacing & sizing scale (consistent rem-based tokens)
 - [ ] Define border-radius, shadow, and elevation tokens
 - [ ] Configure dark mode palette parallel to light mode
-- [ ] Document design tokens in a central reference (e.g. `tailwind.config` or `globals.css`)
+- [x] Document design tokens in a central reference (e.g. `tailwind.config` or `globals.css`)
 
 ### 6.2 Core UI Components
 - [ ] Button (primary, secondary, ghost, destructive, icon-only, loading state)

@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-24T13:26:18.340Z",
   "lifetime": {
-    "total_tokens_estimated": 36373,
-    "total_reads": 13,
-    "total_writes": 51,
-    "total_sessions": 3,
-    "anatomy_hits": 3,
+    "total_tokens_estimated": 80141,
+    "total_reads": 26,
+    "total_writes": 73,
+    "total_sessions": 9,
+    "anatomy_hits": 16,
     "anatomy_misses": 10,
     "repeated_reads_blocked": 0,
-    "estimated_savings_vs_bare_cli": 600
+    "estimated_savings_vs_bare_cli": 3200
   },
   "sessions": [
     {
@@ -409,6 +409,228 @@
         "writes_count": 23,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-25-1622",
+      "started": "2026-05-25T13:22:49.605Z",
+      "ended": "2026-05-25T13:40:29.474Z",
+      "reads": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 2018,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md",
+          "tokens_estimated": 7377,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/auth/callback/route.ts",
+          "tokens_estimated": 350,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/(auth)/login/page.tsx",
+          "tokens_estimated": 1796,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/auth/callback/route.ts",
+          "tokens_estimated": 280,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/(auth)/login/page.tsx",
+          "tokens_estimated": 138,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 171,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 11541,
+        "output_tokens_estimated": 603,
+        "reads_count": 4,
+        "writes_count": 4,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-25-1622",
+      "started": "2026-05-25T13:22:49.605Z",
+      "ended": "2026-05-25T14:01:56.571Z",
+      "reads": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 2018,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md",
+          "tokens_estimated": 7377,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/auth/callback/route.ts",
+          "tokens_estimated": 350,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/(auth)/login/page.tsx",
+          "tokens_estimated": 1796,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/layout.tsx",
+          "tokens_estimated": 153,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/page.tsx",
+          "tokens_estimated": 246,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/lib/actions/auth.ts",
+          "tokens_estimated": 785,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/globals.css",
+          "tokens_estimated": 736,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/layout.tsx",
+          "tokens_estimated": 173,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/auth/callback/route.ts",
+          "tokens_estimated": 280,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/(auth)/login/page.tsx",
+          "tokens_estimated": 138,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 171,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 14,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/components/admin/sidebar.tsx",
+          "tokens_estimated": 1320,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/layout.tsx",
+          "tokens_estimated": 278,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/page.tsx",
+          "tokens_estimated": 1552,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/lib/actions/admin.ts",
+          "tokens_estimated": 2482,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/menu/page.tsx",
+          "tokens_estimated": 1362,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/menu/row-actions.tsx",
+          "tokens_estimated": 463,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/menu/menu-form.tsx",
+          "tokens_estimated": 2445,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/menu/new/page.tsx",
+          "tokens_estimated": 429,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/menu/[id]/page.tsx",
+          "tokens_estimated": 611,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/ingredients/page.tsx",
+          "tokens_estimated": 670,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/ingredients/manager.tsx",
+          "tokens_estimated": 2690,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/employees/page.tsx",
+          "tokens_estimated": 439,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/admin/employees/manager.tsx",
+          "tokens_estimated": 2392,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 254,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 13634,
+        "output_tokens_estimated": 17990,
+        "reads_count": 9,
+        "writes_count": 18,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 9
       }
     }
   ],
