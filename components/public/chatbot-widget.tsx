@@ -68,6 +68,7 @@ export default function ChatbotWidget({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isPending, setIsPending] = useState(false);
+  const [orderId, setOrderId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
@@ -86,25 +87,56 @@ export default function ChatbotWidget({
       handleClose();
     } else {
       setIsOpen(true);
+      if (orderId) {
+        // Start fresh conversation after a completed order
+        setOrderId(null);
+        setMessages([{
+          role: "assistant",
+          content: `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`,
+        }]);
+      }
     }
   };
 
-  // Initial greeting from bot
+  // Initial greeting from bot — personalized based on past orders
   useEffect(() => {
-    setMessages([
-      {
-        role: "assistant",
-        content: `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`,
-      },
-    ]);
-  }, [customerName]);
+    fetch(`/api/insights?user_id=${userId}`)
+      .then((r) => r.json())
+      .then((data) => {
+        const hasInsights =
+          data?.data?.favourite_items?.length > 0 || data?.data?.default_address;
+        const greeting = hasInsights
+          ? `أهلاً ${customerName}! 👋 عارف إنك بتحبوا أصنافنا 😊 هل تحب تطلب تاني؟`
+          : `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`;
+        setMessages([{ role: "assistant", content: greeting }]);
+      })
+      .catch(() => {
+        setMessages([{
+          role: "assistant",
+          content: `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`,
+        }]);
+      });
+  }, [customerName, userId]);
 
   // Listen for "Order Now" button from menu
   useEffect(() => {
-    const handler = () => setIsOpen(true);
+    const handler = () => {
+      setIsOpen(true);
+      // Reset completed-order state so user can place a new order
+      setOrderId((prev) => {
+        if (prev) {
+          setMessages([{
+            role: "assistant",
+            content: `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`,
+          }]);
+          return null;
+        }
+        return prev;
+      });
+    };
     window.addEventListener("open-chatbot", handler);
     return () => window.removeEventListener("open-chatbot", handler);
-  }, []);
+  }, [customerName]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -134,13 +166,16 @@ export default function ChatbotWidget({
         }),
       });
       const data = await res.json();
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: data.reply ?? "عذراً، حصل خطأ. حاول تاني.",
-        },
-      ]);
+      const botReply: Message = {
+        role: "assistant",
+        content: data.reply ?? "عذراً، حصل خطأ. حاول تاني.",
+      };
+      setMessages((prev) => [...prev, botReply]);
+
+      // If order was confirmed and submitted to DB
+      if (data.orderId) {
+        setOrderId(data.orderId);
+      }
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -204,6 +239,22 @@ export default function ChatbotWidget({
               </div>
             ))}
 
+            {/* Order success card */}
+            {orderId && (
+              <div className="mx-2 rounded-xl border border-green-200 bg-green-50 p-4 text-sm dark:border-green-900/40 dark:bg-green-950/30">
+                <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <CheckCircle size={18} className="shrink-0" />
+                  <span className="font-bold">تم تأكيد طلبك!</span>
+                </div>
+                <p className="mt-1 text-green-600 dark:text-green-500">
+                  رقم الطلب: <span className="font-mono font-bold">#{orderId.slice(-8).toUpperCase()}</span>
+                </p>
+                <p className="mt-1 text-xs text-green-600/80 dark:text-green-500/80">
+                  هيظهر الطلب عند الكاشير دلوقتي ✅
+                </p>
+              </div>
+            )}
+
             {/* Typing indicator */}
             {isPending && (
               <div className="flex justify-end">
@@ -238,14 +289,14 @@ export default function ChatbotWidget({
                     sendMessage();
                   }
                 }}
-                placeholder="اكتب رسالتك..."
+                placeholder={orderId ? "تم تسجيل طلبك ✅" : "اكتب رسالتك..."}
                 rows={1}
-                disabled={isPending}
+                disabled={isPending || !!orderId}
                 className="flex-1 resize-none rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 px-3 py-2.5 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:opacity-50"
               />
               <button
                 onClick={sendMessage}
-                disabled={isPending || !input.trim()}
+                disabled={isPending || !input.trim() || !!orderId}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-500 text-white transition-all hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="إرسال"
               >

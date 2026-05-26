@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: { messages: { role: string; content: string }[]; userId: string };
+  let body: { messages: { role: string; content: string }[] };
   try {
     body = await request.json();
   } catch {
@@ -21,8 +21,9 @@ export async function POST(request: Request) {
     );
   }
 
-  const { messages, userId } = body;
-  if (!Array.isArray(messages) || !userId) {
+  const { messages } = body;
+  const userId = user.id; // always use authenticated session — never trust body userId
+  if (!Array.isArray(messages)) {
     return NextResponse.json(
       { error: "Missing required fields" },
       { status: 400 },
@@ -102,10 +103,17 @@ ${menuText}
     if (insights.address) updatesToUser.address = insights.address;
 
     if (Object.keys(updatesToUser).length > 0) {
-      await supabase
+      const { error: userUpdateError } = await supabase
         .from("users")
         .update(updatesToUser)
         .eq("id", userId);
+      if (userUpdateError) {
+        console.error(
+          "[POST /api/chat/extract-insights] update users",
+          userId,
+          userUpdateError.message,
+        );
+      }
     }
 
     // Update chatbot_insights for favourite_items
@@ -140,6 +148,20 @@ ${menuText}
             .insert({ user_id: userId, favourite_items: newFavourites });
         }
       }
+    }
+
+    // Also save default_address if address was extracted
+    if (insights.address) {
+      await supabase
+        .from("chatbot_insights")
+        .upsert(
+          {
+            user_id: userId,
+            default_address: insights.address,
+            last_seen: new Date().toISOString(),
+          },
+          { onConflict: "user_id" },
+        );
     }
 
     return NextResponse.json({ success: true, insights });

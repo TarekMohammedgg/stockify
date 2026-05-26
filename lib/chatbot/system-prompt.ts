@@ -10,7 +10,8 @@ export type MenuItemForPrompt = {
 export type InsightsForPrompt = {
   favourite_items: string[] | null;
   phone: string | null;
-  address: string | null;
+  address: string | null;       // from users.address
+  default_address?: string | null; // from chatbot_insights.default_address (higher priority)
 } | null;
 
 export function buildSystemPrompt(
@@ -35,8 +36,9 @@ export function buildSystemPrompt(
           .join("، ")}`
       : "";
 
-  const savedAddress = insights?.address
-    ? `\nالعنوان المحفوظ للعميل: ${insights.address}`
+  const resolvedAddress = insights?.default_address ?? insights?.address ?? null;
+  const savedAddress = resolvedAddress
+    ? `\nالعنوان المحفوظ للعميل: ${resolvedAddress}`
     : "";
 
   const savedPhone = insights?.phone
@@ -56,7 +58,7 @@ ${favourites}${savedAddress}${savedPhone}
 3. لو ديليفري: تأكد من عنوان التوصيل ورقم التليفون (لو محفوظين في السياق، لا تسأل عنهم من جديد بل اطلب تأكيدهم فقط، لو مش موجودين اسأل عنهم).
 4. خد الطلب: اسأل عن الأصناف والكميات وأي ملاحظات (زي "من غير بصل" أو "صوص إضافي").
 5. قدّم ملخص الطلب الكامل واطلب منه تأكيد.
-6. بعد التأكيد: قوله "تمام! جاري إرسال طلبك ✅" وإن الطلب هيظهر في أقرب وقت.
+6. بعد تأكيد العميل: ابدأ رسالتك بـ <<ORDER_CONFIRMED>> ثم اكتب "تمام! جاري تسجيل طلبك ✅ شوية وهيوصلك."
 
 **قواعد مهمة:**
 - متردّش إلا بالعامية المصرية.
