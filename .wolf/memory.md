@@ -3,6 +3,8 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 21:15 | /steer-tasks: refreshed Phase 5.2 — marked submit/insights/branching done; replaced open items with 3 ordered tasks (delivery-address guard, editable prefill, E2E verify) | tasks.md | updated | ~1.5k |
+
 ## Session: 2026-05-25 13:45
 
 | Time | Action | File(s) | Outcome | ~Tokens |
@@ -464,6 +466,46 @@
 |------|--------|---------|---------|--------|
 
 ## Session: 2026-05-26 20:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:31 | Created components/public/site-header.tsx | — | ~1853 |
+| 20:32 | Edited lib/actions/auth.ts | added 1 condition(s) | ~327 |
+| 20:33 | Edited app/(auth)/login/page.tsx | added nullish coalescing | ~47 |
+| 20:34 | Edited app/(auth)/login/page.tsx | 2→3 lines | ~44 |
+| 20:34 | Created app/menu/page.tsx | — | ~805 |
+| 20:35 | Edited components/public/public-menu.tsx | added 1 import(s) | ~81 |
+| 20:35 | Edited components/public/public-menu.tsx | added 1 condition(s) | ~100 |
+| 20:36 | Edited components/public/public-menu.tsx | removed 15 lines | ~47 |
+| 20:36 | Created app/page.tsx | — | ~309 |
+| 20:38 | Created components/public/landing-page.tsx | — | ~3027 |
+| 20:38 | Edited components/public/landing-page.tsx | "/menu?chat=1" → "/menu" | ~19 |
+| 20:50 | Created components/public/landing-page.tsx | — | ~5273 |
+
+## Session: 2026-05-26 — Landing page split + login gating
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 14:00 | New landing page at / + menu moved to /menu | app/page.tsx, app/menu/page.tsx, components/public/landing-page.tsx | ok | ~3500 |
+| 14:05 | Shared SiteHeader (avatar dropdown OR login button) | components/public/site-header.tsx | ok | ~900 |
+| 14:10 | Gate add-to-cart for guests (router.push /login?next=/menu) | components/public/public-menu.tsx | ok | ~120 |
+| 14:12 | signIn honors safe ?next= form field for post-login return | lib/actions/auth.ts, app/(auth)/login/page.tsx | ok | ~180 |
+| 14:20 | Impeccable layout polish: asymmetric features (1 large + 2 stacked), fluid clamp() type, hero meta strip, info-strip, numbered eyebrows | components/public/landing-page.tsx | ok | ~2800 |
+| 21:16 | Session end: 12 writes across 5 files (site-header.tsx, auth.ts, page.tsx, public-menu.tsx, landing-page.tsx) | 13 reads | ~24059 tok |
+
+## Session: 2026-05-26 21:19
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-26 21:20
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 21:24 | Edited tasks.md | modified name() | ~803 |
+| 21:26 | Session end: 1 writes across 1 files (tasks.md) | 3 reads | ~10885 tok |
+
+## Session: 2026-05-26 21:37
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|

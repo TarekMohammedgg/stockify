@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T13:34:29.690Z
-> Files: 63 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T18:24:46.478Z
+> Files: 66 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -10,7 +10,7 @@
 - `CLAUDE.md` — OpenWolf (~735 tok)
 - `next.config.ts` — Declares nextConfig with Unsplash remotePatterns (~68 tok)
 - `proxy.ts` — Exports proxy (~626 tok)
-- `tasks.md` — Stockify — Build Tasks (~3414 tok)
+- `tasks.md` — Stockify — Build Tasks (~3961 tok)
 
 ## .claude/
 
@@ -30,7 +30,7 @@
 
 - `globals.css` — Styles: 17 rules, 53 vars (~1684 tok)
 - `layout.tsx` — almarai (~300 tok)
-- `page.tsx` — HomePage (~734 tok)
+- `page.tsx` — HomePage (~309 tok)
 
 ## app/(auth)/complete-profile/
 
@@ -38,7 +38,7 @@
 
 ## app/(auth)/login/
 
-- `page.tsx` — LoginPage — renders form (~1852 tok)
+- `page.tsx` — LoginForm — renders form (~1888 tok)
 
 ## app/(auth)/register/
 
@@ -131,6 +131,10 @@
 - `loading.tsx` — DeliveryLoading (~660 tok)
 - `page.tsx` — DeliveryPage (~77 tok)
 
+## app/menu/
+
+- `page.tsx` — MenuPage (~805 tok)
+
 ## components/admin/
 
 - `sidebar.tsx` — PendingDot — renders form (~1880 tok)
@@ -138,7 +142,9 @@
 ## components/public/
 
 - `chatbot-widget.tsx` — MarkdownComponents (~3511 tok)
-- `public-menu.tsx` — PublicMenu (~2956 tok)
+- `landing-page.tsx` — COPY (~5273 tok)
+- `public-menu.tsx` — PublicMenu (~3474 tok)
+- `site-header.tsx` — getInitials — renders form (~1853 tok)
 
 ## docs/
 
@@ -148,7 +154,7 @@
 ## lib/actions/
 
 - `admin.ts` — API routes: GET (19 endpoints) (~2627 tok)
-- `auth.ts` — API routes: GET (8 endpoints) (~804 tok)
+- `auth.ts` — API routes: GET (9 endpoints) (~874 tok)
 - `cashier.ts` — Exports OrderStatus, OrderItem, Order, LowStockItem + 7 more (~1647 tok)
 - `delivery.ts` — Exports DeliveryStatus, OrderItem, DeliveryOrder, listDeliveryOrders, updateDeliveryOrderStatus (~921 tok)
 

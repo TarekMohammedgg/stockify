@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import PublicMenu from "@/components/public/public-menu";
-import ChatbotWidget from "@/components/public/chatbot-widget";
+import LandingPage from "@/components/public/landing-page";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -9,11 +8,13 @@ export default async function HomePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // If logged in, check role
-  let userId: string | null = null;
-  let customerName: string | null = null;
-  let customerPhone: string | null = null;
-  let customerAddress: string | null = null;
+  let userProfile: {
+    id: string;
+    name: string;
+    phone: string | null;
+    address: string | null;
+  } | null = null;
+
   if (user) {
     const { data: role } = await supabase.rpc("current_user_role");
     if (role === "admin") redirect("/admin");
@@ -25,77 +26,16 @@ export default async function HomePage() {
       .select("id, name, phone, address")
       .eq("id", user.id)
       .single();
-    userId = profile?.id ?? null;
-    customerName = profile?.name ?? null;
-    customerPhone = profile?.phone ?? null;
-    customerAddress = profile?.address ?? null;
+
+    if (profile?.id) {
+      userProfile = {
+        id: profile.id,
+        name: profile.name ?? "",
+        phone: profile.phone ?? null,
+        address: profile.address ?? null,
+      };
+    }
   }
 
-  // Fetch Categories
-  const { data: categoriesData } = await supabase
-    .from("categories")
-    .select("id, name_ar, name_en, sort_order")
-    .order("sort_order", { ascending: true });
-
-  // Fetch Menu Items
-  const { data: menuData } = await supabase
-    .from("v_menu")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  // Fetch Ingredients
-  const { data: ingredientsData } = await supabase
-    .from("v_item_ingredients")
-    .select("menu_item_id, name_ar, name_en");
-
-  // Fetch Allergens
-  const { data: allergensData } = await supabase
-    .from("v_item_allergens")
-    .select("menu_item_id, name_ar, name_en");
-
-  // Format data
-  const categories = categoriesData || [];
-  
-  const items = (menuData || []).map((item) => {
-    return {
-      id: item.id,
-      name_ar: item.name_ar,
-      name_en: item.name_en,
-      category_ar: item.category_ar,
-      category_en: item.category_en,
-      price: item.price,
-      photo_url: item.photo_url,
-      is_available: item.is_available,
-      allergens: (allergensData || [])
-        .filter((a) => a.menu_item_id === item.id)
-        .map((a) => ({ name_ar: a.name_ar, name_en: a.name_en })),
-      ingredients: (ingredientsData || [])
-        .filter((i) => i.menu_item_id === item.id)
-        .map((i) => ({ name_ar: i.name_ar, name_en: i.name_en })),
-    };
-  });
-
-  const userProfile = user && userId ? {
-    id: userId,
-    name: customerName ?? "",
-    phone: customerPhone,
-    address: customerAddress,
-  } : null;
-
-  return (
-    <>
-      <PublicMenu
-        items={items}
-        categories={categories}
-        isLoggedIn={!!user}
-        userProfile={userProfile}
-      />
-      {!!user && userId && (
-        <ChatbotWidget
-          userId={userId}
-          customerName={customerName ?? "صديقنا"}
-        />
-      )}
-    </>
-  );
+  return <LandingPage userProfile={userProfile} />;
 }

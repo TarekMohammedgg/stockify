@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Info, ArrowRight, ArrowLeft, Plus } from "lucide-react";
+import { Info, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/lib/store/cart";
 import CartWidget from "./cart-widget";
+import SiteHeader from "./site-header";
 
 type MenuItem = {
   id: string;
@@ -51,6 +52,10 @@ export default function PublicMenu({
   const { addItem } = useCartStore();
 
   const handleAddToCart = (item: MenuItem) => {
+    if (!isLoggedIn) {
+      router.push("/login?next=/menu");
+      return;
+    }
     addItem({
       id: item.id,
       name_ar: item.name_ar,
@@ -68,21 +73,12 @@ export default function PublicMenu({
       }`}
       dir={isAr ? "rtl" : "ltr"}
     >
-      {/* Editorial Header */}
-      <header className="relative z-20 border-b border-[var(--surface-border)] bg-[var(--surface-bg)]/80 backdrop-blur-xl fade-in">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
-          <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--primary-600)] rise-in" style={{ animationDelay: '100ms' }}>
-            Stockify
-          </h1>
-          <button
-            onClick={() => setLang(isAr ? "en" : "ar")}
-            className="rise-in flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full border border-[var(--surface-border)] px-6 text-sm font-bold transition-all hover:bg-[var(--surface-border)] hover:text-[var(--primary-700)] active:scale-95"
-            style={{ animationDelay: '150ms' }}
-          >
-            {isAr ? "English" : "عربي"}
-          </button>
-        </div>
-      </header>
+      <SiteHeader
+        isAr={isAr}
+        onToggleLang={() => setLang(isAr ? "en" : "ar")}
+        userProfile={userProfile}
+        loginNext="/menu"
+      />
 
       <main className="mx-auto max-w-7xl px-6 lg:px-12">
         {/* Bold Asymmetrical Hero */}

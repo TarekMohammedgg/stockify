@@ -3,9 +3,16 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
+function safeNext(raw: FormDataEntryValue | null): string {
+  const value = typeof raw === "string" ? raw : "";
+  if (!value.startsWith("/") || value.startsWith("//")) return "/";
+  return value;
+}
+
 export async function signIn(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  const next = safeNext(formData.get("next"));
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -35,7 +42,7 @@ export async function signIn(formData: FormData) {
 
   if (profile?.profile_complete === false) redirect("/complete-profile");
 
-  redirect("/");
+  redirect(next);
 }
 
 export async function signUp(formData: FormData) {

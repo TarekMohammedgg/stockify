@@ -9,6 +9,7 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 function LoginForm() {
   const searchParams = useSearchParams();
   const urlError = searchParams.get("error");
+  const nextParam = searchParams.get("next") ?? "/";
   const [showPassword, setShowPassword] = useState(false);
   const [pending, setPending] = useState(false);
   const [fieldError, setFieldError] = useState<string | null>(null);
@@ -77,6 +78,7 @@ function LoginForm() {
 
       {/* Email/password form */}
       <form onSubmit={handleSubmit} className="space-y-4">
+        <input type="hidden" name="next" value={nextParam} />
         <div className="space-y-1">
           <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary)]">
             البريد الإلكتروني
