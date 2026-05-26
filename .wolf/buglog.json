@@ -469,6 +469,134 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-05-26T05:37:46.298Z"
+    },
+    {
+      "id": "bug-030",
+      "timestamp": "2026-05-26T06:36:57.089Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/chatbot/system-prompt.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T06:36:57.090Z"
+    },
+    {
+      "id": "bug-031",
+      "timestamp": "2026-05-26T06:37:04.299Z",
+      "error_message": "Incorrect value in code",
+      "file": "lib/chatbot/system-prompt.ts",
+      "root_cause": "Had \"تمام! جاري إرسال طلبك ✅\"",
+      "fix": "Changed to \"تمام! جاري تسجيل طلبك ✅ شوية وهيوصلك.\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T06:37:04.299Z"
+    },
+    {
+      "id": "bug-032",
+      "timestamp": "2026-05-26T06:37:14.509Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "components/public/chatbot-widget.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T06:37:14.509Z"
+    },
+    {
+      "id": "bug-033",
+      "timestamp": "2026-05-26T06:37:28.916Z",
+      "error_message": "Significant refactor of ",
+      "file": "components/public/chatbot-widget.tsx",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 8→11 lines (5 removed) | Also: const handler = () => setIsOpen(true);; }, []);",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-26T06:39:26.552Z"
+    },
+    {
+      "id": "bug-034",
+      "timestamp": "2026-05-26T06:37:36.466Z",
+      "error_message": "Type error",
+      "file": "components/public/chatbot-widget.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T06:37:36.466Z"
+    },
+    {
+      "id": "bug-035",
+      "timestamp": "2026-05-26T06:37:40.613Z",
+      "error_message": "Incorrect value in code",
+      "file": "components/public/chatbot-widget.tsx",
+      "root_cause": "Had \"اكتب رسالتك...\"",
+      "fix": "Changed to \"تم تسجيل طلبك ✅\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T06:37:40.613Z"
+    },
+    {
+      "id": "bug-036",
+      "timestamp": "2026-05-26T06:38:12.037Z",
+      "error_message": "Missing await",
+      "file": "app/api/chat/extract-insights/route.ts",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T06:38:12.037Z"
+    },
+    {
+      "id": "bug-037",
+      "timestamp": "2026-05-26T06:55:42.446Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/api/chat/route.ts",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→8 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T06:55:42.446Z"
     }
   ]
 }

@@ -9,6 +9,7 @@
 - Arabic-first (Egyptian dialect in chatbot), English toggle
 - Log errors: `console.error("[functionName]", id, error.message)`
 - Supabase client: `createClient()` from `@/lib/supabase/server` in all API routes
+- after big event like ending phase update @CLAUDE.md file and @AGENT.md file. 
 
 ## Verification Checklist (per task)
 1. TypeScript compiles: `npx tsc --noEmit`

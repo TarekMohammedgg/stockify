@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T06:12:52.871Z
-> Files: 62 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T06:57:26.999Z
+> Files: 63 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -79,7 +79,11 @@
 
 ## app/api/chat/
 
-- `route.ts` — Next.js API route: POST (~938 tok)
+- `route.ts` — Next.js API route: POST (~2548 tok)
+
+## app/api/chat/extract-insights/
+
+- `route.ts` — Next.js API route: POST (~1541 tok)
 
 ## app/api/insights/
 
@@ -133,7 +137,7 @@
 
 ## components/public/
 
-- `chatbot-widget.tsx` — ChatbotWidget (~1969 tok)
+- `chatbot-widget.tsx` — MarkdownComponents (~3511 tok)
 - `public-menu.tsx` — PublicMenu (~2956 tok)
 
 ## docs/
@@ -150,7 +154,7 @@
 
 ## lib/chatbot/
 
-- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt, buildSystemPrompt (~554 tok)
+- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt (includes default_address), buildSystemPrompt — uses <<ORDER_CONFIRMED>> marker in step 6 (~680 tok)
 
 ## lib/supabase/
 

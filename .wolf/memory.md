@@ -391,3 +391,35 @@
 | 09:12 | Edited .claude/session.md | 2→2 lines | ~30 |
 | 09:12 | Edited .claude/session.md | 4→5 lines | ~135 |
 | 09:13 | Session end: 7 writes across 3 files (requirements.md, tasks.md, session.md) | 3 reads | ~8210 tok |
+
+## Session: 2026-05-26 09:23
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:36 | Edited components/public/chatbot-widget.tsx | 5→6 lines | ~91 |
+| 09:36 | Edited lib/chatbot/system-prompt.ts | 5→6 lines | ~72 |
+| 09:36 | Session end: 2 writes across 2 files (chatbot-widget.tsx, system-prompt.ts) | 7 reads | ~7444 tok |
+| 09:36 | Edited components/public/chatbot-widget.tsx | CSS: role, content | ~115 |
+| 09:36 | Edited lib/chatbot/system-prompt.ts | added nullish coalescing | ~53 |
+| 09:37 | Edited lib/chatbot/system-prompt.ts | "تمام! جاري إرسال طلبك ✅" → "تمام! جاري تسجيل طلبك ✅ ش" | ~30 |
+| 09:37 | Edited components/public/chatbot-widget.tsx | added optional chaining | ~235 |
+| 09:37 | Edited components/public/chatbot-widget.tsx | CSS: botReply | ~97 |
+| 09:37 | Edited components/public/chatbot-widget.tsx | expanded (+16 lines) | ~262 |
+| 09:37 | Edited components/public/chatbot-widget.tsx | 3→3 lines | ~44 |
+| 09:37 | Created app/api/chat/route.ts | — | ~2442 |
+| 09:37 | Edited components/public/chatbot-widget.tsx | inline fix | ~19 |
+| 09:37 | Edited app/api/chat/extract-insights/route.ts | added 1 condition(s) | ~108 |
+| 09:38 | Edited app/api/chat/extract-insights/route.ts | added 1 condition(s) | ~121 |
+
+## Session: 2026-05-26 (chatbot order submission)
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| now | Added default_address field to InsightsForPrompt, prefer default_address over address in prompt | lib/chatbot/system-prompt.ts | ✓ | ~200 |
+| now | Replaced system prompt step 6 with <<ORDER_CONFIRMED>> marker | lib/chatbot/system-prompt.ts | ✓ | ~50 |
+| now | Rewrote chat route: fetch default_address, detect ORDER_CONFIRMED, extract JSON via second AI call, insert order+order_items, upsert chatbot_insights | app/api/chat/route.ts | ✓ | ~2500 |
+| now | Fixed extract-insights: add error logging to users update, upsert default_address to chatbot_insights after insights extraction | app/api/chat/extract-insights/route.ts | ✓ | ~300 |
+| 09:39 | Edited components/public/chatbot-widget.tsx | CSS: role, content | ~180 |
+| 09:55 | Edited app/api/chat/route.ts | 7→8 lines | ~83 |
+| 09:56 | Edited app/api/chat/route.ts | added 2 condition(s) | ~129 |
+| 09:57 | Edited app/api/chat/extract-insights/route.ts | 17→18 lines | ~138 |
