@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T05:36:29.713Z
-> Files: 59 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T06:02:19.051Z
+> Files: 62 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -14,6 +14,8 @@
 
 ## .claude/
 
+- `requirements.md` — Stockify — Requirements & Verification Checklist (~277 tok)
+- `session.md` — What's Done (~341 tok)
 - `settings.json` (~441 tok)
 
 ## .claude/rules/
@@ -28,7 +30,7 @@
 
 - `globals.css` — Styles: 17 rules, 53 vars (~1684 tok)
 - `layout.tsx` — almarai (~300 tok)
-- `page.tsx` — HomePage — renders form (~371 tok)
+- `page.tsx` — HomePage (~734 tok)
 
 ## app/(auth)/complete-profile/
 
@@ -132,6 +134,7 @@
 ## components/public/
 
 - `chatbot-widget.tsx` — ChatbotWidget (~1969 tok)
+- `public-menu.tsx` — PublicMenu (~2956 tok)
 
 ## docs/
 

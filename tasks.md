@@ -164,29 +164,29 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 ## Phase 5 — Chatbot Widget + OpenRouter Integration
 
 ### 5.1 API Routes
-- [ ] `GET /api/menu` — full menu list
-- [ ] `GET /api/menu/[id]/ingredients` — ingredients + allergens
-- [ ] `GET /api/insights?user_id=…` — customer favourites + saved address
-- [ ] `POST /api/orders` — submit new order
-- [ ] `GET /api/orders` — fetch for cashier dashboard
-- [ ] `PATCH /api/orders/[id]` — update status
-- [ ] `POST /api/chat` — OpenRouter chatbot handler
+- [x] `GET /api/menu` — full menu list
+- [x] `GET /api/menu/[id]/ingredients` — ingredients + allergens
+- [x] `GET /api/insights?user_id=…` — customer favourites + saved address
+- [x] `POST /api/orders` — submit new order
+- [x] `GET /api/orders` — fetch for cashier dashboard
+- [x] `PATCH /api/orders/[id]` — update status
+- [x] `POST /api/chat` — OpenRouter chatbot handler
 
 ### 5.2 Chatbot Widget
-- [ ] Floating bottom-right widget (logged-in customers only)
-- [ ] Greets customer by name from account
-- [ ] System prompt with current menu context
-- [ ] Egyptian Arabic dialect responses
-- [ ] Order type prompt (Delivery / Takeaway)
+- [x] Floating bottom-right widget (logged-in customers only)
+- [x] Greets customer by name from account
+- [x] System prompt with current menu context
+- [x] Egyptian Arabic dialect responses
+- [x] Order type prompt (Delivery / Takeaway)
 - [ ] Pre-fill phone + address from account (editable)
 - [ ] New-vs-returning branching: new customer → collect phone (+ address if delivery); returning → silently load insights
 - [ ] Verify delivery flow collects + persists delivery address before submission
-- [ ] Item selection + quantity + notes
-- [ ] Handle modifications (remove onions, extra sauce, etc.)
-- [ ] Order summary confirmation
+- [x] Item selection + quantity + notes
+- [x] Handle modifications (remove onions, extra sauce, etc.)
+- [x] Order summary confirmation
 - [ ] Submit structured order to `/api/orders`
 - [ ] Update `chatbot_insights` (favourite_items, default_address, last_seen)
-- [ ] Do NOT persist full conversation logs
+- [x] Do NOT persist full conversation logs
 
 ---
 
@@ -214,7 +214,7 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 ### 6.3 Page-Level UX
 - [x] Login & Register screens — clean Arabic-first layout, Google button styling
 - [x] Public menu page — hero, category filter chips, responsive grid, item card hover/focus states
-- [ ] Chatbot widget — floating launcher, expanded panel, message bubbles, typing indicator
+- [x] Chatbot widget — floating launcher, expanded panel, message bubbles, typing indicator
 - [x] Admin dashboard — sidebar IA, content density, breadcrumbs/page titles
 - [x] Cashier dashboard — live order grid, status color system, alert banner hierarchy
 - [x] Mobile responsive breakpoints audit for all pages
