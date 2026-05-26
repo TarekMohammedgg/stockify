@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 
   const { data: insightsData } = await supabase
     .from("chatbot_insights")
-    .select("favourite_items, default_address")
+    .select("favourite_items, default_address, last_seen")
     .eq("user_id", userId)
     .maybeSingle();
 
@@ -68,6 +68,7 @@ export async function POST(request: Request) {
     phone: userData?.phone ?? null,
     address: userData?.address ?? null,
     default_address: insightsData?.default_address ?? null,
+    last_seen: insightsData?.last_seen ?? null,
   };
 
   const systemPrompt = buildSystemPrompt(menu, insights, customerName);
@@ -289,6 +290,28 @@ ${menuNamesForExtraction}
         },
         { onConflict: "user_id" },
       );
+
+      // Backfill users.phone / users.address if not already set.
+      const userPatch: { phone?: string; address?: string } = {};
+      if (orderData.customer_phone && !userData?.phone) {
+        userPatch.phone = orderData.customer_phone;
+      }
+      if (deliveryAddress && !userData?.address) {
+        userPatch.address = deliveryAddress;
+      }
+      if (Object.keys(userPatch).length > 0) {
+        const { error: backfillErr } = await supabase
+          .from("users")
+          .update(userPatch)
+          .eq("id", userId);
+        if (backfillErr) {
+          console.error(
+            "[POST /api/chat] backfill users",
+            userId,
+            backfillErr.message,
+          );
+        }
+      }
 
       return NextResponse.json({ reply: cleanReply, orderId: order.id });
     } catch (extractErr) {

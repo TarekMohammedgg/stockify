@@ -39,20 +39,22 @@ export async function POST(request: Request) {
     .map((item) => `- ${item.name_ar} (ID: ${item.id})`)
     .join("\n");
 
-  const systemPrompt = `أنت مساعد لتحليل المحادثات. استخرج المعلومات التالية من المحادثة إذا تم ذكرها:
-1. address: عنوان التوصيل للعميل (نص أو null إذا لم يذكر).
-2. phone: رقم تليفون العميل (نص أو null إذا لم يذكر).
-3. favourite_items: مصفوفة تحتوي على معرفات (IDs) الأصناف اللي العميل طلبها أو عبر عن إعجابه بيها (مصفوفة نصوص أو []).
+  const systemPrompt = `أنت مساعد لتحليل المحادثات. استخرج فقط المعلومات الصريحة المذكورة:
 
-استخدم قائمة الأصناف التالية لربط أسماء الأكل المذكورة في المحادثة بالـ ID الخاص بيها:
+1. address: عنوان التوصيل (اسم شارع/منطقة/حي/مدينة/رقم عمارة). نص أو null. **يجب ألا يكون رقم تليفون.**
+2. phone: رقم تليفون مصري (يبدأ بـ 01 أو +20، طوله 10-13 رقم، أرقام فقط بدون كلمات). نص أو null.
+3. favourite_items: مصفوفة IDs للأصناف اللي العميل طلبها أو أعجب بيها. مصفوفة نصوص أو [].
+
+قائمة الأصناف للربط:
 ${menuText}
 
-يجب أن يكون الرد عبارة عن JSON فقط بدون أي نص إضافي، وبنفس الهيكل التالي:
-{
-  "address": "...",
-  "phone": "...",
-  "favourite_items": ["id1", "id2"]
-}`;
+أمثلة:
+- "عنواني المعادي شارع 9" → address: "المعادي شارع 9", phone: null
+- "تليفوني 01007362202" → address: null, phone: "01007362202"
+- "01234567890" بدون كلمة عنوان → phone، مش address.
+
+الرد JSON فقط بهذا الهيكل بالضبط:
+{"address": null, "phone": null, "favourite_items": []}`;
 
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
@@ -89,12 +91,23 @@ ${menuText}
     // Strip markdown formatting if any
     reply = reply.replace(/```json/g, "").replace(/```/g, "").trim();
 
-    let insights;
+    let insights: { address?: string | null; phone?: string | null; favourite_items?: string[] };
     try {
       insights = JSON.parse(reply);
-    } catch (err) {
-      console.error("Failed to parse insights JSON", reply);
-      return NextResponse.json({ error: "Invalid insights format" }, { status: 500 });
+    } catch {
+      console.error("[POST /api/chat/extract-insights] parse failed", reply.slice(0, 200));
+      return NextResponse.json({ success: false, reason: "parse" }, { status: 200 });
+    }
+
+    // Guard: if "address" is actually a phone number, reclassify.
+    const phoneLike = /^\+?\d[\d\s-]{7,14}$/;
+    if (insights.address && phoneLike.test(insights.address.trim())) {
+      if (!insights.phone) insights.phone = insights.address.trim();
+      insights.address = null;
+    }
+    // Guard: phone must be mostly digits.
+    if (insights.phone && !phoneLike.test(insights.phone.trim())) {
+      insights.phone = null;
     }
 
     // Update users table for phone and address if present
@@ -150,8 +163,8 @@ ${menuText}
       }
     }
 
-    // Also save default_address if address was extracted
-    if (insights.address) {
+    // Also save default_address if address was extracted (and is not a phone)
+    if (insights.address && !phoneLike.test(insights.address.trim())) {
       await supabase
         .from("chatbot_insights")
         .upsert(

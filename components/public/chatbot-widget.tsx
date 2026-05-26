@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MessageCircle, Send, X, Loader2, CheckCircle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -70,16 +70,26 @@ export default function ChatbotWidget({
   const [isPending, setIsPending] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const lastExtractedLenRef = useRef(0);
 
-  const handleClose = () => {
-    setIsOpen(false);
-    if (messages.length > 2) {
+  const extractInsights = useCallback(
+    (msgs: Message[]) => {
+      if (msgs.length < 3) return;
+      if (msgs.length === lastExtractedLenRef.current) return;
+      lastExtractedLenRef.current = msgs.length;
       fetch("/api/chat/extract-insights", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages, userId }),
+        body: JSON.stringify({ messages: msgs, userId }),
+        keepalive: true,
       }).catch((err) => console.error("Failed to extract insights:", err));
-    }
+    },
+    [userId],
+  );
+
+  const handleClose = () => {
+    setIsOpen(false);
+    extractInsights(messages);
   };
 
   const handleToggle = () => {
@@ -145,6 +155,29 @@ export default function ChatbotWidget({
     }
   }, [messages, isPending]);
 
+  // Debounced background extract-insights after a quiet pause in conversation.
+  useEffect(() => {
+    if (isPending) return;
+    if (messages.length < 3) return;
+    const t = setTimeout(() => extractInsights(messages), 1500);
+    return () => clearTimeout(t);
+  }, [messages, isPending, extractInsights]);
+
+  // Best-effort save on tab close — sendBeacon survives navigation/unload.
+  useEffect(() => {
+    const handler = () => {
+      if (messages.length < 3) return;
+      if (messages.length === lastExtractedLenRef.current) return;
+      const blob = new Blob(
+        [JSON.stringify({ messages, userId })],
+        { type: "application/json" },
+      );
+      navigator.sendBeacon?.("/api/chat/extract-insights", blob);
+    };
+    window.addEventListener("pagehide", handler);
+    return () => window.removeEventListener("pagehide", handler);
+  }, [messages, userId]);
+
   async function sendMessage() {
     const text = input.trim();
     if (!text || isPending) return;
@@ -187,12 +220,12 @@ export default function ChatbotWidget({
   }
 
   return (
-    <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 end-4 start-4 sm:start-auto sm:bottom-6 sm:end-6 z-50 flex flex-col items-end gap-3">
       {/* Chat Panel */}
       {isOpen && (
         <div
           dir="rtl"
-          className="flex h-[550px] w-[380px] flex-col overflow-hidden rounded-2xl border-2 border-primary-500 bg-white shadow-2xl dark:bg-neutral-950"
+          className="flex h-[min(550px,calc(100dvh-6rem))] w-full sm:w-[380px] flex-col overflow-hidden rounded-2xl border-2 border-primary-500 bg-white shadow-2xl dark:bg-neutral-950"
         >
           {/* Header */}
           <div className="flex items-center justify-between bg-primary-500 px-4 py-3 text-white">
