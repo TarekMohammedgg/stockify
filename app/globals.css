@@ -151,6 +151,22 @@ body::before {
   animation: rise-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+}
+.float {
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fade-in {
+  animation: fade-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
 /* Hover lift for cards */
 .lift {
   transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),

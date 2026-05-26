@@ -1,602 +1,733 @@
-{
-  "version": 1,
-  "bugs": [
-    {
-      "id": "bug-001",
-      "timestamp": "2026-05-25T11:20:15.997Z",
-      "error_message": "CSS fix: --font-sans",
-      "file": "app/globals.css",
-      "root_cause": "--font-sans: 'Cairo', 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif → var(--font-cairo, 'Cairo'), 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif",
-      "fix": "Changed --font-sans: 'Cairo', 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif → var(--font-cairo, 'Cairo'), 'Noto Naskh Arabic', ui-sans-serif, system-ui, sans-serif",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "css"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T11:20:15.997Z"
-    },
-    {
-      "id": "bug-002",
-      "timestamp": "2026-05-25T11:37:01.936Z",
-      "error_message": "Null/undefined access in ",
-      "file": "proxy.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T11:37:01.936Z"
-    },
-    {
-      "id": "bug-003",
-      "timestamp": "2026-05-25T19:37:42.360Z",
-      "error_message": "CSS fix: hover",
-      "file": "app/admin/menu/row-actions.tsx",
-      "root_cause": "hover: bg-red-500/10 disabled:opacity-50\" → bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors\"",
-      "fix": "Changed hover: bg-red-500/10 disabled:opacity-50\" → bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors\"",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T19:37:42.360Z"
-    },
-    {
-      "id": "bug-004",
-      "timestamp": "2026-05-25T19:46:47.288Z",
-      "error_message": "CSS fix: hover",
-      "file": "app/admin/menu/[id]/page.tsx",
-      "root_cause": "hover: text-[var(--text-primary)]\" → text-primary-600 transition-colors\"",
-      "fix": "Changed hover: text-[var(--text-primary)]\" → text-primary-600 transition-colors\"",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T19:46:47.288Z"
-    },
-    {
-      "id": "bug-005",
-      "timestamp": "2026-05-25T21:16:27.928Z",
-      "error_message": "Significant refactor of ",
-      "file": "app/auth/callback/route.ts",
-      "root_cause": "13 lines replaced/restructured",
-      "fix": "Rewrote 30→20 lines (13 removed)",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T21:16:27.928Z"
-    },
-    {
-      "id": "bug-006",
-      "timestamp": "2026-05-25T21:34:56.529Z",
-      "error_message": "CSS fix: subsets, variable",
-      "file": "app/layout.tsx",
-      "root_cause": "subsets: [\"arabic\", \"latin\"], → [\"arabic\"],; variable: \"--font-cairo\", → \"--font-almarai\",",
-      "fix": "Changed subsets: [\"arabic\", \"latin\"], → [\"arabic\"],; variable: \"--font-cairo\", → \"--font-almarai\",",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T21:34:56.529Z"
-    },
-    {
-      "id": "bug-007",
-      "timestamp": "2026-05-25T21:36:00.896Z",
-      "error_message": "Incorrect value in code",
-      "file": "app/layout.tsx",
-      "root_cause": "Had `${cairo.variable} ${reemKufi.variable} ${fraunces",
-      "fix": "Changed to `${almarai.variable} ${reemKufi.variable} ${fraunc",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T21:36:00.896Z"
-    },
-    {
-      "id": "bug-008",
-      "timestamp": "2026-05-25T21:37:09.406Z",
-      "error_message": "Incorrect value in code",
-      "file": "app/globals.css",
-      "root_cause": "Had 'Cairo'",
-      "fix": "Changed to 'Almarai'",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "css"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T21:37:09.406Z"
-    },
-    {
-      "id": "bug-009",
-      "timestamp": "2026-05-25T21:45:27.788Z",
-      "error_message": "Missing guard clause",
-      "file": "components/admin/sidebar.tsx",
-      "root_cause": "No early return/throw for edge case: !pending",
-      "fix": "Added guard clause: if (!pending)",
-      "tags": [
-        "auto-detected",
-        "guard-clause",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T21:45:27.788Z"
-    },
-    {
-      "id": "bug-010",
-      "timestamp": "2026-05-25T22:44:20.029Z",
-      "error_message": "Missing await",
-      "file": "app/cashier/orders-panel.tsx",
-      "root_cause": "Async call without await — returned Promise instead of value",
-      "fix": "Added await to async call",
-      "tags": [
-        "auto-detected",
-        "async-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-25T22:44:20.029Z"
-    },
-    {
-      "id": "bug-011",
-      "timestamp": "2026-05-26T00:19:08.239Z",
-      "error_message": "Significant refactor of ",
-      "file": "docs/PRD.md",
-      "root_cause": "9 lines replaced/restructured",
-      "fix": "Rewrote 37→54 lines (9 removed) | Also: Admin Dashboard; └── Employee Management (Cashiers) | Also: │   ├── Live order list (website orders + manual o; │   └── Status update buttons: [Pending] → [Prepar | Also: ### 4.4 Customer Flow; ├── Asks: Delivery or Takeaway? | Also: **Order Statuses:**; Pending → Preparing → Ready → Completed | Also: | **Phase 3** | Cashier dashboard (orders + alerts; | **Phase 4** | Public menu page (Arabic RTL, phot",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "md"
-      ],
-      "related_bugs": [],
-      "occurrences": 6,
-      "last_seen": "2026-05-26T00:24:57.201Z"
-    },
-    {
-      "id": "bug-012",
-      "timestamp": "2026-05-26T00:35:03.159Z",
-      "error_message": "Significant refactor of ",
-      "file": "tasks.md",
-      "root_cause": "2 lines replaced/restructured",
-      "fix": "Rewrote 7→13 lines (2 removed)",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "md"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T00:35:03.159Z"
-    },
-    {
-      "id": "bug-013",
-      "timestamp": "2026-05-26T00:44:33.132Z",
-      "error_message": "Incorrect value in code",
-      "file": "lib/actions/cashier.ts",
-      "root_cause": "Had \"preparing\"",
-      "fix": "Changed to \"on_delivery\"",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T00:44:33.132Z"
-    },
-    {
-      "id": "bug-014",
-      "timestamp": "2026-05-26T00:44:38.259Z",
-      "error_message": "Null/undefined access in ",
-      "file": "app/auth/callback/route.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T00:44:38.259Z"
-    },
-    {
-      "id": "bug-015",
-      "timestamp": "2026-05-26T00:46:09.411Z",
-      "error_message": "Incorrect value in code",
-      "file": "supabase/schema.sql",
-      "root_cause": "Had 'customer'",
-      "fix": "Changed to 'delivery'",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "sql"
-      ],
-      "related_bugs": [],
-      "occurrences": 2,
-      "last_seen": "2026-05-26T00:46:10.850Z"
-    },
-    {
-      "id": "bug-016",
-      "timestamp": "2026-05-26T00:46:51.930Z",
-      "error_message": "CSS fix: pending, key",
-      "file": "app/cashier/orders-panel.tsx",
-      "root_cause": "pending: \"ابدأ التحضير\", → \"تم التسليم\",; key: \"cancelled\", label: \"ملغي\" → \"cancelled\",   label: \"ملغي\"",
-      "fix": "Changed pending: \"ابدأ التحضير\", → \"تم التسليم\",; key: \"cancelled\", label: \"ملغي\" → \"cancelled\",   label: \"ملغي\"",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T00:46:51.930Z"
-    },
-    {
-      "id": "bug-017",
-      "timestamp": "2026-05-26T00:48:22.469Z",
-      "error_message": "Incorrect value in code",
-      "file": "app/(auth)/login/page.tsx",
-      "root_cause": "Had \"حسابات المديرين والكاشير لا تدعم تسجيل الدخول بجو",
-      "fix": "Changed to \"حسابات الموظفين (مدير، كاشير، مندوب توصيل) لا تدع",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T00:48:22.469Z"
-    },
-    {
-      "id": "bug-018",
-      "timestamp": "2026-05-26T01:05:21.362Z",
-      "error_message": "Null/undefined access in ",
-      "file": "lib/actions/cashier.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T01:05:21.362Z"
-    },
-    {
-      "id": "bug-019",
-      "timestamp": "2026-05-26T01:05:51.820Z",
-      "error_message": "Significant refactor of ",
-      "file": "lib/actions/admin.ts",
-      "root_cause": "3 lines replaced/restructured",
-      "fix": "Rewrote 30→49 lines (3 removed)",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T01:05:51.820Z"
-    },
-    {
-      "id": "bug-020",
-      "timestamp": "2026-05-26T01:07:26.977Z",
-      "error_message": "Incorrect value in code",
-      "file": "app/admin/page.tsx",
-      "root_cause": "Had \"grid gap-px overflow-hidden rounded-2xl border bo",
-      "fix": "Changed to \"grid gap-px overflow-hidden rounded-2xl border bo",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T01:07:26.977Z"
-    },
-    {
-      "id": "bug-021",
-      "timestamp": "2026-05-26T01:10:54.223Z",
-      "error_message": "CSS fix: hover",
-      "file": "app/admin/employees/manager.tsx",
-      "root_cause": "hover: bg-[var(--surface-input)] transition-colors border-t border-[var(--surface-border-soft)]\" → bg-primary-600\"",
-      "fix": "Changed hover: bg-[var(--surface-input)] transition-colors border-t border-[var(--surface-border-soft)]\" → bg-primary-600\"",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T01:10:54.223Z"
-    },
-    {
-      "id": "bug-022",
-      "timestamp": "2026-05-26T01:12:25.486Z",
-      "error_message": "CSS fix: icon",
-      "file": "app/admin/page.tsx",
-      "root_cause": "icon: Users, → UserCog,",
-      "fix": "Changed icon: Users, → UserCog,",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T01:12:25.486Z"
-    },
-    {
-      "id": "bug-023",
-      "timestamp": "2026-05-26T00:00:00.000Z",
-      "error_message": "Admin employees page shows empty state — cashier and delivery users not appearing despite existing in DB",
-      "file": "lib/actions/admin.ts, supabase migration",
-      "root_cause": "current_user_role() queried public.users, which triggered the same RLS policies on public.users that called current_user_role() again — infinite recursion. PostgreSQL threw 42P17 and the query returned null, showing the empty state.",
-      "fix": "Rewrote current_user_role() to query auth.users.raw_app_meta_data (no custom RLS, no recursion). Backfilled role into auth.users for all existing users. Added app_metadata: { role } to createEmployee so future employees are covered.",
-      "tags": [
-        "rls",
-        "infinite-recursion",
-        "supabase",
-        "auth",
-        "employees",
-        "current_user_role"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T00:00:00.000Z"
-    },
-    {
-      "id": "bug-024",
-      "timestamp": "2026-05-26T02:06:04.888Z",
-      "error_message": "Null/undefined access in ",
-      "file": "lib/actions/auth.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T02:06:04.888Z"
-    },
-    {
-      "id": "bug-025",
-      "timestamp": "2026-05-26T00:00:00.000Z",
-      "error_message": "Admin user logs in with email/password and gets redirected to customer home instead of /admin",
-      "file": "lib/actions/auth.ts",
-      "root_cause": "current_user_role() read role from auth.users.raw_app_meta_data which had no 'role' key for manually-created staff users; fell back to 'customer'",
-      "fix": "1) Updated current_user_role() DB function to read from public.users.role instead of raw_app_meta_data. 2) Backfilled raw_app_meta_data for existing staff. 3) Changed signIn() to query public.users directly (single query, also gets profile_complete), eliminating the RPC call.",
-      "tags": [
-        "auth",
-        "role",
-        "redirect",
-        "supabase",
-        "rpc"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T00:00:00.000Z"
-    },
-    {
-      "id": "bug-026",
-      "timestamp": "2026-05-26T04:38:05.951Z",
-      "error_message": "Null/undefined access in ",
-      "file": "lib/actions/cashier.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T04:38:05.951Z"
-    },
-    {
-      "id": "bug-027",
-      "timestamp": "2026-05-26T04:48:27.265Z",
-      "error_message": "Incorrect value in code",
-      "file": "app/cashier/new-order/order-form.tsx",
-      "root_cause": "Had \"dine-in\"",
-      "fix": "Changed to \"delivery\"",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T04:48:27.265Z"
-    },
-    {
-      "id": "bug-028",
-      "timestamp": "2026-05-26T04:48:48.982Z",
-      "error_message": "CSS fix: type",
-      "file": "app/cashier/new-order/order-form.tsx",
-      "root_cause": "type: \"dine-in\" as const, → orderType,",
-      "fix": "Changed type: \"dine-in\" as const, → orderType,",
-      "tags": [
-        "auto-detected",
-        "style-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T04:48:48.982Z"
-    },
-    {
-      "id": "bug-029",
-      "timestamp": "2026-05-26T05:37:09.641Z",
-      "error_message": "Null/undefined access in ",
-      "file": "app/page.tsx",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check) | Also: <>; {!!user && userId && (",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 2,
-      "last_seen": "2026-05-26T05:37:46.298Z"
-    },
-    {
-      "id": "bug-030",
-      "timestamp": "2026-05-26T06:36:57.089Z",
-      "error_message": "Null/undefined access in ",
-      "file": "lib/chatbot/system-prompt.ts",
-      "root_cause": "Property access on potentially null/undefined value",
-      "fix": "Added null safety (optional chaining or null check)",
-      "tags": [
-        "auto-detected",
-        "null-safety",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T06:36:57.090Z"
-    },
-    {
-      "id": "bug-031",
-      "timestamp": "2026-05-26T06:37:04.299Z",
-      "error_message": "Incorrect value in code",
-      "file": "lib/chatbot/system-prompt.ts",
-      "root_cause": "Had \"تمام! جاري إرسال طلبك ✅\"",
-      "fix": "Changed to \"تمام! جاري تسجيل طلبك ✅ شوية وهيوصلك.\"",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T06:37:04.299Z"
-    },
-    {
-      "id": "bug-032",
-      "timestamp": "2026-05-26T06:37:14.509Z",
-      "error_message": "Missing error handling in unknown",
-      "file": "components/public/chatbot-widget.tsx",
-      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
-      "fix": "Added try/catch block",
-      "tags": [
-        "auto-detected",
-        "error-handling",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T06:37:14.509Z"
-    },
-    {
-      "id": "bug-033",
-      "timestamp": "2026-05-26T06:37:28.916Z",
-      "error_message": "Significant refactor of ",
-      "file": "components/public/chatbot-widget.tsx",
-      "root_cause": "5 lines replaced/restructured",
-      "fix": "Rewrote 8→11 lines (5 removed) | Also: const handler = () => setIsOpen(true);; }, []);",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 2,
-      "last_seen": "2026-05-26T06:39:26.552Z"
-    },
-    {
-      "id": "bug-034",
-      "timestamp": "2026-05-26T06:37:36.466Z",
-      "error_message": "Type error",
-      "file": "components/public/chatbot-widget.tsx",
-      "root_cause": "Missing or incorrect type annotation",
-      "fix": "Added type assertion/annotation",
-      "tags": [
-        "auto-detected",
-        "type-fix",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T06:37:36.466Z"
-    },
-    {
-      "id": "bug-035",
-      "timestamp": "2026-05-26T06:37:40.613Z",
-      "error_message": "Incorrect value in code",
-      "file": "components/public/chatbot-widget.tsx",
-      "root_cause": "Had \"اكتب رسالتك...\"",
-      "fix": "Changed to \"تم تسجيل طلبك ✅\"",
-      "tags": [
-        "auto-detected",
-        "wrong-value",
-        "tsx"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T06:37:40.613Z"
-    },
-    {
-      "id": "bug-036",
-      "timestamp": "2026-05-26T06:38:12.037Z",
-      "error_message": "Missing await",
-      "file": "app/api/chat/extract-insights/route.ts",
-      "root_cause": "Async call without await — returned Promise instead of value",
-      "fix": "Added await to async call",
-      "tags": [
-        "auto-detected",
-        "async-fix",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T06:38:12.037Z"
-    },
-    {
-      "id": "bug-037",
-      "timestamp": "2026-05-26T06:55:42.446Z",
-      "error_message": "Significant refactor of ",
-      "file": "app/api/chat/route.ts",
-      "root_cause": "2 lines replaced/restructured",
-      "fix": "Rewrote 7→8 lines (2 removed)",
-      "tags": [
-        "auto-detected",
-        "refactor",
-        "ts"
-      ],
-      "related_bugs": [],
-      "occurrences": 1,
-      "last_seen": "2026-05-26T06:55:42.446Z"
-    }
-  ]
+﻿{
+    "version":  1,
+    "bugs":  [
+                 {
+                     "id":  "bug-001",
+                     "timestamp":  "2026-05-25T11:20:15.997Z",
+                     "error_message":  "CSS fix: --font-sans",
+                     "file":  "app/globals.css",
+                     "root_cause":  "--font-sans: \u0027Cairo\u0027, \u0027Noto Naskh Arabic\u0027, ui-sans-serif, system-ui, sans-serif â†’ var(--font-cairo, \u0027Cairo\u0027), \u0027Noto Naskh Arabic\u0027, ui-sans-serif, system-ui, sans-serif",
+                     "fix":  "Changed --font-sans: \u0027Cairo\u0027, \u0027Noto Naskh Arabic\u0027, ui-sans-serif, system-ui, sans-serif â†’ var(--font-cairo, \u0027Cairo\u0027), \u0027Noto Naskh Arabic\u0027, ui-sans-serif, system-ui, sans-serif",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "css"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T11:20:15.997Z"
+                 },
+                 {
+                     "id":  "bug-002",
+                     "timestamp":  "2026-05-25T11:37:01.936Z",
+                     "error_message":  "Null/undefined access in ",
+                     "file":  "proxy.ts",
+                     "root_cause":  "Property access on potentially null/undefined value",
+                     "fix":  "Added null safety (optional chaining or null check)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "null-safety",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T11:37:01.936Z"
+                 },
+                 {
+                     "id":  "bug-003",
+                     "timestamp":  "2026-05-25T19:37:42.360Z",
+                     "error_message":  "CSS fix: hover",
+                     "file":  "app/admin/menu/row-actions.tsx",
+                     "root_cause":  "hover: bg-red-500/10 disabled:opacity-50\" â†’ bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors\"",
+                     "fix":  "Changed hover: bg-red-500/10 disabled:opacity-50\" â†’ bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T19:37:42.360Z"
+                 },
+                 {
+                     "id":  "bug-004",
+                     "timestamp":  "2026-05-25T19:46:47.288Z",
+                     "error_message":  "CSS fix: hover",
+                     "file":  "app/admin/menu/[id]/page.tsx",
+                     "root_cause":  "hover: text-[var(--text-primary)]\" â†’ text-primary-600 transition-colors\"",
+                     "fix":  "Changed hover: text-[var(--text-primary)]\" â†’ text-primary-600 transition-colors\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T19:46:47.288Z"
+                 },
+                 {
+                     "id":  "bug-005",
+                     "timestamp":  "2026-05-25T21:16:27.928Z",
+                     "error_message":  "Significant refactor of ",
+                     "file":  "app/auth/callback/route.ts",
+                     "root_cause":  "13 lines replaced/restructured",
+                     "fix":  "Rewrote 30â†’20 lines (13 removed)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "refactor",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T21:16:27.928Z"
+                 },
+                 {
+                     "id":  "bug-006",
+                     "timestamp":  "2026-05-25T21:34:56.529Z",
+                     "error_message":  "CSS fix: subsets, variable",
+                     "file":  "app/layout.tsx",
+                     "root_cause":  "subsets: [\"arabic\", \"latin\"], â†’ [\"arabic\"],; variable: \"--font-cairo\", â†’ \"--font-almarai\",",
+                     "fix":  "Changed subsets: [\"arabic\", \"latin\"], â†’ [\"arabic\"],; variable: \"--font-cairo\", â†’ \"--font-almarai\",",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T21:34:56.529Z"
+                 },
+                 {
+                     "id":  "bug-007",
+                     "timestamp":  "2026-05-25T21:36:00.896Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "app/layout.tsx",
+                     "root_cause":  "Had `${cairo.variable} ${reemKufi.variable} ${fraunces",
+                     "fix":  "Changed to `${almarai.variable} ${reemKufi.variable} ${fraunc",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T21:36:00.896Z"
+                 },
+                 {
+                     "id":  "bug-008",
+                     "timestamp":  "2026-05-25T21:37:09.406Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "app/globals.css",
+                     "root_cause":  "Had \u0027Cairo\u0027",
+                     "fix":  "Changed to \u0027Almarai\u0027",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "css"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T21:37:09.406Z"
+                 },
+                 {
+                     "id":  "bug-009",
+                     "timestamp":  "2026-05-25T21:45:27.788Z",
+                     "error_message":  "Missing guard clause",
+                     "file":  "components/admin/sidebar.tsx",
+                     "root_cause":  "No early return/throw for edge case: !pending",
+                     "fix":  "Added guard clause: if (!pending)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "guard-clause",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T21:45:27.788Z"
+                 },
+                 {
+                     "id":  "bug-010",
+                     "timestamp":  "2026-05-25T22:44:20.029Z",
+                     "error_message":  "Missing await",
+                     "file":  "app/cashier/orders-panel.tsx",
+                     "root_cause":  "Async call without await â€” returned Promise instead of value",
+                     "fix":  "Added await to async call",
+                     "tags":  [
+                                  "auto-detected",
+                                  "async-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-25T22:44:20.029Z"
+                 },
+                 {
+                     "id":  "bug-011",
+                     "timestamp":  "2026-05-26T00:19:08.239Z",
+                     "error_message":  "Significant refactor of ",
+                     "file":  "docs/PRD.md",
+                     "root_cause":  "9 lines replaced/restructured",
+                     "fix":  "Rewrote 37â†’54 lines (9 removed) | Also: Admin Dashboard; â””â”€â”€ Employee Management (Cashiers) | Also: â”‚   â”œâ”€â”€ Live order list (website orders + manual o; â”‚   â””â”€â”€ Status update buttons: [Pending] â†’ [Prepar | Also: ### 4.4 Customer Flow; â”œâ”€â”€ Asks: Delivery or Takeaway? | Also: **Order Statuses:**; Pending â†’ Preparing â†’ Ready â†’ Completed | Also: | **Phase 3** | Cashier dashboard (orders + alerts; | **Phase 4** | Public menu page (Arabic RTL, phot",
+                     "tags":  [
+                                  "auto-detected",
+                                  "refactor",
+                                  "md"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  6,
+                     "last_seen":  "2026-05-26T00:24:57.201Z"
+                 },
+                 {
+                     "id":  "bug-012",
+                     "timestamp":  "2026-05-26T00:35:03.159Z",
+                     "error_message":  "Significant refactor of ",
+                     "file":  "tasks.md",
+                     "root_cause":  "2 lines replaced/restructured",
+                     "fix":  "Rewrote 7â†’13 lines (2 removed)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "refactor",
+                                  "md"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T00:35:03.159Z"
+                 },
+                 {
+                     "id":  "bug-013",
+                     "timestamp":  "2026-05-26T00:44:33.132Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "lib/actions/cashier.ts",
+                     "root_cause":  "Had \"preparing\"",
+                     "fix":  "Changed to \"on_delivery\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T00:44:33.132Z"
+                 },
+                 {
+                     "id":  "bug-014",
+                     "timestamp":  "2026-05-26T00:44:38.259Z",
+                     "error_message":  "Null/undefined access in ",
+                     "file":  "app/auth/callback/route.ts",
+                     "root_cause":  "Property access on potentially null/undefined value",
+                     "fix":  "Added null safety (optional chaining or null check)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "null-safety",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T00:44:38.259Z"
+                 },
+                 {
+                     "id":  "bug-015",
+                     "timestamp":  "2026-05-26T00:46:09.411Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "supabase/schema.sql",
+                     "root_cause":  "Had \u0027customer\u0027",
+                     "fix":  "Changed to \u0027delivery\u0027",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "sql"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  2,
+                     "last_seen":  "2026-05-26T00:46:10.850Z"
+                 },
+                 {
+                     "id":  "bug-016",
+                     "timestamp":  "2026-05-26T00:46:51.930Z",
+                     "error_message":  "CSS fix: pending, key",
+                     "file":  "app/cashier/orders-panel.tsx",
+                     "root_cause":  "pending: \"ط§ط¨ط¯ط£ ط§ظ„طھط­ط¶ظٹط±\", â†’ \"طھظ… ط§ظ„طھط³ظ„ظٹظ…\",; key: \"cancelled\", label: \"ظ…ظ„ط؛ظٹ\" â†’ \"cancelled\",   label: \"ظ…ظ„ط؛ظٹ\"",
+                     "fix":  "Changed pending: \"ط§ط¨ط¯ط£ ط§ظ„طھط­ط¶ظٹط±\", â†’ \"طھظ… ط§ظ„طھط³ظ„ظٹظ…\",; key: \"cancelled\", label: \"ظ…ظ„ط؛ظٹ\" â†’ \"cancelled\",   label: \"ظ…ظ„ط؛ظٹ\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T00:46:51.930Z"
+                 },
+                 {
+                     "id":  "bug-017",
+                     "timestamp":  "2026-05-26T00:48:22.469Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "app/(auth)/login/page.tsx",
+                     "root_cause":  "Had \"ط­ط³ط§ط¨ط§طھ ط§ظ„ظ…ط¯ظٹط±ظٹظ† ظˆط§ظ„ظƒط§ط´ظٹط± ظ„ط§ طھط¯ط¹ظ… طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ ط¨ط¬ظˆ",
+                     "fix":  "Changed to \"ط­ط³ط§ط¨ط§طھ ط§ظ„ظ…ظˆط¸ظپظٹظ† (ظ…ط¯ظٹط±طŒ ظƒط§ط´ظٹط±طŒ ظ…ظ†ط¯ظˆط¨ طھظˆطµظٹظ„) ظ„ط§ طھط¯ط¹",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T00:48:22.469Z"
+                 },
+                 {
+                     "id":  "bug-018",
+                     "timestamp":  "2026-05-26T01:05:21.362Z",
+                     "error_message":  "Null/undefined access in ",
+                     "file":  "lib/actions/cashier.ts",
+                     "root_cause":  "Property access on potentially null/undefined value",
+                     "fix":  "Added null safety (optional chaining or null check)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "null-safety",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T01:05:21.362Z"
+                 },
+                 {
+                     "id":  "bug-019",
+                     "timestamp":  "2026-05-26T01:05:51.820Z",
+                     "error_message":  "Significant refactor of ",
+                     "file":  "lib/actions/admin.ts",
+                     "root_cause":  "3 lines replaced/restructured",
+                     "fix":  "Rewrote 30â†’49 lines (3 removed)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "refactor",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T01:05:51.820Z"
+                 },
+                 {
+                     "id":  "bug-020",
+                     "timestamp":  "2026-05-26T01:07:26.977Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "app/admin/page.tsx",
+                     "root_cause":  "Had \"grid gap-px overflow-hidden rounded-2xl border bo",
+                     "fix":  "Changed to \"grid gap-px overflow-hidden rounded-2xl border bo",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T01:07:26.977Z"
+                 },
+                 {
+                     "id":  "bug-021",
+                     "timestamp":  "2026-05-26T01:10:54.223Z",
+                     "error_message":  "CSS fix: hover",
+                     "file":  "app/admin/employees/manager.tsx",
+                     "root_cause":  "hover: bg-[var(--surface-input)] transition-colors border-t border-[var(--surface-border-soft)]\" â†’ bg-primary-600\"",
+                     "fix":  "Changed hover: bg-[var(--surface-input)] transition-colors border-t border-[var(--surface-border-soft)]\" â†’ bg-primary-600\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T01:10:54.223Z"
+                 },
+                 {
+                     "id":  "bug-022",
+                     "timestamp":  "2026-05-26T01:12:25.486Z",
+                     "error_message":  "CSS fix: icon",
+                     "file":  "app/admin/page.tsx",
+                     "root_cause":  "icon: Users, â†’ UserCog,",
+                     "fix":  "Changed icon: Users, â†’ UserCog,",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T01:12:25.486Z"
+                 },
+                 {
+                     "id":  "bug-023",
+                     "timestamp":  "2026-05-26T00:00:00.000Z",
+                     "error_message":  "Admin employees page shows empty state â€” cashier and delivery users not appearing despite existing in DB",
+                     "file":  "lib/actions/admin.ts, supabase migration",
+                     "root_cause":  "current_user_role() queried public.users, which triggered the same RLS policies on public.users that called current_user_role() again â€” infinite recursion. PostgreSQL threw 42P17 and the query returned null, showing the empty state.",
+                     "fix":  "Rewrote current_user_role() to query auth.users.raw_app_meta_data (no custom RLS, no recursion). Backfilled role into auth.users for all existing users. Added app_metadata: { role } to createEmployee so future employees are covered.",
+                     "tags":  [
+                                  "rls",
+                                  "infinite-recursion",
+                                  "supabase",
+                                  "auth",
+                                  "employees",
+                                  "current_user_role"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T00:00:00.000Z"
+                 },
+                 {
+                     "id":  "bug-024",
+                     "timestamp":  "2026-05-26T02:06:04.888Z",
+                     "error_message":  "Null/undefined access in ",
+                     "file":  "lib/actions/auth.ts",
+                     "root_cause":  "Property access on potentially null/undefined value",
+                     "fix":  "Added null safety (optional chaining or null check)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "null-safety",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T02:06:04.888Z"
+                 },
+                 {
+                     "id":  "bug-025",
+                     "timestamp":  "2026-05-26T00:00:00.000Z",
+                     "error_message":  "Admin user logs in with email/password and gets redirected to customer home instead of /admin",
+                     "file":  "lib/actions/auth.ts",
+                     "root_cause":  "current_user_role() read role from auth.users.raw_app_meta_data which had no \u0027role\u0027 key for manually-created staff users; fell back to \u0027customer\u0027",
+                     "fix":  "1) Updated current_user_role() DB function to read from public.users.role instead of raw_app_meta_data. 2) Backfilled raw_app_meta_data for existing staff. 3) Changed signIn() to query public.users directly (single query, also gets profile_complete), eliminating the RPC call.",
+                     "tags":  [
+                                  "auth",
+                                  "role",
+                                  "redirect",
+                                  "supabase",
+                                  "rpc"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T00:00:00.000Z"
+                 },
+                 {
+                     "id":  "bug-026",
+                     "timestamp":  "2026-05-26T04:38:05.951Z",
+                     "error_message":  "Null/undefined access in ",
+                     "file":  "lib/actions/cashier.ts",
+                     "root_cause":  "Property access on potentially null/undefined value",
+                     "fix":  "Added null safety (optional chaining or null check)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "null-safety",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T04:38:05.951Z"
+                 },
+                 {
+                     "id":  "bug-027",
+                     "timestamp":  "2026-05-26T04:48:27.265Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "app/cashier/new-order/order-form.tsx",
+                     "root_cause":  "Had \"dine-in\"",
+                     "fix":  "Changed to \"delivery\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T04:48:27.265Z"
+                 },
+                 {
+                     "id":  "bug-028",
+                     "timestamp":  "2026-05-26T04:48:48.982Z",
+                     "error_message":  "CSS fix: type",
+                     "file":  "app/cashier/new-order/order-form.tsx",
+                     "root_cause":  "type: \"dine-in\" as const, â†’ orderType,",
+                     "fix":  "Changed type: \"dine-in\" as const, â†’ orderType,",
+                     "tags":  [
+                                  "auto-detected",
+                                  "style-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T04:48:48.982Z"
+                 },
+                 {
+                     "id":  "bug-029",
+                     "timestamp":  "2026-05-26T05:37:09.641Z",
+                     "error_message":  "Null/undefined access in ",
+                     "file":  "app/page.tsx",
+                     "root_cause":  "Property access on potentially null/undefined value",
+                     "fix":  "Added null safety (optional chaining or null check) | Also: \u003c\u003e; {!!user \u0026\u0026 userId \u0026\u0026 (",
+                     "tags":  [
+                                  "auto-detected",
+                                  "null-safety",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  2,
+                     "last_seen":  "2026-05-26T05:37:46.298Z"
+                 },
+                 {
+                     "id":  "bug-030",
+                     "timestamp":  "2026-05-26T06:36:57.089Z",
+                     "error_message":  "Null/undefined access in ",
+                     "file":  "lib/chatbot/system-prompt.ts",
+                     "root_cause":  "Property access on potentially null/undefined value",
+                     "fix":  "Added null safety (optional chaining or null check)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "null-safety",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T06:36:57.090Z"
+                 },
+                 {
+                     "id":  "bug-031",
+                     "timestamp":  "2026-05-26T06:37:04.299Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "lib/chatbot/system-prompt.ts",
+                     "root_cause":  "Had \"طھظ…ط§ظ…! ط¬ط§ط±ظٹ ط¥ط±ط³ط§ظ„ ط·ظ„ط¨ظƒ âœ…\"",
+                     "fix":  "Changed to \"طھظ…ط§ظ…! ط¬ط§ط±ظٹ طھط³ط¬ظٹظ„ ط·ظ„ط¨ظƒ âœ… ط´ظˆظٹط© ظˆظ‡ظٹظˆطµظ„ظƒ.\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T06:37:04.299Z"
+                 },
+                 {
+                     "id":  "bug-032",
+                     "timestamp":  "2026-05-26T06:37:14.509Z",
+                     "error_message":  "Missing error handling in unknown",
+                     "file":  "components/public/chatbot-widget.tsx",
+                     "root_cause":  "Code path had no error handling â€” exceptions would propagate uncaught",
+                     "fix":  "Added try/catch block",
+                     "tags":  [
+                                  "auto-detected",
+                                  "error-handling",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T06:37:14.509Z"
+                 },
+                 {
+                     "id":  "bug-033",
+                     "timestamp":  "2026-05-26T06:37:28.916Z",
+                     "error_message":  "Significant refactor of ",
+                     "file":  "components/public/chatbot-widget.tsx",
+                     "root_cause":  "5 lines replaced/restructured",
+                     "fix":  "Rewrote 8â†’11 lines (5 removed) | Also: const handler = () =\u003e setIsOpen(true);; }, []);",
+                     "tags":  [
+                                  "auto-detected",
+                                  "refactor",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  2,
+                     "last_seen":  "2026-05-26T06:39:26.552Z"
+                 },
+                 {
+                     "id":  "bug-034",
+                     "timestamp":  "2026-05-26T06:37:36.466Z",
+                     "error_message":  "Type error",
+                     "file":  "components/public/chatbot-widget.tsx",
+                     "root_cause":  "Missing or incorrect type annotation",
+                     "fix":  "Added type assertion/annotation",
+                     "tags":  [
+                                  "auto-detected",
+                                  "type-fix",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T06:37:36.466Z"
+                 },
+                 {
+                     "id":  "bug-035",
+                     "timestamp":  "2026-05-26T06:37:40.613Z",
+                     "error_message":  "Incorrect value in code",
+                     "file":  "components/public/chatbot-widget.tsx",
+                     "root_cause":  "Had \"ط§ظƒطھط¨ ط±ط³ط§ظ„طھظƒ...\"",
+                     "fix":  "Changed to \"طھظ… طھط³ط¬ظٹظ„ ط·ظ„ط¨ظƒ âœ…\"",
+                     "tags":  [
+                                  "auto-detected",
+                                  "wrong-value",
+                                  "tsx"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T06:37:40.613Z"
+                 },
+                 {
+                     "id":  "bug-036",
+                     "timestamp":  "2026-05-26T06:38:12.037Z",
+                     "error_message":  "Missing await",
+                     "file":  "app/api/chat/extract-insights/route.ts",
+                     "root_cause":  "Async call without await â€” returned Promise instead of value",
+                     "fix":  "Added await to async call",
+                     "tags":  [
+                                  "auto-detected",
+                                  "async-fix",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T06:38:12.037Z"
+                 },
+                 {
+                     "id":  "bug-037",
+                     "timestamp":  "2026-05-26T06:55:42.446Z",
+                     "error_message":  "Significant refactor of ",
+                     "file":  "app/api/chat/route.ts",
+                     "root_cause":  "2 lines replaced/restructured",
+                     "fix":  "Rewrote 7â†’8 lines (2 removed)",
+                     "tags":  [
+                                  "auto-detected",
+                                  "refactor",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T06:55:42.446Z"
+                 },
+                 {
+                     "id":  "bug-038",
+                     "timestamp":  "2026-05-26T13:03:57.530Z",
+                     "error_message":  "Missing error handling in unknown",
+                     "file":  "app/api/chat/route.ts",
+                     "root_cause":  "Code path had no error handling â€” exceptions would propagate uncaught",
+                     "fix":  "Added try/catch block",
+                     "tags":  [
+                                  "auto-detected",
+                                  "error-handling",
+                                  "ts"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T13:03:57.530Z"
+                 },
+                 {
+                     "id":  "bug-039",
+                     "timestamp":  "2026-05-26T13:50:00Z",
+                     "error_message":  "Chatbot extraction: SyntaxError Unterminated string - model hallucinating/truncating UUIDs",
+                     "file":  "app/api/chat/route.ts",
+                     "root_cause":  "Extraction prompt asked AI to reproduce 36-char UUIDs; Gemini 2.5 Flash Lite hallucinated fake UUIDs (d1000000-...) or response truncated mid-UUID",
+                     "fix":  "Changed extraction to use item names not UUIDs. Backend maps name to real ID from live menu data server-side.",
+                     "tags":  [
+                                  "chatbot",
+                                  "extraction",
+                                  "uuid",
+                                  "hallucination",
+                                  "json-parse"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  3,
+                     "last_seen":  "2026-05-26T13:50:00Z"
+                 },
+                 {
+                     "id":  "bug-040",
+                     "timestamp":  "2026-05-26T12:30:00Z",
+                     "error_message":  "Chatbot confirmation marker ORDER_CONFIRMED not emitted by AI - order never triggered",
+                     "file":  "app/api/chat/route.ts, lib/chatbot/system-prompt.ts",
+                     "root_cause":  "AI followed intent but omitted literal ORDER_CONFIRMED marker from reply",
+                     "fix":  "Added fallback detection checking Arabic confirmation phrases. Strengthened system prompt instruction.",
+                     "tags":  [
+                                  "chatbot",
+                                  "confirmation",
+                                  "marker",
+                                  "detection"
+                              ],
+                     "related_bugs":  [
+
+                                      ],
+                     "occurrences":  1,
+                     "last_seen":  "2026-05-26T12:30:00Z"
+                 }
+             ]
 }

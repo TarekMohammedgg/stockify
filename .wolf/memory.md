@@ -435,3 +435,35 @@
 |------|--------|---------|---------|--------|
 | 15:28 | Edited lib/chatbot/system-prompt.ts | 7→9 lines | ~174 |
 | 15:28 | Edited app/api/chat/route.ts | 2→5 lines | ~86 |
+| 16:02 | Edited app/api/chat/route.ts | 8→9 lines | ~93 |
+| 16:03 | Edited app/api/chat/route.ts | added error handling | ~106 |
+| 16:34 | Edited app/api/chat/route.ts | added 2 condition(s) | ~1544 |
+
+## Session: 2026-05-26 17:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:10 | Phase 5.2 E2E debug: diagnosed <<ORDER_CONFIRMED>> marker missing from Gemini reply → added fallback phrase detection ("جاري تسجيل طلبك", "تم تسجيل طلبك") | app/api/chat/route.ts | ✓ | ~400 |
+| 17:15 | Fixed UUID hallucination in extraction — switched to name-based JSON extraction + server-side name→ID resolution using live menu array; added max_tokens:512 | app/api/chat/route.ts | ✓ | ~1500 |
+| 17:20 | E2E verified: placed takeaway order (سندوتش فلافل × 1 = 20 EGP), success card shown with orderId #FCED521A, DB confirmed order + order_items, chatbot_insights.favourite_items updated | app/api/chat/route.ts, supabase | ✓ Phase 5.2 complete | ~500 |
+| 17:25 | Updated cerebrum.md with Do-Not-Repeat entries (UUID hallucination, ORDER_CONFIRMED fallback), updated anatomy.md for chat route, added session summary to memory.md | .wolf/ | ✓ | ~200 |
+
+## Session: 2026-05-26 19:39
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-26 19:39
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-26 19:42
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-26 20:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

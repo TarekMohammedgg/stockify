@@ -12,6 +12,8 @@ export default async function HomePage() {
   // If logged in, check role
   let userId: string | null = null;
   let customerName: string | null = null;
+  let customerPhone: string | null = null;
+  let customerAddress: string | null = null;
   if (user) {
     const { data: role } = await supabase.rpc("current_user_role");
     if (role === "admin") redirect("/admin");
@@ -20,11 +22,13 @@ export default async function HomePage() {
 
     const { data: profile } = await supabase
       .from("users")
-      .select("id, name")
+      .select("id, name, phone, address")
       .eq("id", user.id)
       .single();
     userId = profile?.id ?? null;
     customerName = profile?.name ?? null;
+    customerPhone = profile?.phone ?? null;
+    customerAddress = profile?.address ?? null;
   }
 
   // Fetch Categories
@@ -71,12 +75,20 @@ export default async function HomePage() {
     };
   });
 
+  const userProfile = user && userId ? {
+    id: userId,
+    name: customerName ?? "",
+    phone: customerPhone,
+    address: customerAddress,
+  } : null;
+
   return (
     <>
       <PublicMenu
         items={items}
         categories={categories}
         isLoggedIn={!!user}
+        userProfile={userProfile}
       />
       {!!user && userId && (
         <ChatbotWidget

@@ -144,12 +144,12 @@ export default function CheckoutModal({
           <div className="space-y-2">
             <Label htmlFor="phone">{isAr ? "رقم الهاتف" : "Phone Number"}</Label>
             <div className="relative">
-              <Phone className={`absolute top-3 h-5 w-5 text-[var(--text-muted)] ${isAr ? 'right-3' : 'left-3'}`} />
+              <Phone className="absolute top-3 start-3 h-5 w-5 text-[var(--text-muted)]" />
               <Input
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className={isAr ? "pr-10" : "pl-10"}
+                className="ps-10"
                 placeholder={isAr ? "أدخل رقم الهاتف..." : "Enter phone number..."}
                 required={type === "delivery"}
               />
@@ -160,12 +160,12 @@ export default function CheckoutModal({
             <div className="space-y-2 animate-in slide-in-from-top-2 fade-in">
               <Label htmlFor="address">{isAr ? "عنوان التوصيل" : "Delivery Address"}</Label>
               <div className="relative">
-                <MapPin className={`absolute top-3 h-5 w-5 text-[var(--text-muted)] ${isAr ? 'right-3' : 'left-3'}`} />
+                <MapPin className="absolute top-3 start-3 h-5 w-5 text-[var(--text-muted)]" />
                 <Input
                   id="address"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className={isAr ? "pr-10" : "pl-10"}
+                  className="ps-10"
                   placeholder={isAr ? "أدخل عنوان التوصيل..." : "Enter delivery address..."}
                   required
                 />
@@ -176,12 +176,12 @@ export default function CheckoutModal({
           <div className="space-y-2">
             <Label htmlFor="notes">{isAr ? "ملاحظات إضافية (اختياري)" : "Additional Notes (Optional)"}</Label>
             <div className="relative">
-              <StickyNote className={`absolute top-3 h-5 w-5 text-[var(--text-muted)] ${isAr ? 'right-3' : 'left-3'}`} />
+              <StickyNote className="absolute top-3 start-3 h-5 w-5 text-[var(--text-muted)]" />
               <Textarea
                 id="notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className={`min-h-[80px] ${isAr ? "pr-10" : "pl-10"}`}
+                className="min-h-[80px] ps-10"
                 placeholder={isAr ? "بدون بصل، تفاصيل أكثر..." : "No onions, extra details..."}
               />
             </div>

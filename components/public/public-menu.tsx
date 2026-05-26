@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Info, ArrowRight, ArrowLeft } from "lucide-react";
+import { Info, ArrowRight, ArrowLeft, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/lib/store/cart";
+import CartWidget from "./cart-widget";
 
 type MenuItem = {
   id: string;
@@ -28,10 +30,12 @@ export default function PublicMenu({
   items,
   categories,
   isLoggedIn,
+  userProfile,
 }: {
   items: MenuItem[];
   categories: Category[];
   isLoggedIn: boolean;
+  userProfile: { id: string; name: string; phone: string | null; address: string | null } | null;
 }) {
   const [lang, setLang] = useState<"ar" | "en">("ar");
   const [activeCategory, setActiveCategory] = useState<string>("all");
@@ -44,12 +48,17 @@ export default function PublicMenu({
     return item.category_en === activeCategory;
   });
 
-  const handleOrderClick = () => {
-    if (isLoggedIn) {
-      window.dispatchEvent(new CustomEvent("open-chatbot"));
-    } else {
-      router.push("/login");
-    }
+  const { addItem } = useCartStore();
+
+  const handleAddToCart = (item: MenuItem) => {
+    addItem({
+      id: item.id,
+      name_ar: item.name_ar,
+      name_en: item.name_en,
+      price: item.price,
+      photo_url: item.photo_url,
+      quantity: 1,
+    });
   };
 
   return (
@@ -60,14 +69,15 @@ export default function PublicMenu({
       dir={isAr ? "rtl" : "ltr"}
     >
       {/* Editorial Header */}
-      <header className="relative z-20 border-b border-[var(--surface-border)] bg-[var(--surface-bg)]/90 backdrop-blur-md">
+      <header className="relative z-20 border-b border-[var(--surface-border)] bg-[var(--surface-bg)]/80 backdrop-blur-xl fade-in">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
-          <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--primary-600)]">
+          <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--primary-600)] rise-in" style={{ animationDelay: '100ms' }}>
             Stockify
           </h1>
           <button
             onClick={() => setLang(isAr ? "en" : "ar")}
-            className="flex items-center gap-2 rounded-full border border-[var(--surface-border)] px-5 py-2 text-sm font-medium transition-all hover:bg-[var(--surface-border)] hover:text-[var(--primary-700)]"
+            className="rise-in flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full border border-[var(--surface-border)] px-6 text-sm font-bold transition-all hover:bg-[var(--surface-border)] hover:text-[var(--primary-700)] active:scale-95"
+            style={{ animationDelay: '150ms' }}
           >
             {isAr ? "English" : "عربي"}
           </button>
@@ -78,65 +88,73 @@ export default function PublicMenu({
         {/* Bold Asymmetrical Hero */}
         <section className="relative my-16 grid grid-cols-1 gap-12 lg:my-24 lg:grid-cols-12 lg:items-center">
           {/* Ornamental Backdrop Block */}
-          <div className="bg-ornament absolute -inset-6 -z-10 hidden rounded-3xl opacity-50 lg:block lg:col-span-8 lg:col-start-5 lg:h-[120%] lg:w-[110%]"></div>
+          <div className="bg-ornament float absolute -inset-6 -z-10 hidden rounded-3xl opacity-50 lg:block lg:col-span-8 lg:col-start-5 lg:h-[120%] lg:w-[110%]"></div>
           
-          <div className="lg:col-span-7 lg:pr-12">
+          <div className="lg:col-span-7 lg:pe-12">
             <h2 className="mb-6 font-display text-6xl font-bold leading-tight tracking-tight text-[var(--ink)] md:text-7xl lg:text-8xl">
               {isAr ? (
                 <>
-                  <span className="block text-[var(--primary-600)]">تذوق</span> 
-                  <span className="block">الفخامة.</span>
+                  <span className="rise-in block text-[var(--primary-600)]" style={{ animationDelay: '200ms' }}>تذوق</span> 
+                  <span className="rise-in block" style={{ animationDelay: '300ms' }}>الفخامة.</span>
                 </>
               ) : (
                 <>
-                  <span className="block text-[var(--primary-600)]">Taste</span> 
-                  <span className="block">Luxury.</span>
+                  <span className="rise-in block text-[var(--primary-600)]" style={{ animationDelay: '200ms' }}>Taste</span> 
+                  <span className="rise-in block" style={{ animationDelay: '300ms' }}>Luxury.</span>
                 </>
               )}
             </h2>
-            <p className="max-w-xl text-xl leading-relaxed text-[var(--text-secondary)] lg:text-2xl">
+            <p className="rise-in max-w-xl text-xl leading-relaxed text-[var(--text-secondary)] lg:text-2xl" style={{ animationDelay: '400ms' }}>
               {isAr
                 ? "استكشف أشهى الأطباق المحضرة بعناية من أفضل المكونات الطازجة يومياً لتقديم تجربة لا تُنسى."
                 : "Explore our exquisite dishes, crafted daily from the finest fresh ingredients for an unforgettable experience."}
             </p>
           </div>
+
+          {/* Asymmetric Gourmet Image Block */}
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-canvas)] shadow-md lg:col-span-5 rise-in" style={{ animationDelay: '500ms' }}>
+            <Image
+              src="/hero-food.png"
+              alt={isAr ? "أطباقنا الفاخرة المحضرة طازجة" : "Gourmet plating of our finest menu items"}
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              priority
+            />
+          </div>
         </section>
 
         {/* Hairline Divider */}
-        <div className="rule-ornament my-16 opacity-60">
+        <div className="rise-in rule-ornament my-16 opacity-60" style={{ animationDelay: '600ms' }}>
           <span className="h-1.5 w-1.5 rotate-45 bg-[var(--accent-500)]"></span>
         </div>
 
         {/* Typography-Led Category Selector */}
-        <div className="mb-16 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="rise-in mb-16 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" style={{ animationDelay: '700ms' }}>
           <div className="flex min-w-max items-end gap-8 border-b border-[var(--surface-border-soft)] pb-4">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`relative pb-2 font-display text-2xl md:text-4xl transition-all duration-300 ${
+              className={`relative min-h-[44px] pb-2 font-display text-2xl md:text-4xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-600)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--surface-bg)] rounded-sm ${
                 activeCategory === "all"
                   ? "text-[var(--accent-600)] font-bold scale-105 origin-bottom"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:-translate-y-1"
               }`}
             >
               {isAr ? "الكل" : "All"}
-              {activeCategory === "all" && (
-                <span className="absolute -bottom-[17px] left-0 right-0 h-1 bg-[var(--accent-600)]" />
-              )}
+              <span className={`absolute -bottom-[17px] left-0 right-0 h-1 bg-[var(--accent-600)] transition-transform duration-300 origin-center ${activeCategory === 'all' ? 'scale-x-100' : 'scale-x-0'}`} />
             </button>
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.name_en)}
-                className={`relative pb-2 font-display text-2xl md:text-4xl transition-all duration-300 ${
+                className={`relative min-h-[44px] pb-2 font-display text-2xl md:text-4xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-600)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--surface-bg)] rounded-sm ${
                   activeCategory === cat.name_en
                     ? "text-[var(--accent-600)] font-bold scale-105 origin-bottom"
-                    : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                    : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:-translate-y-1"
                 }`}
               >
                 {isAr ? cat.name_ar : cat.name_en}
-                {activeCategory === cat.name_en && (
-                  <span className="absolute -bottom-[17px] left-0 right-0 h-1 bg-[var(--accent-600)]" />
-                )}
+                <span className={`absolute -bottom-[17px] left-0 right-0 h-1 bg-[var(--accent-600)] transition-transform duration-300 origin-center ${activeCategory === cat.name_en ? 'scale-x-100' : 'scale-x-0'}`} />
               </button>
             ))}
           </div>
@@ -211,18 +229,18 @@ export default function PublicMenu({
                     <span className="eyebrow mb-1 opacity-70">
                       {isAr ? "السعر" : "Price"}
                     </span>
-                    <span className="numeric text-3xl font-light text-[var(--primary-700)]">
-                      {item.price} <span className="text-lg">{isAr ? "ج.م" : "EGP"}</span>
+                    <span className="numeric text-3xl font-bold text-[var(--primary-700)]">
+                      {item.price} <span className="text-lg font-sans font-medium text-[var(--text-muted)]">{isAr ? "ج.م" : "EGP"}</span>
                     </span>
                   </div>
 
                   <button
-                    onClick={handleOrderClick}
+                    onClick={() => handleAddToCart(item)}
                     disabled={!item.is_available}
-                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--primary-600)] text-white shadow-sm transition-transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                    aria-label={isAr ? "اطلب الآن" : "Order Now"}
+                    className="flex h-12 w-12 min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-[var(--primary-600)] text-white shadow-[0_4px_14px_0_oklch(0.58_0.18_48/0.39)] transition-all hover:bg-[var(--primary-700)] hover:shadow-[0_6px_20px_0_oklch(0.58_0.18_48/0.23)] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-card)]"
+                    aria-label={isAr ? "أضف إلى السلة" : "Add to Cart"}
                   >
-                    {isAr ? <ArrowLeft className="h-5 w-5" /> : <ArrowRight className="h-5 w-5" />}
+                    <Plus className="h-5 w-5" />
                   </button>
                 </div>
               </div>
@@ -241,6 +259,8 @@ export default function PublicMenu({
           </div>
         )}
       </main>
+
+      <CartWidget isAr={isAr} userProfile={userProfile} />
     </div>
   );
 }

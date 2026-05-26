@@ -40,3 +40,117 @@ Error [AuthApiError]: Invalid Refresh Token: Refresh Token Not Found
 ⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
  GET /api/insights?user_id=c0e1dd67-6373-4e5f-adf2-693391ca6ec1 200 in 663ms (next.js: 207ms, proxy.ts: 133ms, application-code: 323ms)
 ⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404
+ POST /api/chat 200 in 6.4s (next.js: 139ms, proxy.ts: 534ms, application-code: 5.7s)
+ POST /api/chat 200 in 2.4s (next.js: 7ms, proxy.ts: 491ms, application-code: 1857ms)
+[POST /api/chat] order extraction failed SyntaxError: Unterminated string in JSON at position 54
+    at JSON.parse (<anonymous>)
+    at POST (app\api\chat\route.ts:196:30)
+  194 |         .replace(/```/g, "")
+  195 |         .trim();
+> 196 |       const orderData = JSON.parse(rawJson);
+      |                              ^
+  197 |
+  198 |       if (!["delivery", "takeaway"].includes(orderData.type)) {
+  199 |         throw new Error(`Invalid order type from extraction: ${orderData.type}`);
+ POST /api/chat 200 in 3.8s (next.js: 8ms, proxy.ts: 346ms, application-code: 3.5s)
+ GET / 200 in 2.8s (next.js: 1002ms, proxy.ts: 1646ms, application-code: 193ms)
+✓ Compiled in 1510ms
+ GET / 200 in 775ms (next.js: 193ms, proxy.ts: 450ms, application-code: 132ms)
+✓ Compiled in 89ms
+ GET / 200 in 1065ms (next.js: 301ms, proxy.ts: 574ms, application-code: 190ms)
+✓ Compiled in 191ms
+ POST /api/chat/extract-insights 200 in 3.1s (next.js: 532ms, proxy.ts: 230ms, application-code: 2.3s)
+ GET / 200 in 2.8s (next.js: 4ms, proxy.ts: 672ms, application-code: 2.1s)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+ GET /api/insights?user_id=c0e1dd67-6373-4e5f-adf2-693391ca6ec1 200 in 758ms (next.js: 339ms, proxy.ts: 147ms, application-code: 273ms)
+ POST /api/chat 200 in 3.6s (next.js: 300ms, proxy.ts: 570ms, application-code: 2.8s)
+[POST /api/chat] extraction JSON parse failed SyntaxError: Unterminated string in JSON at position 76
+    at JSON.parse (<anonymous>)
+    at POST (app\api\chat\route.ts:200:26)
+  198 |       let orderData: any;
+  199 |       try {
+> 200 |         orderData = JSON.parse(rawJson);
+      |                          ^
+  201 |       } catch (parseErr) {
+  202 |         console.error("[POST /api/chat] extraction JSON parse failed", parseErr, "raw:", ...
+  203 |         throw parseErr; raw: {
+  "type": "takeaway",
+  "items": [
+    {
+      "menu_item_id": "d1000000-0
+[POST /api/chat] order extraction failed SyntaxError: Unterminated string in JSON at position 76
+    at JSON.parse (<anonymous>)
+    at POST (app\api\chat\route.ts:200:26)
+  198 |       let orderData: any;
+  199 |       try {
+> 200 |         orderData = JSON.parse(rawJson);
+      |                          ^
+  201 |       } catch (parseErr) {
+  202 |         console.error("[POST /api/chat] extraction JSON parse failed", parseErr, "raw:", ...
+  203 |         throw parseErr;
+ POST /api/chat 200 in 6.7s (next.js: 4ms, proxy.ts: 294ms, application-code: 6.4s)
+ GET / 200 in 2.7s (next.js: 142ms, proxy.ts: 1126ms, application-code: 1401ms)
+ GET / 200 in 1491ms (next.js: 5ms, proxy.ts: 320ms, application-code: 1166ms)
+ GET /api/insights?user_id=c0e1dd67-6373-4e5f-adf2-693391ca6ec1 200 in 475ms (next.js: 125ms, proxy.ts: 104ms, application-code: 247ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+ POST /api/chat 200 in 5.0s (next.js: 226ms, proxy.ts: 647ms, application-code: 4.1s)
+ POST /api/chat 200 in 3.2s (next.js: 5ms, proxy.ts: 414ms, application-code: 2.8s)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=600 404
+✓ Compiled in 353ms
+⨯ ReferenceError: customerPhone is not defined
+    at HomePage (app\page.tsx:28:5)
+  26 |     userId = profile?.id ?? null;
+  27 |     customerName = profile?.name ?? null;
+> 28 |     customerPhone = profile?.phone ?? null;
+     |     ^
+  29 |     customerAddress = profile?.address ?? null;
+  30 |   }
+  31 | {
+  digest: '4013480096'
+}
+⨯ ReferenceError: customerPhone is not defined
+    at HomePage (app\page.tsx:28:5)
+  26 |     userId = profile?.id ?? null;
+  27 |     customerName = profile?.name ?? null;
+> 28 |     customerPhone = profile?.phone ?? null;
+     |     ^
+  29 |     customerAddress = profile?.address ?? null;
+  30 |   }
+  31 | {
+  digest: '4013480096'
+}
+ GET / 200 in 444ms (next.js: 6ms, proxy.ts: 117ms, application-code: 321ms)
+ GET / 200 in 1362ms (next.js: 185ms, proxy.ts: 578ms, application-code: 599ms)
+[browser] Uncaught ReferenceError: customerPhone is not defined
+    at HomePage (app\page.tsx:28:5)
+  26 |     userId = profile?.id ?? null;
+  27 |     customerName = profile?.name ?? null;
+> 28 |     customerPhone = profile?.phone ?? null;
+     |     ^
+  29 |     customerAddress = profile?.address ?? null;
+  30 |   }
+  31 |
+✓ Compiled in 20ms
+ GET / 200 in 2.1s (next.js: 184ms, proxy.ts: 514ms, application-code: 1404ms)
+ GET /api/insights?user_id=c0e1dd67-6373-4e5f-adf2-693391ca6ec1 200 in 626ms (next.js: 208ms, proxy.ts: 113ms, application-code: 305ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404
+✓ Compiled in 652ms
+ GET / 200 in 966ms (next.js: 305ms, proxy.ts: 407ms, application-code: 254ms)
+ GET / 200 in 290ms (next.js: 8ms, proxy.ts: 154ms, application-code: 129ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404
+ GET / 200 in 264ms (next.js: 10ms, proxy.ts: 110ms, application-code: 144ms)
+ GET / 200 in 262ms (next.js: 5ms, proxy.ts: 124ms, application-code: 133ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+[browser] Image with src "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[?25h

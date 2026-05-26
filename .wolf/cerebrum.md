@@ -36,9 +36,14 @@
 - [2026-05-25] Used `searchParams.error` directly in a client component page prop → runtime error. Always use `useSearchParams()` hook in client components.
 - [2026-05-25] Used placeholder UUIDs like `i1000000-…` and `m1000000-…` in seed SQL → "invalid input syntax for type uuid" — UUIDs must be hex only (0-9, a-f). Use prefixes from {a,b,c,d,e,f} (e.g., `b` for ingredients, `d` for menu items, `e` for orders, `f` for users).
 - [2026-05-25] Created Supabase views without `security_invoker=true` → advisors flag SECURITY DEFINER on view. Always `ALTER VIEW … SET (security_invoker = true)` so RLS of the calling user is enforced.
+- [2026-05-26] Asked AI (Gemini 2.5 Flash Lite) to reproduce full UUIDs in JSON extraction prompts → truncated JSON (`"d1000000-0...`) causing `SyntaxError: Unterminated string`. NEVER ask AI to output UUIDs in extraction. Always use human-readable identifiers (item names) in extraction JSON, then resolve names → IDs server-side using the menu array already in memory.
+- [2026-05-26] `<<ORDER_CONFIRMED>>` marker: Gemini follows the spirit (writes Arabic confirmation text) but drops the literal token. Always add fallback phrase detection (`"جاري تسجيل طلبك"`, `"تم تسجيل طلبك"`) alongside marker detection — never rely on a single signal.
 
-<!-- Mistakes made and corrected. Each entry prevents the same mistake recurring. -->
-<!-- Format: [YYYY-MM-DD] Description of what went wrong and what to do instead. -->
+## Key Learnings (continued)
+
+- **Chatbot order extraction pattern**: Two-phase AI call — first for conversation reply, second for structured JSON extraction when order is confirmed. The extraction call uses `response_format: { type: "json_object" }` and `max_tokens: 512`. Item names (not UUIDs) are used in the JSON; backend resolves names → real IDs using the already-fetched menu array.
+- **`chatbot_insights` persistence**: After every confirmed order, upsert `user_id`, `favourite_items` (array of menu_item_id UUIDs), `default_address` (if delivery), and `last_seen`. On next chatbot session, route.ts fetches these and builds a personalised system prompt so the bot doesn't re-ask for address/phone.
+- **Seed UUID `d1...` prefix** resolves to menu items (e.g., `d1000000-0000-0000-0000-00000000000c` = سندوتش فلافل).
 
 ## Decision Log
 

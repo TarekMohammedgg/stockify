@@ -125,31 +125,22 @@ export async function POST(request: Request) {
 
     // Order confirmed — extract structured data and submit
     try {
-      const menuListForExtraction = menu
+      // Use item names (not UUIDs) to avoid hallucination; backend maps names → real IDs
+      const menuNamesForExtraction = menu
         .filter((item) => item.is_available)
-        .map(
-          (item) =>
-            `${item.name_ar} → ID: ${item.id} | السعر: ${item.price}`,
-        )
+        .map((item) => `- ${item.name_ar} (${item.price} جنيه)`)
         .join("\n");
 
-      const extractionSystemPrompt = `أنت نظام استخراج بيانات. استخرج تفاصيل الطلب المؤكد من المحادثة التالية كـ JSON فقط بدون أي نص إضافي.
+      const extractionSystemPrompt = `أنت نظام استخراج بيانات. استخرج تفاصيل الطلب المؤكد من المحادثة كـ JSON فقط بدون أي نص إضافي.
 
-قائمة الأصناف المتاحة (استخدم الـ ID بالضبط):
-${menuListForExtraction}
+قائمة الأصناف المتاحة:
+${menuNamesForExtraction}
 
 أعطني JSON بهذا الهيكل فقط:
-{
-  "type": "delivery" أو "takeaway",
-  "items": [{"menu_item_id": "UUID_هنا", "quantity": 1, "unit_price": 45.00, "notes": null}],
-  "delivery_address": "نص أو null",
-  "customer_phone": "نص أو null",
-  "notes": null
-}
+{"type":"delivery or takeaway","items":[{"name":"اسم الصنف بالضبط","quantity":1,"notes":null}],"delivery_address":null,"customer_phone":null,"notes":null}
 
 قواعد:
-- استخدم UUIDs بالضبط من القائمة أعلاه
-- unit_price يجب أن يكون نفس السعر في القائمة
+- name يجب أن يكون اسم الصنف بالضبط كما هو في القائمة أعلاه
 - delivery_address مطلوب لو type هو delivery`;
 
       const extractResponse = await fetch(
@@ -165,6 +156,7 @@ ${menuListForExtraction}
           body: JSON.stringify({
             model: "google/gemini-2.5-flash-lite",
             response_format: { type: "json_object" },
+            max_tokens: 512,
             messages: [
               { role: "system", content: extractionSystemPrompt },
               ...messages.slice(-10),
@@ -193,7 +185,14 @@ ${menuListForExtraction}
         .replace(/```json/g, "")
         .replace(/```/g, "")
         .trim();
-      const orderData = JSON.parse(rawJson);
+
+      let orderData: any;
+      try {
+        orderData = JSON.parse(rawJson);
+      } catch (parseErr) {
+        console.error("[POST /api/chat] extraction JSON parse failed", parseErr, "raw:", rawJson.slice(0, 300));
+        throw parseErr;
+      }
 
       if (!["delivery", "takeaway"].includes(orderData.type)) {
         throw new Error(`Invalid order type from extraction: ${orderData.type}`);
@@ -202,7 +201,31 @@ ${menuListForExtraction}
         throw new Error("No valid items in extracted order");
       }
 
-      const totalPrice = (orderData.items as Array<{ unit_price: number; quantity: number }>).reduce(
+      // Map item names → real menu IDs and prices
+      type ExtractedItem = { name: string; quantity: number; notes: string | null };
+      const resolvedItems = (orderData.items as ExtractedItem[])
+        .map((item) => {
+          const found = menu.find(
+            (m) => m.name_ar === item.name || m.name_en === item.name,
+          );
+          if (!found) {
+            console.error("[POST /api/chat] unmatched item name:", item.name);
+            return null;
+          }
+          return {
+            menu_item_id: found.id,
+            quantity: item.quantity ?? 1,
+            unit_price: found.price,
+            notes: item.notes ?? null,
+          };
+        })
+        .filter(Boolean) as Array<{ menu_item_id: string; quantity: number; unit_price: number; notes: string | null }>;
+
+      if (resolvedItems.length === 0) {
+        throw new Error("No menu items could be matched from extraction");
+      }
+
+      const totalPrice = resolvedItems.reduce(
         (sum, item) => sum + item.unit_price * item.quantity,
         0,
       );
@@ -230,15 +253,13 @@ ${menuListForExtraction}
         });
       }
 
-      const orderItems = (orderData.items as Array<{ menu_item_id: string; quantity: number; unit_price: number; notes: string | null }>).map(
-        (item) => ({
-          order_id: order.id,
-          menu_item_id: item.menu_item_id,
-          quantity: item.quantity,
-          unit_price: item.unit_price,
-          notes: item.notes ?? null,
-        }),
-      );
+      const orderItems = resolvedItems.map((item) => ({
+        order_id: order.id,
+        menu_item_id: item.menu_item_id,
+        quantity: item.quantity,
+        unit_price: item.unit_price,
+        notes: item.notes,
+      }));
 
       const { error: itemsError } = await supabase
         .from("order_items")
@@ -256,9 +277,7 @@ ${menuListForExtraction}
         });
       }
 
-      const orderedItemIds = (orderData.items as Array<{ menu_item_id: string }>)
-        .map((item) => item.menu_item_id)
-        .filter(Boolean);
+      const orderedItemIds = resolvedItems.map((item) => item.menu_item_id);
       const deliveryAddress: string | null = orderData.delivery_address ?? null;
 
       await supabase.from("chatbot_insights").upsert(

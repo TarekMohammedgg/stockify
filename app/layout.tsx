@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Almarai } from "next/font/google";
+import BypassExtensionHydration from "@/components/ui/BypassExtensionHydration";
 import "./globals.css";
 
 const almarai = Almarai({
@@ -25,7 +26,9 @@ export default function RootLayout({
       dir="rtl"
       className={`${almarai.variable} h-full`}
     >
+      <head />
       <body className="min-h-full antialiased" suppressHydrationWarning>
+        <BypassExtensionHydration />
         {children}
       </body>
     </html>

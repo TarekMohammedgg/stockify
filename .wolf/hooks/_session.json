@@ -1,26 +1,26 @@
 {
-  "session_id": "session-2026-05-26-1527",
-  "started": "2026-05-26T12:27:40.539Z",
-  "files_read": {},
-  "files_written": [
-    {
-      "file": "E:/root/Programming/web-development/stockify/lib/chatbot/system-prompt.ts",
-      "action": "edit",
-      "tokens": 174,
-      "at": "2026-05-26T12:28:10.637Z"
+  "session_id": "session-2026-05-26-2010",
+  "started": "2026-05-26T17:10:48.059Z",
+  "files_read": {
+    "E:/root/Programming/web-development/stockify/app/page.tsx": {
+      "count": 1,
+      "tokens": 734,
+      "first_read": "2026-05-26T17:22:47.251Z"
     },
-    {
-      "file": "E:/root/Programming/web-development/stockify/app/api/chat/route.ts",
-      "action": "edit",
-      "tokens": 86,
-      "at": "2026-05-26T12:28:37.572Z"
+    "E:/root/Programming/web-development/stockify/components/public/public-menu.tsx": {
+      "count": 1,
+      "tokens": 2956,
+      "first_read": "2026-05-26T17:23:06.784Z"
+    },
+    "E:/root/Programming/web-development/stockify/components/public/chatbot-widget.tsx": {
+      "count": 1,
+      "tokens": 3511,
+      "first_read": "2026-05-26T17:28:09.224Z"
     }
-  ],
-  "edit_counts": {
-    "lib/chatbot/system-prompt.ts": 1,
-    "app/api/chat/route.ts": 1
   },
-  "anatomy_hits": 0,
+  "files_written": [],
+  "edit_counts": {},
+  "anatomy_hits": 3,
   "anatomy_misses": 0,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,

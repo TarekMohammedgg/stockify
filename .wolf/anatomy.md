@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T12:28:37.533Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T13:34:29.690Z
 > Files: 63 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -79,7 +79,7 @@
 
 ## app/api/chat/
 
-- `route.ts` — Next.js API route: POST (~2592 tok)
+- `route.ts` — POST: two-phase AI call (conversation + JSON extraction). Detects ORDER_CONFIRMED, extracts item names, resolves names→IDs server-side, inserts orders + order_items, upserts chatbot_insights (~3100 tok)
 
 ## app/api/chat/extract-insights/
 
