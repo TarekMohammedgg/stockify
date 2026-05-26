@@ -113,7 +113,10 @@ export async function POST(request: Request) {
     const reply: string =
       orData?.choices?.[0]?.message?.content ?? "عذراً، مش قادر أرد دلوقتي.";
 
-    const isOrderConfirmed = reply.includes("<<ORDER_CONFIRMED>>");
+    const CONFIRMATION_PHRASES = ["جاري تسجيل طلبك", "تم تسجيل طلبك", "ORDER_CONFIRMED"];
+    const isOrderConfirmed =
+      reply.includes("<<ORDER_CONFIRMED>>") ||
+      CONFIRMATION_PHRASES.some((p) => reply.includes(p));
     const cleanReply = reply.replaceAll("<<ORDER_CONFIRMED>>", "").trim();
 
     if (!isOrderConfirmed) {

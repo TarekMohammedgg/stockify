@@ -22,3 +22,21 @@ Error [AuthApiError]: Invalid Refresh Token: Refresh Token Not Found
 }
  GET /login 200 in 1473ms (next.js: 197ms, proxy.ts: 956ms, application-code: 319ms)
  GET /login 200 in 135ms (next.js: 14ms, proxy.ts: 12ms, application-code: 109ms)
+ GET /auth/callback 307 in 193ms (next.js: 170ms, proxy.ts: 6ms, application-code: 17ms)
+ GET /login?error=auth_callback_error 200 in 66ms (next.js: 4ms, proxy.ts: 5ms, application-code: 57ms)
+ GET / 200 in 2.4s (next.js: 94ms, proxy.ts: 469ms, application-code: 1836ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404
+ GET /api/insights?user_id=c0e1dd67-6373-4e5f-adf2-693391ca6ec1 200 in 975ms (next.js: 601ms, proxy.ts: 114ms, application-code: 260ms)
+ POST /api/chat 200 in 5.4s (next.js: 51ms, proxy.ts: 2.6s, application-code: 2.7s)
+ POST /api/chat 200 in 3.8s (next.js: 8ms, proxy.ts: 354ms, application-code: 3.5s)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=600 404
+⨯ upstream image response failed for https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=600 404
+ POST /api/chat 200 in 2.6s (next.js: 6ms, proxy.ts: 504ms, application-code: 2.1s)
+ POST /api/chat 200 in 2.1s (next.js: 4ms, proxy.ts: 456ms, application-code: 1625ms)
+ GET / 200 in 2.9s (next.js: 130ms, proxy.ts: 1146ms, application-code: 1659ms)
+ GET / 200 in 947ms (next.js: 181ms, proxy.ts: 599ms, application-code: 166ms)
+ GET / 200 in 1815ms (next.js: 8ms, proxy.ts: 410ms, application-code: 1396ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1567364143-3de17a5dc3b6?w=600 404
+ GET /api/insights?user_id=c0e1dd67-6373-4e5f-adf2-693391ca6ec1 200 in 663ms (next.js: 207ms, proxy.ts: 133ms, application-code: 323ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1626081078019-a1e8f5a7e7b3?w=600 404

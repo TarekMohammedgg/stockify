@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T06:57:26.999Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T12:28:37.533Z
 > Files: 63 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -79,7 +79,7 @@
 
 ## app/api/chat/
 
-- `route.ts` — Next.js API route: POST (~2548 tok)
+- `route.ts` — Next.js API route: POST (~2592 tok)
 
 ## app/api/chat/extract-insights/
 
@@ -154,7 +154,7 @@
 
 ## lib/chatbot/
 
-- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt (includes default_address), buildSystemPrompt — uses <<ORDER_CONFIRMED>> marker in step 6 (~680 tok)
+- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt, buildSystemPrompt (~699 tok)
 
 ## lib/supabase/
 
