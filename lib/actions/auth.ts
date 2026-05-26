@@ -21,17 +21,17 @@ export async function signIn(formData: FormData) {
 
   if (!user) return { error: "فشل تسجيل الدخول" };
 
-  const { data: role } = await supabase.rpc("current_user_role");
+  const { data: profile } = await supabase
+    .from("users")
+    .select("role, profile_complete")
+    .eq("id", user.id)
+    .single();
+
+  const role = profile?.role;
 
   if (role === "admin") redirect("/admin");
   if (role === "cashier") redirect("/cashier");
   if (role === "delivery") redirect("/delivery");
-
-  const { data: profile } = await supabase
-    .from("users")
-    .select("profile_complete")
-    .eq("id", user.id)
-    .single();
 
   if (profile?.profile_complete === false) redirect("/complete-profile");
 

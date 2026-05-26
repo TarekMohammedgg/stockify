@@ -1,0 +1,64 @@
+{
+  "project_overview": {
+    "domain": "Restaurant SaaS / Management System",
+    "database_backend": "Supabase",
+    "authentication": {
+      "methods": ["Gmail/password", "Google auth"]
+    }
+  },
+  "user_roles": [
+    {
+      "role": "Admin",
+      "permissions_and_features": {
+        "dashboard_metrics": [
+          "Number of orders with status",
+          "Number of employees",
+          "Daily income",
+          "Monthly income"
+        ],
+        "management_modules": ["Menu", "Ingredients (Stock)"]
+      }
+    },
+    {
+      "role": "Cashier",
+      "permissions_and_features": {
+        "order_types_handled": ["Onsite", "Delivery", "Takeaway"],
+        "actions": [
+          "Update the order status",
+          "Create new order",
+          "Update/create order and update the status of orders (specifically onsite and takeaway orders, as delivery tracking is handled by the delivery role)"
+        ]
+      }
+    },
+    {
+      "role": "Customer",
+      "permissions_and_features": {
+        "types": ["New customer", "Already client"],
+        "order_creation_methods": ["Chatbot", "Manually by customer"],
+        "conditional_rules": {
+          "address_or_phone_number": "Can be null in case takeaway or onsite"
+        }
+      }
+    },
+    {
+      "role": "Delivery",
+      "permissions_and_features": {
+        "actions": ["Can only update the status of delivery orders"]
+      }
+    }
+  ],
+  "system_components": {
+    "chatbot": {
+      "capabilities": [
+        "Have in-memory context by default",
+        "Access insights (favorites) of the customer",
+        "Use API requests with Supabase to get access to data about the restaurant (e.g., get menu, get ingredients of a specific item)",
+        "Can make orders"
+      ]
+    },
+    "order_management": {
+      "order_types": ["Onsite", "Delivery", "Takeaway"],
+      "statuses": ["Pending", "On delivery", "Complete", "Canceled"]
+    }
+  }
+}

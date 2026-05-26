@@ -215,6 +215,7 @@ function RowActions({
         type="button"
         onClick={onEdit}
         title="تعديل"
+        aria-label="تعديل"
         className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-colors"
       >
         <Pencil className="h-4 w-4" />
@@ -223,6 +224,7 @@ function RowActions({
         type="button"
         disabled={pending}
         title={employee.is_active ? "إيقاف" : "تفعيل"}
+        aria-label={employee.is_active ? "إيقاف" : "تفعيل"}
         onClick={() =>
           start(async () => {
             await setCashierActive(employee.id, !employee.is_active);
@@ -240,6 +242,7 @@ function RowActions({
         type="button"
         disabled={pending}
         title="حذف"
+        aria-label="حذف"
         onClick={() => {
           if (
             !confirm(
@@ -321,6 +324,7 @@ function EmployeeDialog({
             type="button"
             onClick={onClose}
             className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] transition-colors"
+            aria-label="إغلاق"
           >
             <X className="h-4 w-4" />
           </button>

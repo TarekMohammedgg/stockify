@@ -352,6 +352,107 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-26T01:12:25.486Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-05-26T00:00:00.000Z",
+      "error_message": "Admin employees page shows empty state — cashier and delivery users not appearing despite existing in DB",
+      "file": "lib/actions/admin.ts, supabase migration",
+      "root_cause": "current_user_role() queried public.users, which triggered the same RLS policies on public.users that called current_user_role() again — infinite recursion. PostgreSQL threw 42P17 and the query returned null, showing the empty state.",
+      "fix": "Rewrote current_user_role() to query auth.users.raw_app_meta_data (no custom RLS, no recursion). Backfilled role into auth.users for all existing users. Added app_metadata: { role } to createEmployee so future employees are covered.",
+      "tags": [
+        "rls",
+        "infinite-recursion",
+        "supabase",
+        "auth",
+        "employees",
+        "current_user_role"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T00:00:00.000Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-05-26T02:06:04.888Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/actions/auth.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T02:06:04.888Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-05-26T00:00:00.000Z",
+      "error_message": "Admin user logs in with email/password and gets redirected to customer home instead of /admin",
+      "file": "lib/actions/auth.ts",
+      "root_cause": "current_user_role() read role from auth.users.raw_app_meta_data which had no 'role' key for manually-created staff users; fell back to 'customer'",
+      "fix": "1) Updated current_user_role() DB function to read from public.users.role instead of raw_app_meta_data. 2) Backfilled raw_app_meta_data for existing staff. 3) Changed signIn() to query public.users directly (single query, also gets profile_complete), eliminating the RPC call.",
+      "tags": [
+        "auth",
+        "role",
+        "redirect",
+        "supabase",
+        "rpc"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T00:00:00.000Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-05-26T04:38:05.951Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/actions/cashier.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T04:38:05.951Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-05-26T04:48:27.265Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/cashier/new-order/order-form.tsx",
+      "root_cause": "Had \"dine-in\"",
+      "fix": "Changed to \"delivery\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T04:48:27.265Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-05-26T04:48:48.982Z",
+      "error_message": "CSS fix: type",
+      "file": "app/cashier/new-order/order-form.tsx",
+      "root_cause": "type: \"dine-in\" as const, → orderType,",
+      "fix": "Changed type: \"dine-in\" as const, → orderType,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T04:48:48.982Z"
     }
   ]
 }

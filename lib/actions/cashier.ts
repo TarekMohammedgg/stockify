@@ -122,9 +122,37 @@ export async function getLowStock(): Promise<LowStockItem[]> {
   return (data ?? []) as LowStockItem[];
 }
 
+export type CustomerInfo = {
+  id: string;
+  name: string;
+  phone: string;
+  address: string | null;
+};
+
+export async function findCustomerByPhone(
+  phone: string,
+): Promise<{ customer?: CustomerInfo; error?: string }> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, name, phone, address")
+    .eq("phone", phone.trim())
+    .eq("role", "customer")
+    .maybeSingle();
+  if (error) {
+    console.error("[findCustomerByPhone]", phone, error.message);
+    return { error: "خطأ في البحث، حاول مرة أخرى" };
+  }
+  if (!data) return { error: "لم يتم العثور على عميل بهذا الرقم" };
+  return { customer: data as CustomerInfo };
+}
+
 export type CreateOrderData = {
-  type: "dine-in" | "takeaway";
+  type: "dine-in" | "takeaway" | "delivery";
+  customer_id?: string;
   owner_name?: string;
+  customer_phone?: string;
+  delivery_address?: string;
   notes?: string;
   items: {
     menu_item_id: string;
@@ -140,8 +168,10 @@ export async function createOnsiteOrder(
   const supabase = await createClient();
 
   if (!data.items.length) return { error: "أضف صنفاً واحداً على الأقل" };
-  if (data.type === "takeaway" && !data.owner_name?.trim())
-    return { error: "أدخل اسم صاحب الطلب للتيك أواي" };
+  if (data.type === "delivery") {
+    if (!data.owner_name?.trim()) return { error: "أدخل اسم العميل للتوصيل" };
+    if (!data.delivery_address?.trim()) return { error: "أدخل عنوان التوصيل" };
+  }
 
   const total_price = data.items.reduce(
     (sum, i) => sum + i.unit_price * i.quantity,
@@ -154,7 +184,10 @@ export async function createOnsiteOrder(
       source: "onsite",
       type: data.type,
       status: "pending",
+      customer_id: data.customer_id ?? null,
       owner_name: data.owner_name?.trim() || null,
+      customer_phone: data.customer_phone?.trim() || null,
+      delivery_address: data.delivery_address?.trim() || null,
       notes: data.notes?.trim() || null,
       total_price,
     })

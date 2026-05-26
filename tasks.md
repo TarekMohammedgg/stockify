@@ -151,13 +151,13 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 
 ## Phase 4 — Public Menu Page
 
-- [ ] `/` landing/menu page (Arabic RTL by default)
-- [ ] Language toggle (AR/EN)
-- [ ] Category filter
-- [ ] Menu item cards (photo, name, price, ingredients, allergen badges)
-- [ ] "Order Now" button (opens chatbot if logged in, else redirects to login)
-- [ ] Responsive layout (desktop priority, mobile supported)
-- [ ] Performance: page load < 2s
+- [x] `/` landing/menu page (Arabic RTL by default)
+- [x] Language toggle (AR/EN)
+- [x] Category filter
+- [x] Menu item cards (photo, name, price, ingredients, allergen badges)
+- [x] "Order Now" button (opens chatbot if logged in, else redirects to login)
+- [x] Responsive layout (desktop priority, mobile supported)
+- [x] Performance: page load < 2s
 
 ---
 
@@ -193,40 +193,40 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 ## Phase 6 — UI/UX Design System
 
 ### 6.1 Design Foundations
-- [ ] Define color palette (primary, secondary, accent, semantic states) with Tailwind theme tokens
-- [ ] Define typography scale (Arabic-first font stack + English fallback, sizes, weights, line-heights)
-- [ ] Define spacing & sizing scale (consistent rem-based tokens)
-- [ ] Define border-radius, shadow, and elevation tokens
-- [ ] Configure dark mode palette parallel to light mode
+- [x] Define color palette (primary, secondary, accent, semantic states) with Tailwind theme tokens
+- [x] Define typography scale (Arabic-first font stack + English fallback, sizes, weights, line-heights)
+- [x] Define spacing & sizing scale (consistent rem-based tokens)
+- [x] Define border-radius, shadow, and elevation tokens
+- [x] Configure dark mode palette parallel to light mode
 - [x] Document design tokens in a central reference (e.g. `tailwind.config` or `globals.css`)
 
 ### 6.2 Core UI Components
-- [ ] Button (primary, secondary, ghost, destructive, icon-only, loading state)
-- [ ] Input, Textarea, Select, Checkbox, Radio, Toggle
-- [ ] Card (menu card, order card, stat card variants)
-- [ ] Modal / Dialog with RTL-aware close affordance
-- [ ] Toast / Alert / Banner (info, success, warning, error)
-- [ ] Badge / Tag (allergen badges, order type, status pills)
-- [ ] Table / List rows for admin & cashier dashboards
-- [ ] Sidebar / TopNav shell components
-- [ ] Empty state, Loading skeleton, Error state components
+- [x] Button (primary, secondary, ghost, destructive, icon-only, loading state)
+- [x] Input, Textarea, Select, Checkbox, Radio, Toggle
+- [x] Card (menu card, order card, stat card variants)
+- [x] Modal / Dialog with RTL-aware close affordance
+- [x] Toast / Alert / Banner (info, success, warning, error)
+- [x] Badge / Tag (allergen badges, order type, status pills)
+- [x] Table / List rows for admin & cashier dashboards
+- [x] Sidebar / TopNav shell components
+- [x] Empty state, Loading skeleton, Error state components
 
 ### 6.3 Page-Level UX
-- [ ] Login & Register screens — clean Arabic-first layout, Google button styling
-- [ ] Public menu page — hero, category filter chips, responsive grid, item card hover/focus states
+- [x] Login & Register screens — clean Arabic-first layout, Google button styling
+- [x] Public menu page — hero, category filter chips, responsive grid, item card hover/focus states
 - [ ] Chatbot widget — floating launcher, expanded panel, message bubbles, typing indicator
-- [ ] Admin dashboard — sidebar IA, content density, breadcrumbs/page titles
-- [ ] Cashier dashboard — live order grid, status color system, alert banner hierarchy
-- [ ] Mobile responsive breakpoints audit for all pages
+- [x] Admin dashboard — sidebar IA, content density, breadcrumbs/page titles
+- [x] Cashier dashboard — live order grid, status color system, alert banner hierarchy
+- [x] Mobile responsive breakpoints audit for all pages
 
 ### 6.4 RTL, Accessibility & Polish
-- [ ] Audit all components for logical properties (no `left`/`right`, use `start`/`end`)
-- [ ] Verify icon mirroring (chevrons, arrows) under RTL
-- [ ] Color contrast meets WCAG AA on light + dark modes
-- [ ] Keyboard navigation & visible focus rings on all interactive elements
-- [ ] ARIA labels for icon-only buttons and live regions (orders, alerts)
-- [ ] Reduced-motion respect for animations
-- [ ] Run `openwolf designqc` and iterate on captured screenshots
+- [x] Audit all components for logical properties (no `left`/`right`, use `start`/`end`)
+- [x] Verify icon mirroring (chevrons, arrows) under RTL
+- [x] Color contrast meets WCAG AA on light + dark modes
+- [x] Keyboard navigation & visible focus rings on all interactive elements
+- [x] ARIA labels for icon-only buttons and live regions (orders, alerts)
+- [x] Reduced-motion respect for animations
+- [x] Run `openwolf designqc` and iterate on captured screenshots
 
 ---
 

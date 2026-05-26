@@ -156,6 +156,7 @@ function RowActions({
         onClick={onEdit}
         className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-colors"
         title="تعديل"
+        aria-label="تعديل"
       >
         <Pencil className="h-4 w-4" />
       </button>
@@ -174,6 +175,7 @@ function RowActions({
         }}
         className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors"
         title="حذف"
+        aria-label="حذف"
       >
         <Trash2 className="h-4 w-4" />
       </button>
@@ -220,6 +222,7 @@ function IngredientForm({
           type="button"
           onClick={onClose}
           className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] transition-colors"
+          aria-label="إغلاق"
         >
           <X className="h-4 w-4" />
         </button>

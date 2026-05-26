@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS orders (
     owner_name       TEXT,
     delivery_address TEXT,
     notes            TEXT,
+    customer_phone   TEXT,
     total_price      NUMERIC      NOT NULL DEFAULT 0,
     created_at       TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at       TIMESTAMPTZ  NOT NULL DEFAULT NOW()
@@ -221,7 +222,7 @@ SELECT
     o.created_at,
     o.updated_at,
     u.name  AS customer_name,
-    u.phone AS customer_phone,
+    COALESCE(u.phone, o.customer_phone) AS customer_phone,
     COALESCE(
         json_agg(
             json_build_object(

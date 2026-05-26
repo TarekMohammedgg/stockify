@@ -22,6 +22,7 @@ export function MenuRowActions({
       <button
         type="button"
         title={isAvailable ? "إخفاء" : "إظهار"}
+        aria-label={isAvailable ? "إخفاء" : "إظهار"}
         disabled={pending}
         onClick={() =>
           start(async () => {
@@ -40,12 +41,14 @@ export function MenuRowActions({
         href={`/admin/menu/${id}`}
         className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-colors"
         title="تعديل"
+        aria-label="تعديل"
       >
         <Pencil className="h-4 w-4" />
       </Link>
       <button
         type="button"
         title="حذف"
+        aria-label="حذف"
         disabled={pending}
         onClick={() => {
           if (!confirm("هل أنت متأكد من حذف هذا الصنف؟")) return;

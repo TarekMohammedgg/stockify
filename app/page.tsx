@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { signOut } from "@/lib/actions/auth";
+import PublicMenu from "@/components/public/public-menu";
+import ChatbotWidget from "@/components/public/chatbot-widget";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -8,35 +9,81 @@ export default async function HomePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  // If logged in, check role
+  let userId: string | null = null;
+  let customerName: string | null = null;
+  if (user) {
+    const { data: role } = await supabase.rpc("current_user_role");
+    if (role === "admin") redirect("/admin");
+    if (role === "cashier") redirect("/cashier");
+    if (role === "delivery") redirect("/delivery");
 
-  const { data: role } = await supabase.rpc("current_user_role");
+    const { data: profile } = await supabase
+      .from("users")
+      .select("id, name")
+      .eq("id", user.id)
+      .single();
+    userId = profile?.id ?? null;
+    customerName = profile?.name ?? null;
+  }
 
-  if (role === "admin") redirect("/admin");
-  if (role === "cashier") redirect("/cashier");
+  // Fetch Categories
+  const { data: categoriesData } = await supabase
+    .from("categories")
+    .select("id, name_ar, name_en, sort_order")
+    .order("sort_order", { ascending: true });
 
-  const { data: profile } = await supabase
-    .from("users")
-    .select("name")
-    .eq("id", user.id)
-    .single();
+  // Fetch Menu Items
+  const { data: menuData } = await supabase
+    .from("v_menu")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  // Fetch Ingredients
+  const { data: ingredientsData } = await supabase
+    .from("v_item_ingredients")
+    .select("menu_item_id, name_ar, name_en");
+
+  // Fetch Allergens
+  const { data: allergensData } = await supabase
+    .from("v_item_allergens")
+    .select("menu_item_id, name_ar, name_en");
+
+  // Format data
+  const categories = categoriesData || [];
+  
+  const items = (menuData || []).map((item) => {
+    return {
+      id: item.id,
+      name_ar: item.name_ar,
+      name_en: item.name_en,
+      category_ar: item.category_ar,
+      category_en: item.category_en,
+      price: item.price,
+      photo_url: item.photo_url,
+      is_available: item.is_available,
+      allergens: (allergensData || [])
+        .filter((a) => a.menu_item_id === item.id)
+        .map((a) => ({ name_ar: a.name_ar, name_en: a.name_en })),
+      ingredients: (ingredientsData || [])
+        .filter((i) => i.menu_item_id === item.id)
+        .map((i) => ({ name_ar: i.name_ar, name_en: i.name_en })),
+    };
+  });
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-[var(--surface-bg)] px-4 text-center">
-      <h1 className="font-display text-3xl text-[var(--text-primary)]">
-        مرحباً {profile?.name ?? ""}
-      </h1>
-      <p className="text-[var(--text-muted)]">
-        منيو العميل سيتم بناؤه في المرحلة الرابعة.
-      </p>
-      <form action={signOut}>
-        <button
-          type="submit"
-          className="rounded-full border border-[var(--surface-border)] px-5 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--surface-input)] transition-colors"
-        >
-          تسجيل الخروج
-        </button>
-      </form>
-    </div>
+    <>
+      <PublicMenu
+        items={items}
+        categories={categories}
+        isLoggedIn={!!user}
+      />
+      {!!user && userId && (
+        <ChatbotWidget
+          userId={userId}
+          customerName={customerName ?? "صديقنا"}
+        />
+      )}
+    </>
   );
 }

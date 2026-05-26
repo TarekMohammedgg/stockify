@@ -136,7 +136,7 @@ export default async function AdminHomePage() {
               <span aria-hidden>٭</span>
               <span aria-hidden>٭</span>
             </div>
-            <div className="grid grid-cols-3 gap-x-8 gap-y-3 ms-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-3 ms-auto">
               <KpiMini label="طلبات" value={String(ordersToday ?? 0)} />
               <KpiMini label="منيو" value={String(menuCount ?? 0)} />
               <KpiMini label="موظفون" value={String(employeeCount ?? 0)} />
@@ -209,7 +209,7 @@ export default async function AdminHomePage() {
               href="/admin/ingredients"
               className="text-xs eyebrow text-primary-600 hover:text-primary-700"
             >
-              عرض الكل →
+              عرض الكل ←
             </Link>
           </div>
           <p className="text-xs text-[var(--text-muted)] mb-6">

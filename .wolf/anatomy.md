@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T01:12:25.433Z
-> Files: 50 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T05:36:29.713Z
+> Files: 59 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -19,6 +19,10 @@
 ## .claude/rules/
 
 - `openwolf.md` (~313 tok)
+
+## C:/Users/USER/.claude/plans/
+
+- `peaceful-purring-naur.md` — Plan: Phase 5 — Chatbot Widget + OpenRouter Integration (~1204 tok)
 
 ## app/
 
@@ -71,9 +75,33 @@
 
 - `page.tsx` — NewMenuItemPage (~502 tok)
 
+## app/api/chat/
+
+- `route.ts` — Next.js API route: POST (~938 tok)
+
+## app/api/insights/
+
+- `route.ts` — Next.js API route: GET, PATCH (~555 tok)
+
+## app/api/menu/
+
+- `route.ts` — Next.js API route: GET (~150 tok)
+
+## app/api/menu/[id]/ingredients/
+
+- `route.ts` — Next.js API route: GET (~362 tok)
+
 ## app/api/orders-refresh/
 
 - `route.ts` — Next.js API route: GET (~58 tok)
+
+## app/api/orders/
+
+- `route.ts` — Next.js API route: GET, POST (~782 tok)
+
+## app/api/orders/[id]/
+
+- `route.ts` — Next.js API route: PATCH (~334 tok)
 
 ## app/auth/callback/
 
@@ -87,7 +115,7 @@
 
 ## app/cashier/new-order/
 
-- `order-form.tsx` — OrderForm (~3793 tok)
+- `order-form.tsx` — OrderForm (~6461 tok)
 - `page.tsx` — NewOrderPage (~275 tok)
 
 ## app/delivery/
@@ -101,6 +129,10 @@
 
 - `sidebar.tsx` — PendingDot — renders form (~1880 tok)
 
+## components/public/
+
+- `chatbot-widget.tsx` — ChatbotWidget (~1969 tok)
+
 ## docs/
 
 - `PRD.md` — PRD — Stockify Restaurant Management Website (~4981 tok)
@@ -108,10 +140,14 @@
 
 ## lib/actions/
 
-- `admin.ts` — API routes: GET (19 endpoints) (~2619 tok)
-- `auth.ts` — API routes: GET (8 endpoints) (~812 tok)
-- `cashier.ts` — Exports OrderStatus, OrderItem, Order, LowStockItem + 5 more (~1350 tok)
+- `admin.ts` — API routes: GET (19 endpoints) (~2627 tok)
+- `auth.ts` — API routes: GET (8 endpoints) (~804 tok)
+- `cashier.ts` — Exports OrderStatus, OrderItem, Order, LowStockItem + 7 more (~1647 tok)
 - `delivery.ts` — Exports DeliveryStatus, OrderItem, DeliveryOrder, listDeliveryOrders, updateDeliveryOrderStatus (~921 tok)
+
+## lib/chatbot/
+
+- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt, buildSystemPrompt (~554 tok)
 
 ## lib/supabase/
 
@@ -120,4 +156,4 @@
 
 ## supabase/
 
-- `schema.sql` — Database schema (~2469 tok)
+- `schema.sql` — Database schema (~2483 tok)

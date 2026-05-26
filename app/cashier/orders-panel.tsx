@@ -205,7 +205,7 @@ function OrderCard({ order }: { order: Order }) {
           {order.customer_name && <p>{order.customer_name}{order.customer_phone && ` · ${order.customer_phone}`}</p>}
           {order.owner_name && <p>{order.owner_name}</p>}
           {order.delivery_address && <p className="text-[var(--text-faint)]">{order.delivery_address}</p>}
-          {order.notes && <p className="italic">"{order.notes}"</p>}
+          {order.notes && <p className="italic">&quot;{order.notes}&quot;</p>}
         </div>
         <p className="font-serif text-lg font-semibold text-[var(--text-primary)] shrink-0">
           {order.total_price.toLocaleString("ar-EG")} ج
@@ -322,7 +322,7 @@ export function OrdersPanel({
           <p className="text-sm">لا توجد طلبات في هذا التصنيف</p>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div aria-live="polite" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}

@@ -208,6 +208,7 @@ async function createEmployee(
     password,
     email_confirm: true,
     user_metadata: { full_name: name },
+    app_metadata: { role },
   });
   if (error) {
     console.error("[createEmployee] auth.admin.createUser failed", error.message);
