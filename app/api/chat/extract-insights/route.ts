@@ -110,22 +110,32 @@ ${menuText}
       insights.phone = null;
     }
 
-    // Update users table for phone and address if present
-    const updatesToUser: { phone?: string; address?: string } = {};
-    if (insights.phone) updatesToUser.phone = insights.phone;
-    if (insights.address) updatesToUser.address = insights.address;
-
-    if (Object.keys(updatesToUser).length > 0) {
-      const { error: userUpdateError } = await supabase
+    // Backfill users.phone / users.address only when currently empty —
+    // don't silently overwrite a value the user set manually in their
+    // profile. Explicit profile edits live in /complete-profile.
+    if (insights.phone || insights.address) {
+      const { data: currentUser } = await supabase
         .from("users")
-        .update(updatesToUser)
-        .eq("id", userId);
-      if (userUpdateError) {
-        console.error(
-          "[POST /api/chat/extract-insights] update users",
-          userId,
-          userUpdateError.message,
-        );
+        .select("phone, address")
+        .eq("id", userId)
+        .maybeSingle();
+
+      const updatesToUser: { phone?: string; address?: string } = {};
+      if (insights.phone && !currentUser?.phone) updatesToUser.phone = insights.phone;
+      if (insights.address && !currentUser?.address) updatesToUser.address = insights.address;
+
+      if (Object.keys(updatesToUser).length > 0) {
+        const { error: userUpdateError } = await supabase
+          .from("users")
+          .update(updatesToUser)
+          .eq("id", userId);
+        if (userUpdateError) {
+          console.error(
+            "[POST /api/chat/extract-insights] update users",
+            userId,
+            userUpdateError.message,
+          );
+        }
       }
     }
 

@@ -28,6 +28,19 @@ export default async function MenuPage() {
     customerName = profile?.name ?? null;
     customerPhone = profile?.phone ?? null;
     customerAddress = profile?.address ?? null;
+
+    // Fallback: if the chatbot collected an address but it hasn't been
+    // promoted to users.address yet, surface it to manual checkout too.
+    if (userId && !customerAddress) {
+      const { data: insights } = await supabase
+        .from("chatbot_insights")
+        .select("default_address")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (insights?.default_address) {
+        customerAddress = insights.default_address;
+      }
+    }
   }
 
   const { data: categoriesData } = await supabase
