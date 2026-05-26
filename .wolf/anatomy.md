@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-25T21:58:55.148Z
-> Files: 39 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-25T22:34:10.243Z
+> Files: 41 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -77,8 +77,9 @@
 
 ## app/cashier/
 
-- `layout.tsx` — CashierLayout (~154 tok)
-- `page.tsx` — CashierHomePage — renders form (~246 tok)
+- `layout.tsx` — Mark — renders form (~1040 tok)
+- `orders-panel.tsx` — STATUS_LABELS (~3504 tok)
+- `page.tsx` — CashierHomePage (~89 tok)
 
 ## components/admin/
 
@@ -93,6 +94,7 @@
 
 - `admin.ts` — API routes: GET (19 endpoints) (~2482 tok)
 - `auth.ts` — API routes: GET (8 endpoints) (~798 tok)
+- `cashier.ts` — Exports OrderStatus, OrderItem, Order, LowStockItem + 5 more (~1083 tok)
 
 ## lib/supabase/
 
