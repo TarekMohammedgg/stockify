@@ -3,6 +3,9 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+## 2026-05-26
+| 21:43 | /steer: conflict-checked docs/PRD.md, docs/SUPABASE_SCHEMA.md, CLAUDE.md, AGENTS.md; user resolved 5 conflicts | CLAUDE.md, AGENTS.md | rewrote both files (≤200 lines each) with PRD-aligned order status enum + delivery role + pinned versions (Next 16.2.6, React 19.2.4, TW v4) | ~6k |
+
 | 21:15 | /steer-tasks: refreshed Phase 5.2 — marked submit/insights/branching done; replaced open items with 3 ordered tasks (delivery-address guard, editable prefill, E2E verify) | tasks.md | updated | ~1.5k |
 
 ## Session: 2026-05-25 13:45
@@ -509,3 +512,6 @@
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+| 21:42 | Created CLAUDE.md | — | ~1952 |
+| 21:42 | Created AGENTS.md | — | ~1211 |
+| 21:44 | Session end: 2 writes across 2 files (CLAUDE.md, AGENTS.md) | 6 reads | ~18032 tok |

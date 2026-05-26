@@ -48,3 +48,9 @@
 ## Decision Log
 
 <!-- Significant technical decisions with rationale. Why X was chosen over Y. -->
+
+- **[2026-05-26] Order status enum**: PRD §7 (`pending | on_delivery | complete | cancelled`) wins over the 5-value enum in `docs/SUPABASE_SCHEMA.md` (`pending | preparing | ready | completed | cancelled`). Code must use the 4-value PRD enum; the SQL file is the one out of sync and must be reconciled.
+- **[2026-05-26] User role enum**: `user_role` must include `delivery` (per PRD §7). The SQL file in `docs/` is missing it — that's a schema bug, not a code workaround. The codebase already redirects `delivery → /delivery` in `lib/actions/auth.ts`.
+- **[2026-05-26] Staff auth method**: All staff roles (admin / cashier / delivery) authenticate with **email + password** via Supabase Auth — not arbitrary usernames. PRD wording "Username + Password" is informal; the codebase uses email. Google OAuth is customer-only.
+- **[2026-05-26] Tailwind v4** locked as the only allowed styling system (`@tailwindcss/postcss`). No v3 fallback.
+- **[2026-05-26] Pinned versions in CLAUDE.md**: Next.js 16.2.6, React 19.2.4, TypeScript ^5, `@types/node` ^20. Drift requires an explicit bump task — don't change ad hoc.

@@ -1,13 +1,13 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T18:24:46.478Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T18:42:43.299Z
 > Files: 66 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
 - `.prettierrc` (~34 tok)
-- `AGENTS.md` — Project Overview (~677 tok)
-- `CLAUDE.md` — OpenWolf (~735 tok)
+- `AGENTS.md` — Stockify — Agent Guide (~1135 tok)
+- `CLAUDE.md` — OpenWolf (~1830 tok)
 - `next.config.ts` — Declares nextConfig with Unsplash remotePatterns (~68 tok)
 - `proxy.ts` — Exports proxy (~626 tok)
 - `tasks.md` — Stockify — Build Tasks (~3961 tok)

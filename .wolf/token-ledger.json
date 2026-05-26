@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-24T13:26:18.340Z",
   "lifetime": {
-    "total_tokens_estimated": 617373,
-    "total_reads": 301,
-    "total_writes": 357,
+    "total_tokens_estimated": 635405,
+    "total_reads": 307,
+    "total_writes": 359,
     "total_sessions": 33,
-    "anatomy_hits": 257,
-    "anatomy_misses": 38,
+    "anatomy_hits": 262,
+    "anatomy_misses": 39,
     "repeated_reads_blocked": 96,
-    "estimated_savings_vs_bare_cli": 236049
+    "estimated_savings_vs_bare_cli": 237049
   },
   "sessions": [
     {
@@ -4210,6 +4210,69 @@
         "writes_count": 0,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-26-2137",
+      "started": "2026-05-26T18:37:02.717Z",
+      "ended": "2026-05-26T18:44:07.457Z",
+      "reads": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/CLAUDE.md",
+          "tokens_estimated": 735,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/AGENTS.md",
+          "tokens_estimated": 677,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/PRD.md",
+          "tokens_estimated": 4981,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md",
+          "tokens_estimated": 7377,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/package.json",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/lib/actions/auth.ts",
+          "tokens_estimated": 874,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/CLAUDE.md",
+          "tokens_estimated": 2091,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/AGENTS.md",
+          "tokens_estimated": 1297,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 14644,
+        "output_tokens_estimated": 3388,
+        "reads_count": 6,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 5
       }
     }
   ],
