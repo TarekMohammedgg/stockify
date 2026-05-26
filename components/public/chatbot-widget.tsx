@@ -70,6 +70,25 @@ export default function ChatbotWidget({
   const [isPending, setIsPending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const handleClose = () => {
+    setIsOpen(false);
+    if (messages.length > 2) {
+      fetch("/api/chat/extract-insights", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages, userId }),
+      }).catch((err) => console.error("Failed to extract insights:", err));
+    }
+  };
+
+  const handleToggle = () => {
+    if (isOpen) {
+      handleClose();
+    } else {
+      setIsOpen(true);
+    }
+  };
+
   // Initial greeting from bot
   useEffect(() => {
     setMessages([
@@ -149,7 +168,7 @@ export default function ChatbotWidget({
               <p className="text-xs text-primary-100">بيرد بالعامية المصرية</p>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="rounded-lg p-1.5 text-white/80 transition-colors hover:bg-primary-600 hover:text-white"
               aria-label="إغلاق المحادثة"
             >
@@ -243,7 +262,7 @@ export default function ChatbotWidget({
 
       {/* Launcher Button */}
       <button
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={handleToggle}
         className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-500 text-white shadow-lg hover:shadow-xl hover:shadow-primary-500/30 hover:bg-primary-600 transition-all active:scale-95 border-2 border-white dark:border-neutral-900"
         aria-label={isOpen ? "إغلاق المحادثة" : "فتح المحادثة"}
       >

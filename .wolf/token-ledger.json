@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-24T13:26:18.340Z",
   "lifetime": {
-    "total_tokens_estimated": 553005,
-    "total_reads": 271,
-    "total_writes": 335,
+    "total_tokens_estimated": 561215,
+    "total_reads": 274,
+    "total_writes": 342,
     "total_sessions": 22,
-    "anatomy_hits": 235,
-    "anatomy_misses": 30,
+    "anatomy_hits": 237,
+    "anatomy_misses": 31,
     "repeated_reads_blocked": 90,
-    "estimated_savings_vs_bare_cli": 222231
+    "estimated_savings_vs_bare_cli": 222631
   },
   "sessions": [
     {
@@ -3836,6 +3836,76 @@
         "writes_count": 4,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-26-0855",
+      "started": "2026-05-26T05:55:04.148Z",
+      "ended": "2026-05-26T06:13:22.796Z",
+      "reads": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/.claude/session.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 3414,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/cashier/orders-panel.tsx",
+          "tokens_estimated": 3459,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/.claude/requirements.md",
+          "tokens_estimated": 316,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 348,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 26,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/.claude/session.md",
+          "tokens_estimated": 390,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/tasks.md",
+          "tokens_estimated": 80,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/.claude/session.md",
+          "tokens_estimated": 32,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/.claude/session.md",
+          "tokens_estimated": 145,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 6873,
+        "output_tokens_estimated": 1337,
+        "reads_count": 3,
+        "writes_count": 7,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
       }
     }
   ],

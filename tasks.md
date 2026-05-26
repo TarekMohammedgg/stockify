@@ -104,8 +104,8 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 - [x] Color-coded: Yellow (low) / Red (out of stock)
 
 ### 3.4 Cashier — Delivery Order Visibility
-- [ ] Ensure cashier orders panel lists delivery-type orders as read-only for status (visible but transitions disabled per PRD §5.5)
-- [ ] Update status-update buttons in `app/cashier/orders-panel.tsx` to use new enum values (`pending` / `on_delivery` / `complete` / `cancelled`)
+- [x] Ensure cashier orders panel lists delivery-type orders as read-only for status (visible but transitions disabled per PRD §5.5)
+- [x] Update status-update buttons in `app/cashier/orders-panel.tsx` to use new enum values (`pending` / `on_delivery` / `complete` / `cancelled`)
 - [x] Restrict cashier status mutations server-side to non-delivery orders only
 - [x] Confirm cashier "New Order → Delivery" path still creates orders with `type='delivery'` and status `pending` so they surface in the delivery dashboard
 

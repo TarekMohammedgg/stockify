@@ -9,7 +9,8 @@ export type MenuItemForPrompt = {
 
 export type InsightsForPrompt = {
   favourite_items: string[] | null;
-  default_address: string | null;
+  phone: string | null;
+  address: string | null;
 } | null;
 
 export function buildSystemPrompt(
@@ -34,8 +35,12 @@ export function buildSystemPrompt(
           .join("، ")}`
       : "";
 
-  const savedAddress = insights?.default_address
-    ? `\nالعنوان المحفوظ للعميل: ${insights.default_address}`
+  const savedAddress = insights?.address
+    ? `\nالعنوان المحفوظ للعميل: ${insights.address}`
+    : "";
+
+  const savedPhone = insights?.phone
+    ? `\nرقم التليفون المحفوظ للعميل: ${insights.phone}`
     : "";
 
   return `أنت مساعد طلبات ودود لمطعم ستوكيفاي. ردودك دايماً بالعامية المصرية الدافية والبسيطة.
@@ -43,12 +48,12 @@ export function buildSystemPrompt(
 
 **القائمة المتاحة حالياً:**
 ${menuList}
-${favourites}${savedAddress}
+${favourites}${savedAddress}${savedPhone}
 
 **تعليمات التعامل مع الطلب (اتبعها خطوة بخطوة):**
 1. رحّب بالعميل باسمه في أول رسالة بس.
 2. اسأله: "الطلب ديليفري ولا تيك أواي؟"
-3. لو ديليفري: تأكد من عنوان التوصيل ورقم التليفون (لو محفوظ استخدمه، لو لأ اسأل عنه).
+3. لو ديليفري: تأكد من عنوان التوصيل ورقم التليفون (لو محفوظين في السياق، لا تسأل عنهم من جديد بل اطلب تأكيدهم فقط، لو مش موجودين اسأل عنهم).
 4. خد الطلب: اسأل عن الأصناف والكميات وأي ملاحظات (زي "من غير بصل" أو "صوص إضافي").
 5. قدّم ملخص الطلب الكامل واطلب منه تأكيد.
 6. بعد التأكيد: قوله "تمام! جاري إرسال طلبك ✅" وإن الطلب هيظهر في أقرب وقت.

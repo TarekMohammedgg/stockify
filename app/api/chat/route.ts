@@ -51,17 +51,22 @@ export async function POST(request: Request) {
 
   const { data: insightsData } = await supabase
     .from("chatbot_insights")
-    .select("favourite_items, default_address")
+    .select("favourite_items")
     .eq("user_id", userId)
     .maybeSingle();
 
+  const { data: userData } = await supabase
+    .from("users")
+    .select("phone, address")
+    .eq("id", userId)
+    .maybeSingle();
+
   const menu = (menuData ?? []) as MenuItemForPrompt[];
-  const insights: InsightsForPrompt = insightsData
-    ? {
-        favourite_items: insightsData.favourite_items ?? null,
-        default_address: insightsData.default_address ?? null,
-      }
-    : null;
+  const insights: InsightsForPrompt = {
+    favourite_items: insightsData?.favourite_items ?? null,
+    phone: userData?.phone ?? null,
+    address: userData?.address ?? null,
+  };
 
   const systemPrompt = buildSystemPrompt(menu, insights, customerName);
 

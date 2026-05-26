@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T06:02:19.051Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T06:12:52.871Z
 > Files: 62 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -15,7 +15,7 @@
 ## .claude/
 
 - `requirements.md` — Stockify — Requirements & Verification Checklist (~277 tok)
-- `session.md` — What's Done (~341 tok)
+- `session.md` — What's Done (~392 tok)
 - `settings.json` (~441 tok)
 
 ## .claude/rules/
