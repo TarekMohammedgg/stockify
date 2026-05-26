@@ -1,78 +1,43 @@
 {
-  "session_id": "session-2026-05-25-0106",
-  "started": "2026-05-25T22:06:53.634Z",
+  "session_id": "session-2026-05-26-0428",
+  "started": "2026-05-26T01:28:12.160Z",
   "files_read": {
-    "E:/root/Programming/web-development/stockify/app/cashier/page.tsx": {
+    "E:/root/Programming/web-development/stockify/app/admin/employees/page.tsx": {
       "count": 1,
-      "tokens": 246,
-      "first_read": "2026-05-25T22:12:03.918Z"
-    },
-    "E:/root/Programming/web-development/stockify/app/cashier/layout.tsx": {
-      "count": 1,
-      "tokens": 154,
-      "first_read": "2026-05-25T22:12:04.508Z"
+      "tokens": 788,
+      "first_read": "2026-05-26T01:31:16.296Z"
     },
     "E:/root/Programming/web-development/stockify/lib/actions/admin.ts": {
       "count": 1,
-      "tokens": 2482,
-      "first_read": "2026-05-25T22:12:04.783Z"
+      "tokens": 2619,
+      "first_read": "2026-05-26T01:31:16.726Z"
     },
-    "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md": {
-      "count": 4,
-      "tokens": 7377,
-      "first_read": "2026-05-25T22:12:19.979Z"
-    },
-    "E:/root/Programming/web-development/stockify/docs/PRD.md": {
+    "E:/root/Programming/web-development/stockify/app/admin/employees/manager.tsx": {
       "count": 1,
-      "tokens": 3332,
-      "first_read": "2026-05-25T22:12:20.782Z"
+      "tokens": 3876,
+      "first_read": "2026-05-26T01:32:56.904Z"
     },
-    "E:/root/Programming/web-development/stockify/components/admin/sidebar.tsx": {
+    "E:/root/Programming/web-development/stockify/app/admin/layout.tsx": {
       "count": 1,
-      "tokens": 1880,
-      "first_read": "2026-05-25T22:29:11.686Z"
+      "tokens": 293,
+      "first_read": "2026-05-26T01:33:59.959Z"
     },
-    "E:/root/Programming/web-development/stockify/app/globals.css": {
+    "E:/root/Programming/web-development/stockify/lib/supabase/server.ts": {
       "count": 1,
-      "tokens": 1684,
-      "first_read": "2026-05-25T22:29:12.539Z"
+      "tokens": 202,
+      "first_read": "2026-05-26T01:34:55.524Z"
+    },
+    "E:/root/Programming/web-development/stockify/app/admin/page.tsx": {
+      "count": 1,
+      "tokens": 2750,
+      "first_read": "2026-05-26T01:37:03.895Z"
     }
   },
-  "files_written": [
-    {
-      "file": "E:/root/Programming/web-development/stockify/lib/actions/cashier.ts",
-      "action": "create",
-      "tokens": 1083,
-      "at": "2026-05-25T22:31:35.910Z"
-    },
-    {
-      "file": "E:/root/Programming/web-development/stockify/app/cashier/layout.tsx",
-      "action": "create",
-      "tokens": 1040,
-      "at": "2026-05-25T22:32:21.073Z"
-    },
-    {
-      "file": "E:/root/Programming/web-development/stockify/app/cashier/page.tsx",
-      "action": "create",
-      "tokens": 89,
-      "at": "2026-05-25T22:32:52.758Z"
-    },
-    {
-      "file": "E:/root/Programming/web-development/stockify/app/cashier/orders-panel.tsx",
-      "action": "create",
-      "tokens": 3504,
-      "at": "2026-05-25T22:34:10.311Z"
-    }
-  ],
-  "edit_counts": {
-    "lib/actions/cashier.ts": 1,
-    "app/cashier/layout.tsx": 1,
-    "app/cashier/page.tsx": 1,
-    "app/cashier/orders-panel.tsx": 1
-  },
-  "anatomy_hits": 7,
+  "files_written": [],
+  "edit_counts": {},
+  "anatomy_hits": 6,
   "anatomy_misses": 0,
-  "repeated_reads_warned": 3,
+  "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
   "stop_count": 0
 }

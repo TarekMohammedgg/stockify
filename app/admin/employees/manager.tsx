@@ -12,17 +12,26 @@ import {
 } from "lucide-react";
 import {
   createCashier,
+  createDeliveryEmployee,
   updateCashier,
   setCashierActive,
   deleteCashier,
 } from "@/lib/actions/admin";
 
-type Cashier = {
+type Employee = {
   id: string;
   name: string;
   email: string;
   phone: string;
+  role: "cashier" | "delivery";
   is_active: boolean;
+};
+
+type FilterTab = "all" | "cashier" | "delivery";
+
+const ROLE_LABEL: Record<"cashier" | "delivery", string> = {
+  cashier: "كاشير",
+  delivery: "توصيل",
 };
 
 function initials(name: string) {
@@ -34,46 +43,107 @@ function initials(name: string) {
     .join("");
 }
 
-export function EmployeesManager({ cashiers }: { cashiers: Cashier[] }) {
-  const [open, setOpen] = useState<Cashier | "new" | null>(null);
+export function EmployeesManager({ employees }: { employees: Employee[] }) {
+  const [open, setOpen] = useState<{ employee: Employee | null; role: "cashier" | "delivery" } | null>(null);
+  const [filter, setFilter] = useState<FilterTab>("all");
+
+  const filtered =
+    filter === "all" ? employees : employees.filter((e) => e.role === filter);
+
+  const tabs: { key: FilterTab; label: string; count: number }[] = [
+    { key: "all", label: "الكل", count: employees.length },
+    {
+      key: "cashier",
+      label: "كاشير",
+      count: employees.filter((e) => e.role === "cashier").length,
+    },
+    {
+      key: "delivery",
+      label: "توصيل",
+      count: employees.filter((e) => e.role === "delivery").length,
+    },
+  ];
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
-        <button
-          type="button"
-          onClick={() => setOpen("new")}
-          className="group inline-flex items-center gap-3 rounded-full bg-[var(--surface-ink)] px-6 py-3 text-sm font-medium text-[var(--surface-bg)] transition-all hover:gap-4 hover:bg-primary-600"
-        >
-          <Plus className="h-4 w-4" />
-          إضافة كاشير
-        </button>
+      {/* ── Top bar: filters + add button ─────────────────── */}
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        {/* Filter tabs */}
+        <div className="inline-flex items-center gap-1 rounded-full border border-[var(--surface-border-soft)] bg-[var(--surface-input)] p-1">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setFilter(tab.key)}
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+                filter === tab.key
+                  ? "bg-[var(--surface-ink)] text-[var(--surface-bg)] shadow-sm"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              }`}
+            >
+              {tab.label}
+              <span
+                className={`numeric text-xs rounded-full px-1.5 py-0.5 ${
+                  filter === tab.key
+                    ? "bg-white/20 text-[var(--surface-bg)]"
+                    : "bg-[var(--surface-border-soft)] text-[var(--text-muted)]"
+                }`}
+              >
+                {tab.count}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Add buttons */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setOpen({ employee: null, role: "cashier" })}
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--surface-border-soft)] bg-[var(--surface-input)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-all hover:bg-primary-500/10 hover:border-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            إضافة كاشير
+          </button>
+          <button
+            type="button"
+            onClick={() => setOpen({ employee: null, role: "delivery" })}
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ink)] px-4 py-2 text-sm font-medium text-[var(--surface-bg)] transition-all hover:bg-primary-600"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            إضافة مندوب توصيل
+          </button>
+        </div>
       </div>
 
-      {cashiers.length > 0 && (
+      {/* ── Employee grid ──────────────────────────────────── */}
+      {filtered.length > 0 && (
         <ul className="grid gap-3 sm:grid-cols-2">
-          {cashiers.map((c, idx) => (
+          {filtered.map((emp, idx) => (
             <li
-              key={c.id}
+              key={emp.id}
               className="lift group rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-5"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-4 min-w-0">
                   <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/20 to-accent-500/15 font-display text-lg text-primary-700 dark:text-primary-300">
-                    {initials(c.name) || "؟"}
+                    {initials(emp.name) || "؟"}
                     <span
                       className={`absolute -bottom-0.5 -end-0.5 h-3.5 w-3.5 rounded-full ring-2 ring-[var(--surface-card)] ${
-                        c.is_active ? "bg-emerald-500" : "bg-zinc-400"
+                        emp.is_active ? "bg-emerald-500" : "bg-zinc-400"
                       }`}
                       aria-hidden
                     />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-display text-base text-[var(--text-primary)] truncate">
-                      {c.name}
-                    </p>
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <p className="font-display text-base text-[var(--text-primary)] truncate">
+                        {emp.name}
+                      </p>
+                      <RoleBadge role={emp.role} />
+                    </div>
                     <p className="text-xs text-[var(--text-muted)] truncate" dir="ltr">
-                      {c.email}
+                      {emp.email}
                     </p>
                   </div>
                 </div>
@@ -89,19 +159,27 @@ export function EmployeesManager({ cashiers }: { cashiers: Cashier[] }) {
                     className="text-sm text-[var(--text-secondary)] truncate numeric"
                     dir="ltr"
                   >
-                    {c.phone || "—"}
+                    {emp.phone || "—"}
                   </p>
                 </div>
-                <RowActions cashier={c} onEdit={() => setOpen(c)} />
+                <RowActions employee={emp} onEdit={() => setOpen({ employee: emp, role: emp.role })} />
               </div>
             </li>
           ))}
         </ul>
       )}
 
+      {filtered.length === 0 && employees.length > 0 && (
+        <p className="text-center text-sm text-[var(--text-muted)] py-10">
+          لا يوجد موظفون في هذه الفئة
+        </p>
+      )}
+
+      {/* ── Dialog ────────────────────────────────────────── */}
       {open && (
-        <CashierDialog
-          cashier={open === "new" ? null : open}
+        <EmployeeDialog
+          employee={open.employee}
+          role={open.role}
           onClose={() => setOpen(null)}
         />
       )}
@@ -109,11 +187,25 @@ export function EmployeesManager({ cashiers }: { cashiers: Cashier[] }) {
   );
 }
 
+function RoleBadge({ role }: { role: "cashier" | "delivery" }) {
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
+        role === "cashier"
+          ? "bg-primary-500/10 text-primary-700 dark:text-primary-300"
+          : "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+      }`}
+    >
+      {ROLE_LABEL[role]}
+    </span>
+  );
+}
+
 function RowActions({
-  cashier,
+  employee,
   onEdit,
 }: {
-  cashier: Cashier;
+  employee: Employee;
   onEdit: () => void;
 }) {
   const [pending, start] = useTransition();
@@ -130,15 +222,15 @@ function RowActions({
       <button
         type="button"
         disabled={pending}
-        title={cashier.is_active ? "إيقاف" : "تفعيل"}
+        title={employee.is_active ? "إيقاف" : "تفعيل"}
         onClick={() =>
           start(async () => {
-            await setCashierActive(cashier.id, !cashier.is_active);
+            await setCashierActive(employee.id, !employee.is_active);
           })
         }
         className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] disabled:opacity-50 transition-colors"
       >
-        {cashier.is_active ? (
+        {employee.is_active ? (
           <PowerOff className="h-4 w-4" />
         ) : (
           <Power className="h-4 w-4" />
@@ -149,9 +241,14 @@ function RowActions({
         disabled={pending}
         title="حذف"
         onClick={() => {
-          if (!confirm(`حذف الكاشير ${cashier.name}؟ هذا الإجراء نهائي`)) return;
+          if (
+            !confirm(
+              `حذف ${ROLE_LABEL[employee.role]} ${employee.name}؟ هذا الإجراء نهائي`,
+            )
+          )
+            return;
           start(async () => {
-            const res = await deleteCashier(cashier.id);
+            const res = await deleteCashier(employee.id);
             if (res?.error) alert(res.error);
           });
         }}
@@ -163,11 +260,13 @@ function RowActions({
   );
 }
 
-function CashierDialog({
-  cashier,
+function EmployeeDialog({
+  employee,
+  role,
   onClose,
 }: {
-  cashier: Cashier | null;
+  employee: Employee | null;
+  role: "cashier" | "delivery";
   onClose: () => void;
 }) {
   const [pending, start] = useTransition();
@@ -178,13 +277,25 @@ function CashierDialog({
     setError(null);
     const fd = new FormData(e.currentTarget);
     start(async () => {
-      const res = cashier
-        ? await updateCashier(cashier.id, fd)
-        : await createCashier(fd);
+      let res;
+      if (employee) {
+        res = await updateCashier(employee.id, fd);
+      } else if (role === "delivery") {
+        res = await createDeliveryEmployee(fd);
+      } else {
+        res = await createCashier(fd);
+      }
       if (res?.error) setError(res.error);
       else onClose();
     });
   }
+
+  const isNew = !employee;
+  const dialogTitle = isNew
+    ? role === "cashier"
+      ? "كاشير جديد"
+      : "مندوب توصيل جديد"
+    : employee.name;
 
   return (
     <div
@@ -198,11 +309,12 @@ function CashierDialog({
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--surface-border-soft)] bg-[var(--surface-canvas)]/50">
           <div>
-            <p className="eyebrow mb-1">
-              {cashier ? "تعديل" : "إضافة"}
-            </p>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="eyebrow">{employee ? "تعديل" : "إضافة"}</p>
+              <RoleBadge role={employee?.role ?? role} />
+            </div>
             <h2 className="font-display text-lg text-[var(--text-primary)]">
-              {cashier ? cashier.name : "كاشير جديد"}
+              {dialogTitle}
             </h2>
           </div>
           <button
@@ -221,9 +333,9 @@ function CashierDialog({
             </p>
           )}
 
-          <Field label="الاسم" name="name" defaultValue={cashier?.name} required />
+          <Field label="الاسم" name="name" defaultValue={employee?.name} required />
 
-          {!cashier && (
+          {isNew && (
             <>
               <Field
                 label="البريد الإلكتروني"
@@ -245,7 +357,7 @@ function CashierDialog({
             label="رقم الهاتف"
             name="phone"
             dir="ltr"
-            defaultValue={cashier?.phone}
+            defaultValue={employee?.phone}
           />
 
           <div className="flex items-center justify-end gap-3 pt-3">
@@ -262,7 +374,7 @@ function CashierDialog({
               className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ink)] px-5 py-2.5 text-sm font-medium text-[var(--surface-bg)] hover:bg-primary-600 disabled:opacity-50 transition-colors"
             >
               {pending && <Loader2 className="h-4 w-4 animate-spin" />}
-              {cashier ? "حفظ" : "إنشاء"}
+              {employee ? "حفظ" : "إنشاء"}
             </button>
           </div>
         </div>

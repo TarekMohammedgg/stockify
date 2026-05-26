@@ -144,6 +144,214 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-25T21:45:27.788Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-05-25T22:44:20.029Z",
+      "error_message": "Missing await",
+      "file": "app/cashier/orders-panel.tsx",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-25T22:44:20.029Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-05-26T00:19:08.239Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/PRD.md",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 37→54 lines (9 removed) | Also: Admin Dashboard; └── Employee Management (Cashiers) | Also: │   ├── Live order list (website orders + manual o; │   └── Status update buttons: [Pending] → [Prepar | Also: ### 4.4 Customer Flow; ├── Asks: Delivery or Takeaway? | Also: **Order Statuses:**; Pending → Preparing → Ready → Completed | Also: | **Phase 3** | Cashier dashboard (orders + alerts; | **Phase 4** | Public menu page (Arabic RTL, phot",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 6,
+      "last_seen": "2026-05-26T00:24:57.201Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-05-26T00:35:03.159Z",
+      "error_message": "Significant refactor of ",
+      "file": "tasks.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→13 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T00:35:03.159Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-05-26T00:44:33.132Z",
+      "error_message": "Incorrect value in code",
+      "file": "lib/actions/cashier.ts",
+      "root_cause": "Had \"preparing\"",
+      "fix": "Changed to \"on_delivery\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T00:44:33.132Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-05-26T00:44:38.259Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/auth/callback/route.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T00:44:38.259Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-05-26T00:46:09.411Z",
+      "error_message": "Incorrect value in code",
+      "file": "supabase/schema.sql",
+      "root_cause": "Had 'customer'",
+      "fix": "Changed to 'delivery'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "sql"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-26T00:46:10.850Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-05-26T00:46:51.930Z",
+      "error_message": "CSS fix: pending, key",
+      "file": "app/cashier/orders-panel.tsx",
+      "root_cause": "pending: \"ابدأ التحضير\", → \"تم التسليم\",; key: \"cancelled\", label: \"ملغي\" → \"cancelled\",   label: \"ملغي\"",
+      "fix": "Changed pending: \"ابدأ التحضير\", → \"تم التسليم\",; key: \"cancelled\", label: \"ملغي\" → \"cancelled\",   label: \"ملغي\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T00:46:51.930Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-05-26T00:48:22.469Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/(auth)/login/page.tsx",
+      "root_cause": "Had \"حسابات المديرين والكاشير لا تدعم تسجيل الدخول بجو",
+      "fix": "Changed to \"حسابات الموظفين (مدير، كاشير، مندوب توصيل) لا تدع",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T00:48:22.469Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-05-26T01:05:21.362Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/actions/cashier.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T01:05:21.362Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-05-26T01:05:51.820Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/actions/admin.ts",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 30→49 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T01:05:51.820Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-05-26T01:07:26.977Z",
+      "error_message": "Incorrect value in code",
+      "file": "app/admin/page.tsx",
+      "root_cause": "Had \"grid gap-px overflow-hidden rounded-2xl border bo",
+      "fix": "Changed to \"grid gap-px overflow-hidden rounded-2xl border bo",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T01:07:26.977Z"
+    },
+    {
+      "id": "bug-021",
+      "timestamp": "2026-05-26T01:10:54.223Z",
+      "error_message": "CSS fix: hover",
+      "file": "app/admin/employees/manager.tsx",
+      "root_cause": "hover: bg-[var(--surface-input)] transition-colors border-t border-[var(--surface-border-soft)]\" → bg-primary-600\"",
+      "fix": "Changed hover: bg-[var(--surface-input)] transition-colors border-t border-[var(--surface-border-soft)]\" → bg-primary-600\"",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T01:10:54.223Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-05-26T01:12:25.486Z",
+      "error_message": "CSS fix: icon",
+      "file": "app/admin/page.tsx",
+      "root_cause": "icon: Users, → UserCog,",
+      "fix": "Changed icon: Users, → UserCog,",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T01:12:25.486Z"
     }
   ]
 }

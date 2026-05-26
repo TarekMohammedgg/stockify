@@ -194,3 +194,130 @@
 | 01:32 | Created app/cashier/layout.tsx | — | ~1040 |
 | 01:32 | Created app/cashier/page.tsx | — | ~89 |
 | 01:34 | Created app/cashier/orders-panel.tsx | — | ~3504 |
+| 01:36 | Created app/api/orders-refresh/route.ts | — | ~58 |
+| 01:37 | Created app/cashier/new-order/page.tsx | — | ~275 |
+| 01:38 | Created app/cashier/new-order/order-form.tsx | — | ~3793 |
+| 01:40 | Edited tasks.md | 17→18 lines | ~195 |
+| 01:44 | Edited app/cashier/orders-panel.tsx | modified handleAdvance() | ~76 |
+
+## Session: 2026-05-26 03:13
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 03:18 | Edited docs/PRD.md | 3→5 lines | ~192 |
+| 03:19 | Edited docs/PRD.md | expanded (+17 lines) | ~628 |
+| 03:19 | Edited docs/PRD.md | 19→19 lines | ~193 |
+| 03:19 | Edited docs/PRD.md | expanded (+6 lines) | ~183 |
+| 03:20 | Edited docs/PRD.md | expanded (+12 lines) | ~285 |
+| 03:21 | Edited docs/PRD.md | expanded (+7 lines) | ~279 |
+| 03:21 | Edited docs/PRD.md | modified Statuses() | ~141 |
+| 03:22 | Created supabase/schema.sql | — | ~2468 |
+| 03:22 | Edited docs/PRD.md | expanded (+7 lines) | ~161 |
+| 03:22 | Edited docs/PRD.md | expanded (+6 lines) | ~85 |
+| 03:23 | Edited docs/PRD.md | modified account() | ~230 |
+| 03:23 | sync canonical schema to live Supabase, create supabase/schema.sql, verify Phase 1-3 tasks | supabase/schema.sql, tasks.md | success (DB already in sync) | ~3500 |
+| 03:23 | Edited docs/PRD.md | 5→6 lines | ~79 |
+| 03:23 | Edited docs/PRD.md | 7→8 lines | ~99 |
+| 03:24 | Edited docs/PRD.md | 2→3 lines | ~67 |
+| 03:24 | Edited docs/PRD.md | modified spec() | ~496 |
+| 03:24 | Edited docs/PRD.md | 4→4 lines | ~92 |
+| 03:26 | Edited CLAUDE.md | expanded (+9 lines) | ~329 |
+| 03:26 | Edited AGENTS.md | expanded (+9 lines) | ~329 |
+
+## Session: 2026-05-26 PRD refinement
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| now | Refined PRD from project-sketch.png | docs/PRD.md, CLAUDE.md, AGENTS.md | added Delivery role, updated order statuses (Pending/On-Delivery/Complete/Cancelled), added Admin KPIs, added section 11 UI Reference, updated overview in CLAUDE.md & AGENTS.md | ~2200 |
+| 03:27 | Session end: 18 writes across 4 files (PRD.md, schema.sql, CLAUDE.md, AGENTS.md) | 6 reads | ~20515 tok |
+| 03:32 | Edited tasks.md | expanded (+8 lines) | ~224 |
+| 03:33 | Edited tasks.md | expanded (+6 lines) | ~174 |
+| 03:34 | Edited tasks.md | 5→10 lines | ~161 |
+| 03:34 | Edited tasks.md | modified name() | ~860 |
+| 03:34 | Edited tasks.md | 2→4 lines | ~80 |
+| 03:35 | Edited tasks.md | expanded (+6 lines) | ~222 |
+| 03:35 | Edited tasks.md | inline fix | ~37 |
+| 03:35 | added Delivery-role tasks to tasks.md (Phase 1.2.D/1.3.D DB+auth migration, 2.4 admin employee mgmt, 3.4 cashier delivery-visibility, new Phase 3.5 Delivery Dashboard + RLS, 5.2 chatbot new/returning, 7.1 QA, 7.4 docs) | tasks.md | ok | ~700 |
+| 03:36 | Session end: 25 writes across 5 files (PRD.md, schema.sql, CLAUDE.md, AGENTS.md, tasks.md) | 7 reads | ~26959 tok |
+| 03:44 | Edited lib/actions/cashier.ts | inline fix | ~23 |
+| 03:44 | Edited lib/actions/auth.ts | added 1 condition(s) | ~41 |
+| 03:44 | Edited app/auth/callback/route.ts | added optional chaining | ~223 |
+| 03:46 | Edited supabase/schema.sql | 3→3 lines | ~38 |
+| 03:46 | Edited supabase/schema.sql | 3→3 lines | ~41 |
+| 03:46 | Edited app/cashier/orders-panel.tsx | CSS: on_delivery, complete, orders | ~208 |
+| 03:46 | Edited app/cashier/orders-panel.tsx | modified statusChipClass() | ~216 |
+| 03:47 | Edited app/cashier/orders-panel.tsx | 3→5 lines | ~92 |
+| 03:47 | Edited app/cashier/orders-panel.tsx | 25→23 lines | ~315 |
+| 03:48 | Edited app/cashier/orders-panel.tsx | 11→10 lines | ~35 |
+| 03:48 | Edited app/(auth)/login/page.tsx | 3→3 lines | ~62 |
+| 03:48 | Created app/delivery/layout.tsx | — | ~528 |
+| 03:48 | Created app/delivery/page.tsx | — | ~124 |
+| 03:49 | Edited tasks.md | 7→7 lines | ~188 |
+| 03:49 | Edited tasks.md | 5→5 lines | ~120 |
+| 03:50 | Phase 1.2.D + 1.3.D complete: 2 Supabase migrations (enum adds + backfill + RLS), updated OrderStatus TS type, cashier panel status labels/flow for new enum, delivery role redirect in auth.ts + callback, Google OAuth block for delivery, created app/delivery/layout.tsx (role guard) + page.tsx (placeholder) | multiple | ✓ | ~4000 |
+| 03:54 | Session end: 40 writes across 11 files (PRD.md, schema.sql, CLAUDE.md, AGENTS.md, tasks.md) | 13 reads | ~37475 tok |
+
+## Session: 2026-05-26 04:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 04:05 | Edited lib/actions/cashier.ts | added optional chaining | ~389 |
+| 04:05 | Edited tasks.md | 2→2 lines | ~63 |
+
+## Session: 2026-05-26 (§3.4 server guard)
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| now | Added server-side guards to updateOrderStatus: fetch order type (block delivery mutations), validate status is complete/cancelled only | lib/actions/cashier.ts | ✓ | ~800 |
+| now | Marked §3.4 tasks [x] (server-side delivery guard + createOnsiteOrder delivery confirmation) | tasks.md | ✓ | ~100 |
+| 04:05 | Edited lib/actions/admin.ts | modified createEmployee() | ~456 |
+| 04:06 | Created app/admin/employees/page.tsx | — | ~788 |
+| 04:06 | Session end: 4 writes across 4 files (cashier.ts, tasks.md, admin.ts, page.tsx) | 11 reads | ~22918 tok |
+| 04:06 | Edited tasks.md | 7→7 lines | ~188 |
+
+| 10:30 | Phase 3.5.4: audited existing delivery RLS policies via pg_policies, confirmed orders_delivery_read/update + order_items_delivery_read already existed from prior migration, added missing delivery_users_customer_select policy so delivery role can read customer name/phone/address for delivery cards, verified no delivery write policies on menu_items/ingredients/categories/allergens, marked all §3.5.4 tasks complete in tasks.md | supabase (migration: delivery_users_customer_select), tasks.md | success | ~3500 |
+| 04:07 | Created lib/actions/delivery.ts | — | ~921 |
+| 04:07 | Created app/admin/employees/manager.tsx | — | ~4244 |
+| 04:07 | Session end: 7 writes across 6 files (cashier.ts, tasks.md, admin.ts, page.tsx, delivery.ts) | 11 reads | ~28284 tok |
+| 04:07 | Edited app/admin/page.tsx | 23→28 lines | ~251 |
+| 04:07 | Created app/delivery/loading.tsx | — | ~660 |
+| 04:07 | Created app/delivery/page.tsx | — | ~77 |
+| 04:07 | Edited app/admin/page.tsx | expanded (+7 lines) | ~239 |
+| 04:07 | Edited app/admin/page.tsx | "grid gap-px overflow-hidd" → "grid gap-px overflow-hidd" | ~49 |
+| 04:07 | Edited app/admin/page.tsx | 10→11 lines | ~161 |
+| 04:07 | Edited app/admin/page.tsx | 04 → 05 | ~16 |
+| 04:07 | Edited tasks.md | 5→5 lines | ~107 |
+| 04:08 | Created app/delivery/delivery-panel.tsx | — | ~3678 |
+
+## Session: 2026-05-26 (§2.4 Delivery role extension)
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| now | Added createDeliveryEmployee + private createEmployee helper to admin.ts | lib/actions/admin.ts | ✓ | ~400 |
+| now | Refactored employees/page.tsx: query .in("role",["cashier","delivery"]), pass role field, updated header stats | app/admin/employees/page.tsx | ✓ | ~300 |
+| now | Rewrote employees/manager.tsx: Employee type with role field, RoleBadge, filter tabs (All/Cashier/Delivery), add dropdown (إضافة كاشير / إضافة مندوب توصيل), role-aware dialog titles and action dispatch | app/admin/employees/manager.tsx | ✓ | ~1200 |
+| now | Added employeeCount KPI to admin/page.tsx: .in("role",["cashier","delivery"]), new stat card "الموظفون", grid lg:grid-cols-5, hero mini KPIs 3-col grid | app/admin/page.tsx | ✓ | ~300 |
+| now | Marked all §2.4 delivery tasks [x] in tasks.md | tasks.md | ✓ | ~100 |
+| 04:08 | Edited tasks.md | modified name() | ~460 |
+
+## Session: 2026-05-26 (§§3.5.1–3.5.3 Delivery Dashboard)
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| now | Created lib/actions/delivery.ts | DeliveryStatus, DeliveryOrder, OrderItem types + listDeliveryOrders + updateDeliveryOrderStatus with transition guard | ✓ | ~600 |
+| now | Created app/delivery/loading.tsx | animate-pulse skeleton: page title, filter tabs, 3 order card skeletons | ✓ | ~250 |
+| now | Replaced app/delivery/page.tsx | server component calling listDeliveryOrders, renders DeliveryPanel | ✓ | ~50 |
+| now | Created app/delivery/delivery-panel.tsx | "use client" — filter tabs, sortOrders, realtime subscription on delivery orders, OrderCard with advance/cancel (window.confirm), error/offline state with retry | ✓ | ~1200 |
+| now | Marked §§3.5.1–3.5.3 [x] in tasks.md | tasks.md | all 20 items checked | ~100 |
+| 04:09 | Session end: 17 writes across 8 files (cashier.ts, tasks.md, admin.ts, page.tsx, delivery.ts) | 11 reads | ~34022 tok |
+| 04:10 | Edited app/admin/employees/manager.tsx | 10→9 lines | ~28 |
+| 04:10 | Edited app/admin/employees/manager.tsx | modified EmployeesManager() | ~70 |
+| 04:10 | Edited app/admin/employees/manager.tsx | reduced (-27 lines) | ~294 |
+| 04:11 | Edited app/admin/page.tsx | 7→8 lines | ~33 |
+| 04:12 | Edited app/admin/page.tsx | 7→7 lines | ~48 |
+| 04:13 | Session end: 22 writes across 8 files (cashier.ts, tasks.md, admin.ts, page.tsx, delivery.ts) | 11 reads | ~36160 tok |
+
+## Session: 2026-05-26 04:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

@@ -4,6 +4,7 @@ import {
   UtensilsCrossed,
   AlertTriangle,
   Users,
+  UserCog,
   ArrowUpLeft,
 } from "lucide-react";
 import Link from "next/link";
@@ -29,6 +30,7 @@ export default async function AdminHomePage() {
     { count: menuCount },
     { data: lowStock },
     { count: customerCount },
+    { count: employeeCount },
   ] = await Promise.all([
     supabase
       .from("orders")
@@ -45,6 +47,10 @@ export default async function AdminHomePage() {
       .from("users")
       .select("id", { count: "exact", head: true })
       .eq("role", "customer"),
+    supabase
+      .from("users")
+      .select("id", { count: "exact", head: true })
+      .in("role", ["cashier", "delivery"]),
   ]);
 
   const revenueToday =
@@ -85,6 +91,13 @@ export default async function AdminHomePage() {
       icon: Users,
       hint: "كل الوقت",
     },
+    {
+      label: "الموظفون",
+      value: String(employeeCount ?? 0),
+      icon: UserCog,
+      href: "/admin/employees",
+      hint: "كاشير ومندوبو توصيل",
+    },
   ];
 
   return (
@@ -123,9 +136,10 @@ export default async function AdminHomePage() {
               <span aria-hidden>٭</span>
               <span aria-hidden>٭</span>
             </div>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-3 ms-auto">
+            <div className="grid grid-cols-3 gap-x-8 gap-y-3 ms-auto">
               <KpiMini label="طلبات" value={String(ordersToday ?? 0)} />
               <KpiMini label="منيو" value={String(menuCount ?? 0)} />
+              <KpiMini label="موظفون" value={String(employeeCount ?? 0)} />
               <KpiMini label="عملاء" value={String(customerCount ?? 0)} />
               <KpiMini
                 label="تنبيهات"
@@ -143,9 +157,9 @@ export default async function AdminHomePage() {
           <h2 className="font-display text-xl text-[var(--text-primary)]">
             مؤشرات سريعة
           </h2>
-          <span className="eyebrow">04 / counters</span>
+          <span className="eyebrow">05 / counters</span>
         </div>
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-border-soft)] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px overflow-hidden rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-border-soft)] sm:grid-cols-2 lg:grid-cols-5">
           {stats.map((s, i) => {
             const Icon = s.icon;
             const inner = (

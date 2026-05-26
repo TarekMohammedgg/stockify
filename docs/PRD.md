@@ -9,7 +9,9 @@
 
 ## 1. Overview
 
-Stockify is a web-based restaurant management system built for a small-to-medium Egyptian restaurant. It serves three distinct user roles — **Admin**, **Cashier**, and **Customer** — each with a dedicated interface. The platform is Arabic-first with an English toggle, cash-only, and supports dine-in, delivery, and takeaway order types.
+Stockify is a web-based restaurant management system built for a small-to-medium Egyptian restaurant. It serves four distinct user roles — **Admin**, **Cashier**, **Delivery**, and **Customer** — each with a dedicated interface routed from a single login screen. The platform is Arabic-first with an English toggle, cash-only, and supports onsite (dine-in), takeaway, and delivery order types.
+
+A Supabase backend powers all four roles. Customers place orders either through an AI **chatbot** (powered by OpenRouter) or manually via a menu UI; the chatbot has live access to menu and ingredient data via internal API routes and remembers lightweight per-customer insights (favourites, phone, address).
 
 ---
 
@@ -27,36 +29,53 @@ Stockify is a web-based restaurant management system built for a small-to-medium
 
 ## 3. Users & Roles
 
+All four roles share a single `/login` page and are routed to their respective dashboards based on role.
+
 ### 3.1 Admin
 Restaurant owner or manager. Full system control.
 
 **Can do:**
+- View the admin dashboard showing: number of orders by status, number of employees, daily income, monthly income
 - Manage menu (add / edit / remove items with photo, price, category, ingredients, allergens)
 - Manage ingredients & stock levels
-- Manage cashier employee accounts (add / edit / remove)
+- Manage employee accounts (Cashiers and Delivery staff — add / edit / remove)
 - View inventory alerts
 
 ### 3.2 Cashier
-Front-of-house or delivery staff. Operational access only.
+Front-of-house staff. Operates onsite, takeaway, and delivery order intake.
 
 **Can do:**
-- View and manage all incoming orders (website + onsite)
-- Update order status (Pending → Preparing → Ready → Delivered/Completed)
-- Create manual onsite orders (dine-in / takeaway)
+- View and manage incoming orders (website + onsite). Handles **onsite** and **takeaway** orders end-to-end.
+- Create new orders manually
+- Update / create orders and update the status of onsite and takeaway orders (delivery orders are status-updated by the Delivery role)
 - Receive low-stock / out-of-stock inventory alerts
 
 **Cannot do:**
 - Access admin settings, menu editing, or employee management
 
-### 3.3 Customer
+### 3.3 Delivery
+Delivery staff. Mobile-friendly read + status-update only.
+
+**Can do:**
+- View delivery orders assigned to the restaurant
+- **Only** update the status of delivery orders (e.g. on-delivery → complete / cancelled)
+
+**Cannot do:**
+- Create orders, edit the menu, or modify onsite/takeaway orders
+
+### 3.4 Customer
 End user placing an order online via the public-facing website. **Must be logged in to place an order.**
 
 **Can do:**
-- Register / Login to their account
+- Register / Login to their account (email/password or Google OAuth)
 - Browse the menu (photos, ingredients, allergens)
-- Order via in-website chatbot widget
+- Order via in-website **chatbot widget** OR **manually** by selecting items from the menu
 - Choose order type: Delivery or Takeaway
-- Provide phone number and delivery address
+- Provide phone number and delivery address (address/phone may be skipped if order is takeaway/onsite)
+
+**New vs returning customer:**
+- **New customer:** the chatbot/order flow collects address or phone number (required only for delivery; for takeaway/onsite either is fine)
+- **Already client:** insights (saved phone, address, favourites) are auto-loaded from the customer's account
 
 **Session behavior:**
 - Account required — login before ordering
@@ -69,11 +88,11 @@ End user placing an order online via the public-facing website. **Must be logged
 
 ### 4.1 Login & Role Routing
 ```
-[Login Screen]  ←  All three user types log in here
+[Login Screen]  ←  All four user roles log in here (single entry point)
     │
-    ├── [Username + Password]
+    ├── [Email + Password]  (Google auth optional for customers)
     │       ↓
-    │   Role check → Admin / Cashier / Customer view
+    │   Role check → Admin / Cashier / Delivery / Customer view
     │
     └── [Continue with Google]  ← Customers only
             ↓
@@ -85,13 +104,19 @@ End user placing an order online via the public-facing website. **Must be logged
     └── Register (name, phone, email, password) → Login → Customer view
 ```
 
-The login screen is the single entry point. Admin and Cashier accounts are created by the Admin only and cannot use Google OAuth. Customers can register manually or use Google.
+The login screen is the single entry point for all four roles. Admin, Cashier, and Delivery accounts are created by the Admin only and cannot use Google OAuth. Customers can register manually or use Google.
 
 ---
 
 ### 4.2 Admin Flow
 ```
-Admin Dashboard
+Admin Dashboard (home metrics)
+├── Number of orders by status (pending / on-delivery / complete / cancelled)
+├── Number of employees (cashiers + delivery)
+├── Daily income (EGP)
+└── Monthly income (EGP)
+
+Admin Sections
 ├── Menu Management
 │   ├── Add Item (name, category, photo, price, ingredients, allergens)
 │   ├── Edit Item
@@ -100,10 +125,10 @@ Admin Dashboard
 │   ├── Add Ingredient
 │   ├── Set stock level & low-stock threshold
 │   └── Edit / Remove Ingredient
-└── Employee Management (Cashiers)
-    ├── Add Cashier (name, username, password)
-    ├── Edit Cashier details
-    └── Remove Cashier
+└── Employee Management (Cashiers + Delivery)
+    ├── Add Employee (name, username, password, role: cashier|delivery)
+    ├── Edit Employee details
+    └── Remove Employee
 ```
 
 ---
@@ -112,40 +137,59 @@ Admin Dashboard
 ```
 Cashier Dashboard
 ├── Orders Panel
-│   ├── Live order list (website orders + manual onsite orders)
+│   ├── Live order list (website orders + manual onsite/takeaway orders)
 │   ├── Order detail view (items, type, customer info)
-│   └── Status update buttons: [Pending] → [Preparing] → [Ready] → [Done]
-├── New Onsite Order
+│   ├── Status update buttons: [Pending] → [On-Delivery] → [Complete]  (or [Cancelled])
+│   └── Cashier may only update status of ONSITE + TAKEAWAY orders
+│       (delivery order status transitions are handled by the Delivery role)
+├── New Order (manual)
 │   ├── Select items from menu
 │   ├── Choose type:
-│   │   ├── Dine-in   → no extra info needed
-│   │   └── Takeaway  → enter order owner name only
+│   │   ├── Onsite (dine-in) → no extra info needed
+│   │   ├── Takeaway          → enter order owner name only
+│   │   └── Delivery          → enter customer phone + address (if new)
 │   └── Confirm & send to order list
 └── Inventory Alerts Banner
     └── Shows items below threshold with warning
 ```
 
+### 4.4 Delivery Flow
+```
+Delivery Dashboard (mobile-first)
+└── Delivery Orders List
+    ├── See order items, customer name, phone, address
+    └── Status update only:  [Pending] → [On-Delivery] → [Complete]  (or [Cancelled])
+        (No create / edit / menu access)
+```
+
 ---
 
-### 4.4 Customer Flow
+### 4.5 Customer Flow
 ```
 [Login / Register]
     ↓
 Public Website
 ├── Menu Page (browse by category, photos, ingredients, allergens)
+│   └── Manual order: pick items → choose type → checkout
 └── Chatbot Widget (bottom-right corner)
     ├── Greets customer by name (from account)
-    ├── Asks: Delivery or Takeaway?
+    ├── New customer? → asks for phone + (address if delivery)
+    │   Already client? → loads insights (favourites, phone, address) silently
+    ├── Asks: Delivery or Takeaway? (onsite = N/A for online orders)
     ├── Pre-fills phone number & address from account (editable)
     ├── Takes order (item selection, quantity, notes)
     ├── Confirms order summary
-    └── Submits order → appears in Cashier dashboard
+    └── Submits order → appears in Cashier dashboard (and Delivery dashboard if delivery type)
     
     [Saved Insights — per customer account]
     - Favourite item(s)
     - Phone number
     - Delivery address
 ```
+
+**Two creation paths for a customer order:**
+1. **Via chatbot** — conversational order build (default, recommended).
+2. **Manually by customer** — direct menu UI, add items to cart, checkout.
 
 ---
 
@@ -206,8 +250,15 @@ When stock drops below threshold → alert shown in Cashier dashboard.
 | Full name | Text |
 | Username | Unique, used for login |
 | Password | Hashed, set by admin |
-| Role | Fixed: Cashier |
+| Role | Cashier or Delivery |
 | Status | Active / Inactive |
+
+### 5.4.1 Admin — Dashboard Metrics
+The Admin home page displays at-a-glance KPIs:
+- **Orders by status** — counts grouped by pending / on-delivery / complete / cancelled
+- **Employees count** — total active cashiers + delivery staff
+- **Daily income** — sum of completed orders for the current day (EGP)
+- **Monthly income** — sum of completed orders for the current month (EGP)
 
 ---
 
@@ -222,10 +273,18 @@ When stock drops below threshold → alert shown in Cashier dashboard.
 - **Delivery (online):** customer name, phone, delivery address
 - Current status with action button
 
-**Order Statuses:**
+**Order Statuses (per sketch):**
 ```
-Pending → Preparing → Ready → Completed
+Pending → On-Delivery → Complete
+                ↘
+                 Cancelled  (terminal, reachable from any non-complete state)
 ```
+- **Pending** — order received, not yet dispatched
+- **On-Delivery** — out for delivery (delivery orders) / in-progress (onsite/takeaway)
+- **Complete** — fulfilled
+- **Cancelled** — voided
+
+Only the **Delivery** role can move delivery orders from Pending → On-Delivery → Complete. The Cashier role handles the same transitions for onsite + takeaway orders.
 
 **Inventory Alert Banner:**
 - Shown at top of dashboard
@@ -233,6 +292,12 @@ Pending → Preparing → Ready → Completed
 - Color-coded: Yellow (low) / Red (out of stock)
 
 ---
+
+### 5.5.1 Delivery — Order Status Panel
+- Lists only orders with `type = delivery`
+- Each order card shows: items, customer name, phone, address, current status
+- Single action: change status (`Pending` → `On-Delivery` → `Complete`, or `Cancelled`)
+- No create / edit / menu access
 
 ### 5.6 Customer — Public Menu Page
 - Filterable by category
@@ -247,10 +312,12 @@ Pending → Preparing → Ready → Completed
 - **Requires customer to be logged in before chatting**
 - Powered by OpenRouter API — model: `google/gemini-2.5-flash-lite`
 - Conversation in Arabic by default
+- **In-memory context by default** = the customer's saved insights (favourites, phone, address) — auto-loaded at chat start
+- **Uses internal API requests against Supabase** to fetch live restaurant data: `GET /api/menu`, `GET /api/menu/[id]/ingredients`, etc.
+- **Can make orders** — submits structured order via `POST /api/orders`
 - Greets customer by name pulled from account
 - Pre-fills phone & address from account (customer can override)
 - Collects: order type (Delivery/Takeaway), items, notes
-- Submits structured order to backend → Cashier dashboard
 - Saves to customer account (insights):
   - `favourite_items[]`
   - `default_address`
@@ -301,8 +368,9 @@ The chatbot calls these internal API endpoints to fetch filtered data from Supab
 ### users
 ```
 id (UUID PK), name, phone (unique), email, password_hash,
-role ENUM(admin|cashier|customer), address, is_active, created_at
+role ENUM(admin|cashier|delivery|customer), address, is_active, created_at
 ```
+> Note: the `role` enum includes **delivery** per the sketch. Schema management is handled by a separate agent; this PRD documents the intent.
 
 ### categories
 ```
@@ -339,10 +407,11 @@ menu_item_id (FK) + allergen_id (FK) → PK
 ### orders
 ```
 id (UUID PK), source ENUM(online|onsite), type ENUM(dine-in|takeaway|delivery),
-status ENUM(pending|preparing|ready|completed|cancelled),
+status ENUM(pending|on_delivery|complete|cancelled),
 customer_id (FK → users, online orders), owner_name (onsite takeaway),
 delivery_address, notes, total_price, created_at, updated_at
 ```
+> Status enum aligned with the sketch: `pending | on_delivery | complete | cancelled`.
 
 ### order_items
 ```
@@ -378,8 +447,9 @@ favourite_items UUID[], default_address, last_seen
 | `/admin/menu` | Admin only | Menu management |
 | `/admin/ingredients` | Admin only | Stock management |
 | `/admin/employees` | Admin only | Cashier accounts |
-| `/cashier` | Cashier only | Orders dashboard |
-| `/cashier/new-order` | Cashier only | Manual onsite order creation |
+| `/cashier` | Cashier only | Orders dashboard (onsite + takeaway + view of all) |
+| `/cashier/new-order` | Cashier only | Manual order creation (onsite / takeaway / delivery) |
+| `/delivery` | Delivery only | Delivery-orders status-update dashboard |
 | `/api/orders` | Internal | Order CRUD |
 | `/api/menu` | Internal | Menu CRUD |
 | `/api/chat` | Public | Chatbot API handler |
@@ -413,15 +483,39 @@ favourite_items UUID[], default_address, last_seen
 ---
 
 
+## 11. UI Reference / Wireframes
+
+Source: `project-sketch.png` (project root). Treated as the latest source of truth where it conflicts with prose.
+
+**Sketch summary:**
+
+- **Supabase** sits at the top as the shared backend for all roles.
+- **Login** (centered, email/password + Google auth) is the single entry point. It branches outward to four role views: **Admin**, **Cashier**, **Customer**, **Delivery**. A **Chatbot** node hangs off the customer/login cluster — accessible to the customer experience.
+- **Order creation paths** (right side of sketch):
+  - *Onsite / Delivery / Takeaway* split, with a "new customer" branch (needs address or phone — phone-only is acceptable for takeaway/onsite) and an "already client" branch (uses saved insights).
+  - *Create order* node forks into **chatbot** and **manually by customer**.
+- **Chatbot node spec (from sketch):**
+  - "Have in memory context by default the insights (favourites) of the customer"
+  - "Use the API request with Supabase to get access to the data about restaurant like get menu or get ingredients of specific item"
+  - "Can make orders"
+- **Order status enum (from sketch):** `Pending`, `On-Delivery`, `Complete`, `Cancelled`.
+- **Delivery role spec:** "Can only update the status of delivery orders."
+- **Cashier role spec:** Onsite / Delivery / Takeaway — updates order status, creates new orders, updates/creates orders or updates the status of orders (just updates onsite and takeaway orders; delivery will be handled by delivery role).
+- **Admin role spec:** Shows the dashboard (number of orders with status, number of employees, daily income and monthly income), Menu, Ingredients/Stock.
+
+When implementing screens, refer to the sketch for layout intent. Visual design is otherwise left to the design system (Tailwind v4 + Lucide icons, Arabic-first RTL).
+
+---
+
 ## 12. Milestones
 
 | Phase | Deliverable |
 |---|---|
 | **Phase 1** | Auth + role routing + DB schema |
 | **Phase 2** | Admin dashboard (menu + ingredients + employees) |
-| **Phase 3** | Cashier dashboard (orders + alerts) |
-| **Phase 4** | Public menu page (Arabic RTL, photos, filters) |
-| **Phase 5** | Chatbot widget + OpenRouter API integration |
+| **Phase 3** | Cashier dashboard (orders + alerts) + Delivery dashboard (status updates) |
+| **Phase 4** | Public menu page (Arabic RTL, photos, filters) + manual customer ordering |
+| **Phase 5** | Chatbot widget + OpenRouter API integration (insights memory + Supabase API access) |
 | **Phase 6** | QA, RTL polish, bug fixing, deployment |
 
 ---

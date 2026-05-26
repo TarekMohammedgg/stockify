@@ -18,11 +18,23 @@ export async function GET(request: NextRequest) {
       if (user) {
         const { data: role } = await supabase.rpc("current_user_role");
 
+        // Block Google OAuth for staff roles — they must use email/password
+        if (
+          user.app_metadata?.provider === "google" &&
+          (role === "admin" || role === "cashier" || role === "delivery")
+        ) {
+          await supabase.auth.signOut();
+          return NextResponse.redirect(`${origin}/login?error=oauth_not_allowed_for_staff`);
+        }
+
         if (role === "admin") {
           return NextResponse.redirect(`${origin}/admin`);
         }
         if (role === "cashier") {
           return NextResponse.redirect(`${origin}/cashier`);
+        }
+        if (role === "delivery") {
+          return NextResponse.redirect(`${origin}/delivery`);
         }
 
         const { data: profile } = await supabase

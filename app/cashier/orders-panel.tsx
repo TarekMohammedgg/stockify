@@ -14,7 +14,6 @@ import {
   AlertCircle,
   CheckCircle2,
   XCircle,
-  ChefHat,
   Package,
   Wifi,
   ShoppingBag,
@@ -25,53 +24,46 @@ import {
 // ── Helpers ────────────────────────────────────────────────────────────────
 
 const STATUS_LABELS: Record<OrderStatus, string> = {
-  pending: "قيد الانتظار",
-  preparing: "قيد التحضير",
-  ready: "جاهز",
-  completed: "مكتمل",
-  cancelled: "ملغي",
+  pending:     "قيد الانتظار",
+  on_delivery: "في الطريق",
+  complete:    "مكتمل",
+  cancelled:   "ملغي",
 };
 
+// Cashier advances non-delivery orders: pending → complete
 const STATUS_NEXT: Partial<Record<OrderStatus, OrderStatus>> = {
-  pending: "preparing",
-  preparing: "ready",
-  ready: "completed",
+  pending: "complete",
 };
 
 const STATUS_NEXT_LABEL: Partial<Record<OrderStatus, string>> = {
-  pending: "ابدأ التحضير",
-  preparing: "جاهز للاستلام",
-  ready: "تم التسليم",
+  pending: "تم التسليم",
 };
 
 type FilterStatus = "all" | OrderStatus;
 
 const FILTERS: { key: FilterStatus; label: string }[] = [
-  { key: "all", label: "الكل" },
-  { key: "pending", label: "انتظار" },
-  { key: "preparing", label: "تحضير" },
-  { key: "ready", label: "جاهز" },
-  { key: "completed", label: "مكتمل" },
-  { key: "cancelled", label: "ملغي" },
+  { key: "all",         label: "الكل" },
+  { key: "pending",     label: "انتظار" },
+  { key: "on_delivery", label: "في الطريق" },
+  { key: "complete",    label: "مكتمل" },
+  { key: "cancelled",   label: "ملغي" },
 ];
 
 function statusChipClass(status: OrderStatus) {
   switch (status) {
-    case "pending":   return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
-    case "preparing": return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
-    case "ready":     return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";
-    case "completed": return "bg-[var(--surface-border)] text-[var(--text-muted)]";
-    case "cancelled": return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
+    case "pending":     return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";
+    case "on_delivery": return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
+    case "complete":    return "bg-[var(--surface-border)] text-[var(--text-muted)]";
+    case "cancelled":   return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300";
   }
 }
 
 function statusCardBorder(status: OrderStatus) {
   switch (status) {
-    case "pending":   return "border-s-amber-400";
-    case "preparing": return "border-s-blue-400";
-    case "ready":     return "border-s-green-400";
-    case "completed": return "border-s-[var(--surface-border)]";
-    case "cancelled": return "border-s-red-400";
+    case "pending":     return "border-s-amber-400";
+    case "on_delivery": return "border-s-blue-400";
+    case "complete":    return "border-s-[var(--surface-border)]";
+    case "cancelled":   return "border-s-red-400";
   }
 }
 
@@ -144,15 +136,17 @@ function LowStockBanner({ items }: { items: LowStockItem[] }) {
 function OrderCard({ order }: { order: Order }) {
   const [isPending, startTransition] = useTransition();
   const nextStatus = STATUS_NEXT[order.status];
-  const isTerminal = order.status === "completed" || order.status === "cancelled";
+  // Delivery orders are managed by the delivery role — cashier sees them read-only
+  const isDeliveryOrder = order.type === "delivery";
+  const isTerminal = order.status === "complete" || order.status === "cancelled";
 
   function handleAdvance() {
     if (!nextStatus) return;
-    startTransition(() => updateOrderStatus(order.id, nextStatus));
+    startTransition(async () => { await updateOrderStatus(order.id, nextStatus); });
   }
 
   function handleCancel() {
-    startTransition(() => updateOrderStatus(order.id, "cancelled"));
+    startTransition(async () => { await updateOrderStatus(order.id, "cancelled"); });
   }
 
   return (
@@ -218,8 +212,8 @@ function OrderCard({ order }: { order: Order }) {
         </p>
       </div>
 
-      {/* Actions */}
-      {!isTerminal && (
+      {/* Actions — hidden for delivery orders (managed by delivery role) */}
+      {!isTerminal && !isDeliveryOrder && (
         <div className="flex gap-2 pt-1">
           {nextStatus && (
             <button
@@ -227,9 +221,7 @@ function OrderCard({ order }: { order: Order }) {
               disabled={isPending}
               className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium py-2 transition-colors disabled:opacity-50"
             >
-              {nextStatus === "preparing" && <ChefHat className="h-4 w-4" />}
-              {nextStatus === "ready"     && <CheckCircle2 className="h-4 w-4" />}
-              {nextStatus === "completed" && <Package className="h-4 w-4" />}
+              <Package className="h-4 w-4" />
               {STATUS_NEXT_LABEL[order.status]}
             </button>
           )}

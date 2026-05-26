@@ -25,6 +25,7 @@ export async function signIn(formData: FormData) {
 
   if (role === "admin") redirect("/admin");
   if (role === "cashier") redirect("/cashier");
+  if (role === "delivery") redirect("/delivery");
 
   const { data: profile } = await supabase
     .from("users")

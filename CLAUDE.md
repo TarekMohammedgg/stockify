@@ -5,8 +5,17 @@
 This project uses OpenWolf for context management. Read and follow .wolf/OPENWOLF.md every session. Check .wolf/cerebrum.md before generating code. Check .wolf/anatomy.md before reading files.
 
 
-# Project Overview 
-Stockify is a web-based restaurant management system built for a small-to-medium Egyptian restaurant. It serves three distinct user roles — **Admin**, **Cashier**, and **Customer** — each with a dedicated interface. The platform is Arabic-first with an English toggle, cash-only, and supports dine-in, delivery, and takeaway order types.
+# Project Overview
+Stockify is a web-based restaurant management system built for a small-to-medium Egyptian restaurant. It serves **four** distinct user roles — **Admin**, **Cashier**, **Delivery**, and **Customer** — each with a dedicated interface routed from a single `/login` entry point. The platform is Arabic-first (RTL) with an English toggle, cash-only, and supports onsite (dine-in), takeaway, and delivery order types.
+
+Key product pillars:
+- **Admin dashboard** surfaces KPIs: orders by status, employee count, daily and monthly income. Admin manages menu, ingredients/stock, and employees (cashiers + delivery).
+- **Cashier** handles onsite and takeaway orders end-to-end (create + status). Cashier can see delivery orders but status transitions for them are owned by the Delivery role.
+- **Delivery** is a status-update-only role for delivery orders.
+- **Customer** orders via either the AI chatbot (with in-memory insights + live Supabase API access for menu/ingredients) or a manual menu UI.
+- **Order statuses**: `Pending → On-Delivery → Complete` (with `Cancelled` as a terminal branch).
+
+See `docs/PRD.md` (especially section 11 "UI Reference / Wireframes") and `project-sketch.png` for the canonical UX intent.
 # Tech Stack 
 
 | Layer | Choice | Detail |
@@ -38,3 +47,4 @@ Stockify is a web-based restaurant management system built for a small-to-medium
 
 # Important Rules
 - Update CLAUDE.md file and AGENTS.md file after big changes. 
+- when update files @CLAUDE.md or @AGENTS.md make the maxline number <= 200 lines . 

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 
 type ActionResult = { error?: string; ok?: true };
 
-export type OrderStatus = "pending" | "preparing" | "ready" | "completed" | "cancelled";
+export type OrderStatus = "pending" | "on_delivery" | "complete" | "cancelled";
 
 export type OrderItem = {
   menu_item_id: string;
@@ -55,11 +55,48 @@ export async function getOrders(): Promise<Order[]> {
   return (data ?? []) as Order[];
 }
 
+const CASHIER_ALLOWED_STATUSES: OrderStatus[] = ["complete", "cancelled"];
+
 export async function updateOrderStatus(
   id: string,
   status: OrderStatus,
 ): Promise<ActionResult> {
+  // Guard: only allow complete or cancelled transitions for cashier
+  if (!CASHIER_ALLOWED_STATUSES.includes(status)) {
+    console.error(
+      "[updateOrderStatus] invalid status transition attempted",
+      id,
+      status,
+    );
+    return { error: "انتقال حالة غير مسموح به" };
+  }
+
   const supabase = await createClient();
+
+  // Guard: fetch order type before mutating
+  const { data: order, error: fetchErr } = await supabase
+    .from("orders")
+    .select("type")
+    .eq("id", id)
+    .single();
+
+  if (fetchErr || !order) {
+    console.error(
+      "[updateOrderStatus] fetch",
+      id,
+      fetchErr?.message ?? "not found",
+    );
+    return { error: "الطلب غير موجود" };
+  }
+
+  if (order.type === "delivery") {
+    console.error(
+      "[updateOrderStatus] cashier attempted to mutate delivery order",
+      id,
+    );
+    return { error: "لا يمكن للكاشير تغيير حالة طلبات التوصيل" };
+  }
+
   const { error } = await supabase
     .from("orders")
     .update({ status })

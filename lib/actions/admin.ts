@@ -188,7 +188,10 @@ function getAdminClient() {
   });
 }
 
-export async function createCashier(formData: FormData): Promise<ActionResult> {
+async function createEmployee(
+  formData: FormData,
+  role: "cashier" | "delivery",
+): Promise<ActionResult> {
   const admin = getAdminClient();
   if (!admin) return { error: "SUPABASE_SERVICE_ROLE_KEY غير مضبوط في البيئة" };
 
@@ -206,17 +209,33 @@ export async function createCashier(formData: FormData): Promise<ActionResult> {
     email_confirm: true,
     user_metadata: { full_name: name },
   });
-  if (error) return { error: error.message };
+  if (error) {
+    console.error("[createEmployee] auth.admin.createUser failed", error.message);
+    return { error: error.message };
+  }
   if (!data.user) return { error: "تعذّر إنشاء الحساب" };
 
   const { error: profileErr } = await admin
     .from("users")
-    .update({ role: "cashier", phone, name, profile_complete: true })
+    .update({ role, phone, name, profile_complete: true })
     .eq("id", data.user.id);
-  if (profileErr) return { error: profileErr.message };
+  if (profileErr) {
+    console.error("[createEmployee] users update failed", profileErr.message);
+    return { error: profileErr.message };
+  }
 
   revalidatePath("/admin/employees");
   return { ok: true };
+}
+
+export async function createCashier(formData: FormData): Promise<ActionResult> {
+  return createEmployee(formData, "cashier");
+}
+
+export async function createDeliveryEmployee(
+  formData: FormData,
+): Promise<ActionResult> {
+  return createEmployee(formData, "delivery");
 }
 
 export async function updateCashier(

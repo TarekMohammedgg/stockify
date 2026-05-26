@@ -23,6 +23,14 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 - [x] Configure Row Level Security (RLS) policies per role
 - [x] Pre-seed Admin account (requires Supabase Dashboard → Auth → Add User, then `UPDATE users SET role='admin' WHERE id='<uuid>'`)
 
+### 1.2.D Delivery Role — DB Migration
+- [x] Write Supabase migration to add `'delivery'` value to the `users.role` enum
+- [x] Write Supabase migration to update the `orders.status` enum to `pending | on_delivery | complete | cancelled` (current enum uses preparing/ready/completed)
+- [x] Data backfill plan: map existing `preparing` → `on_delivery`, `ready` → `on_delivery`, `completed` → `complete`; document rollback strategy
+- [x] Update local `supabase/schema.sql` to reflect new role + status enum values and any seed data
+- [x] Update any DB views (`v_orders`, etc.) that reference old status strings
+- [x] Update TypeScript types / `OrderStatus` union in `lib/actions/cashier.ts` to match new enum
+
 ### 1.3 Authentication
 - [x] Configure Supabase Auth (email/password + Google OAuth provider)
 - [x] Build `/login` page (form + "Continue with Google" button)
@@ -32,6 +40,12 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 - [x] Implement role-based redirect after login (admin → `/admin`, cashier → `/cashier`, customer → `/`)
 - [x] Create middleware for protected routes
 - [x] Block Google OAuth for Admin/Cashier roles
+
+### 1.3.D Delivery Role — Auth & Routing
+- [x] Extend role-based redirect to send `delivery` users to `/delivery` after login
+- [x] Update `proxy.ts` (middleware) to guard `/delivery` — only `role='delivery'` may access; redirect others appropriately
+- [x] Block Google OAuth for the `delivery` role (same restriction as admin/cashier)
+- [x] Add server-side role check helper for delivery pages (reject admin/cashier/customer impersonation attempts)
 
 ---
 
@@ -60,28 +74,78 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 - [x] Add Cashier (full name, username, password, status)
 - [x] Edit Cashier details
 - [x] Remove / deactivate Cashier
+- [x] Extend employee list to show Delivery accounts alongside Cashiers (role column / filter)
+- [x] Add Delivery employee form (full name, username, password, role=delivery, status)
+- [x] Edit Delivery employee details (including role switch between cashier/delivery if needed)
+- [x] Remove / deactivate Delivery employee
+- [x] Update admin dashboard "employees count" KPI to include delivery staff
 
 ---
 
 ## Phase 3 — Cashier Dashboard
 
 ### 3.1 Orders Panel (`/cashier`)
-- [ ] Live order list (Supabase realtime subscription)
-- [ ] Order card UI (ID, timestamp, type badge, source, items, customer info)
-- [ ] Order detail view
-- [ ] Status update buttons: Pending → Preparing → Ready → Completed
-- [ ] Filter by status / type / source
+- [x] Live order list (Supabase realtime subscription)
+- [x] Order card UI (ID, timestamp, type badge, source, items, customer info)
+- [x] Order detail view
+- [x] Status update buttons: Pending → Preparing → Ready → Completed
+- [x] Cancel button (sets status to 'cancelled')
+- [x] Filter by status
 
 ### 3.2 New Onsite Order (`/cashier/new-order`)
-- [ ] Menu item picker (by category)
-- [ ] Cart with quantity controls
-- [ ] Order type selector: Dine-in (no extra info) / Takeaway (owner name)
-- [ ] Confirm & submit → appears in order list
+- [x] Menu item picker (by category)
+- [x] Cart with quantity controls
+- [x] Order type selector: Dine-in (no extra info) / Takeaway (owner name)
+- [x] Confirm & submit → appears in order list
 
 ### 3.3 Inventory Alerts
-- [ ] Banner at top of cashier dashboard
-- [ ] Fetch from `v_low_stock` view
-- [ ] Color-coded: Yellow (low) / Red (out of stock)
+- [x] Banner at top of cashier dashboard
+- [x] Fetch from `v_low_stock` view
+- [x] Color-coded: Yellow (low) / Red (out of stock)
+
+### 3.4 Cashier — Delivery Order Visibility
+- [ ] Ensure cashier orders panel lists delivery-type orders as read-only for status (visible but transitions disabled per PRD §5.5)
+- [ ] Update status-update buttons in `app/cashier/orders-panel.tsx` to use new enum values (`pending` / `on_delivery` / `complete` / `cancelled`)
+- [x] Restrict cashier status mutations server-side to non-delivery orders only
+- [x] Confirm cashier "New Order → Delivery" path still creates orders with `type='delivery'` and status `pending` so they surface in the delivery dashboard
+
+---
+
+## Phase 3.5 — Delivery Dashboard
+
+### 3.5.1 Delivery Shell & Routing
+- [x] Create `/delivery` route group (`app/delivery/`) with mobile-first layout
+- [x] Build `app/delivery/layout.tsx` (Arabic RTL default, English toggle, top bar with logout)
+- [x] Build `app/delivery/loading.tsx` skeleton state
+- [x] Server-side role guard in `app/delivery/page.tsx` (redirect non-delivery users)
+
+### 3.5.2 Delivery Orders Panel (`/delivery`)
+- [x] Live list of orders filtered to `type='delivery'` (Supabase realtime subscription)
+- [x] Filter / default sort: pending and on_delivery first, then complete/cancelled
+- [x] Order card UI: order ID, timestamp, items list w/ quantities, customer name, phone, delivery address, notes, current status
+- [x] Status update buttons: `Pending → On-Delivery → Complete`, plus `Cancelled` (terminal from any non-complete state)
+- [x] Confirmation prompt before `Cancelled` transition
+- [x] Use lucide-react icons (Truck, CheckCircle, XCircle, Clock) — no inline SVG
+- [x] Arabic-first labels with English toggle (status labels, action buttons)
+- [x] Tailwind v4 utility classes only — no inline `style={}`, no hardcoded hex colors
+- [x] Use logical properties (`start`/`end`) for RTL correctness
+- [x] Dark mode via `dark:` variant
+- [x] Empty state when no delivery orders exist
+- [x] Error / offline state with retry
+
+### 3.5.3 Delivery Server Actions
+- [x] Create `lib/actions/delivery.ts` with server actions: `listDeliveryOrders()`, `updateDeliveryOrderStatus(orderId, status)`
+- [x] Server-side validation: only allow status transitions defined in PRD (Pending → On-Delivery → Complete / Cancelled)
+- [x] Reject mutations on non-delivery orders or by non-delivery users
+- [x] Log errors with function name + order ID context
+
+### 3.5.4 Delivery RLS Policies
+- [x] RLS on `orders`: delivery role may `SELECT` only rows where `type='delivery'`
+- [x] RLS on `orders`: delivery role may `UPDATE` only the `status` column (and only on delivery-type rows)
+- [x] RLS on `users`: delivery role may `SELECT` minimal customer fields (name, phone, address) needed for delivery cards — denied for everything else
+- [x] RLS on `order_items`: delivery role may `SELECT` items belonging to delivery orders only
+- [x] Deny delivery role access to `menu_items`, `ingredients`, `categories`, `allergens`, `chatbot_insights` write operations (read-only or none, per least privilege)
+- [x] Smoke test RLS via Supabase SQL editor with a delivery JWT
 
 ---
 
@@ -115,6 +179,8 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 - [ ] Egyptian Arabic dialect responses
 - [ ] Order type prompt (Delivery / Takeaway)
 - [ ] Pre-fill phone + address from account (editable)
+- [ ] New-vs-returning branching: new customer → collect phone (+ address if delivery); returning → silently load insights
+- [ ] Verify delivery flow collects + persists delivery address before submission
 - [ ] Item selection + quantity + notes
 - [ ] Handle modifications (remove onions, extra sauce, etc.)
 - [ ] Order summary confirmation
@@ -167,12 +233,18 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 ## Phase 7 — QA, RTL Polish, Deployment
 
 ### 7.1 QA
-- [ ] E2E test login flows (all 3 roles + Google OAuth)
+- [ ] E2E test login flows (all 4 roles + Google OAuth)
 - [ ] E2E test admin CRUD operations
 - [ ] E2E test cashier order lifecycle
 - [ ] E2E test customer chatbot order flow
+- [ ] E2E test delivery login → see only delivery orders → Pending → On-Delivery → Complete
+- [ ] E2E test delivery cancellation path (Cancelled from Pending and from On-Delivery)
+- [ ] Verify cashier cannot mutate delivery order status (RLS + UI both enforce)
+- [ ] Verify admin/customer accounts cannot access `/delivery` (route guard + RLS)
+- [ ] Verify delivery account cannot access `/admin`, `/cashier`, or menu/ingredient APIs
+- [ ] Verify admin can create / edit / deactivate a delivery employee end-to-end
 - [ ] Verify low-stock alerts trigger correctly
-- [ ] DevTools MCP testing for UI changes
+- [ ] DevTools MCP testing for UI changes (including `/delivery` mobile viewport)
 
 ### 7.2 RTL & i18n Polish
 - [ ] Audit all components for logical properties (no `left`/`right`)
@@ -192,7 +264,7 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 - [ ] Configure Next.js `images.remotePatterns` for Unsplash
 - [ ] Deploy to production
 - [ ] Smoke test all flows in production
-- [ ] Update `CLAUDE.md` and `AGENTS.md`
+- [ ] Update `CLAUDE.md` and `AGENTS.md` (reflect 4-role model: Admin / Cashier / Delivery / Customer, new status enum, `/delivery` route)
 
 ---
 
