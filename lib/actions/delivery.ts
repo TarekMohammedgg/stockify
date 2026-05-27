@@ -49,7 +49,7 @@ export async function listDeliveryOrders(): Promise<DeliveryOrder[]> {
 
   if (error) {
     console.error("[listDeliveryOrders]", error.message);
-    return [];
+    throw new Error(error.message);
   }
 
   return (data ?? []) as DeliveryOrder[];
@@ -109,10 +109,12 @@ export async function updateDeliveryOrderStatus(
     return { error: "انتقال حالة غير مسموح به" };
   }
 
-  const { error: updateErr } = await supabase
+  const { data: updated, error: updateErr } = await supabase
     .from("orders")
     .update({ status })
-    .eq("id", orderId);
+    .eq("id", orderId)
+    .select("id")
+    .maybeSingle();
 
   if (updateErr) {
     console.error(
@@ -121,6 +123,14 @@ export async function updateDeliveryOrderStatus(
       updateErr.message,
     );
     return { error: updateErr.message };
+  }
+
+  if (!updated) {
+    console.error(
+      "[updateDeliveryOrderStatus] update affected 0 rows (RLS?)",
+      orderId,
+    );
+    return { error: "تعذّر تحديث الطلب — تحقق من الصلاحيات" };
   }
 
   revalidatePath("/delivery");

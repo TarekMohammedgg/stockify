@@ -72,13 +72,13 @@ export default function CartWidget({
                   </button>
                 </div>
                 <div className="mt-auto flex items-center justify-between">
-                  <span className="font-bold text-[var(--primary-700)]">{item.price} <span className="text-sm">{isAr ? "ج.م" : "EGP"}</span></span>
+                  <span className="font-bold text-primary-700">{item.price} <span className="text-sm">{isAr ? "ج.م" : "EGP"}</span></span>
                   <div className="flex items-center gap-3 rounded-full border border-[var(--surface-border)] px-2 py-1">
-                    <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-[var(--text-secondary)] hover:text-[var(--primary-600)]">
+                    <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-[var(--text-secondary)] hover:text-primary-600">
                       <Minus className="h-4 w-4" />
                     </button>
                     <span className="w-4 text-center font-bold text-sm">{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-[var(--text-secondary)] hover:text-[var(--primary-600)]">
+                    <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-[var(--text-secondary)] hover:text-primary-600">
                       <Plus className="h-4 w-4" />
                     </button>
                   </div>
@@ -91,11 +91,11 @@ export default function CartWidget({
         <div className="mt-6 border-t border-[var(--surface-border)] pt-4" dir={isAr ? "rtl" : "ltr"}>
           <div className="mb-4 flex justify-between font-display text-2xl font-bold">
             <span>{isAr ? "المجموع" : "Total"}</span>
-            <span className="text-[var(--primary-700)]">{getTotal()} <span className="text-lg">{isAr ? "ج.م" : "EGP"}</span></span>
+            <span className="text-primary-700">{getTotal()} <span className="text-lg">{isAr ? "ج.م" : "EGP"}</span></span>
           </div>
           <button
             onClick={handleCheckoutClick}
-            className="flex w-full items-center justify-center gap-2 rounded bg-[var(--primary-600)] py-4 text-lg font-bold text-white transition-all hover:bg-[var(--primary-700)]"
+            className="flex w-full items-center justify-center gap-2 rounded bg-primary-600 py-4 text-lg font-bold text-white transition-all hover:bg-primary-700 active:scale-98 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500"
           >
             {isAr ? "إتمام الطلب" : "Checkout"}
             {isAr ? <ArrowLeft className="h-5 w-5" /> : <ArrowRight className="h-5 w-5" />}

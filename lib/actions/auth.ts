@@ -3,9 +3,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
+const CUSTOMER_HOME = "/menu";
+
 function safeNext(raw: FormDataEntryValue | null): string {
   const value = typeof raw === "string" ? raw : "";
-  if (!value.startsWith("/") || value.startsWith("//")) return "/";
+  if (!value.startsWith("/") || value.startsWith("//")) return CUSTOMER_HOME;
   return value;
 }
 
@@ -74,7 +76,7 @@ export async function signUp(formData: FormData) {
     await supabase.from("users").update({ phone, profile_complete: true }).eq("id", user.id);
   }
 
-  redirect("/");
+  redirect(CUSTOMER_HOME);
 }
 
 export async function signInWithGoogle() {
@@ -120,5 +122,5 @@ export async function completeProfile(formData: FormData) {
     return { error: error.message };
   }
 
-  redirect("/");
+  redirect(CUSTOMER_HOME);
 }

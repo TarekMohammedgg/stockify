@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, LogIn, LogOut, User } from "lucide-react";
+import { ChevronDown, LogIn, LogOut, UserCircle, User } from "lucide-react";
 import { signOut } from "@/lib/actions/auth";
 
 type UserProfile = {
@@ -58,20 +58,7 @@ export default function SiteHeader({
           Stockify
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          <Link
-            href="/"
-            className="text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--primary-600)]"
-          >
-            {isAr ? "الرئيسية" : "Home"}
-          </Link>
-          <Link
-            href="/menu"
-            className="text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--primary-600)]"
-          >
-            {isAr ? "القائمة" : "Menu"}
-          </Link>
-        </nav>
+
 
         <div className="flex items-center gap-3">
           <button
@@ -124,6 +111,15 @@ export default function SiteHeader({
                       </div>
                     </div>
                   </div>
+                  <Link
+                    href="/profile"
+                    role="menuitem"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex w-full items-center gap-3 px-4 py-3 text-start text-sm font-medium text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-card-warm)]"
+                  >
+                    <UserCircle className="h-4 w-4 text-[var(--text-muted)]" />
+                    {isAr ? "ملفي الشخصي" : "My Profile"}
+                  </Link>
                   <form action={signOut} className="block">
                     <button
                       type="submit"

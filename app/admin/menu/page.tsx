@@ -51,26 +51,35 @@ export default async function AdminMenuPage() {
       {!items || items.length === 0 ? (
         <EmptyState />
       ) : (
-        <div className="rise-in space-y-12" style={{ animationDelay: "100ms" }}>
-          {Array.from(groups.entries()).map(([category, rows]) => (
-            <section key={category}>
-              {/* Category divider */}
-              <div className="mb-5 flex items-baseline gap-4">
-                <h2 className="font-display text-lg text-[var(--text-primary)] whitespace-nowrap">
-                  {category}
-                </h2>
-                <div className="flex-1 h-px bg-[var(--surface-border-soft)]" />
-                <span className="eyebrow numeric">
-                  {(rows?.length ?? 0).toString().padStart(2, "0")}
-                </span>
-              </div>
+        <div className="space-y-12">
+          {Array.from(groups.entries()).map(([category, rows], catIdx) => {
+            const sectionDelay = (catIdx + 1) * 100;
+            return (
+              <section
+                key={category}
+                className="rise-in"
+                style={{ animationDelay: `${sectionDelay}ms` }}
+              >
+                {/* Category divider */}
+                <div className="mb-5 flex items-baseline gap-4">
+                  <h2 className="font-display text-lg text-[var(--text-primary)] whitespace-nowrap">
+                    {category}
+                  </h2>
+                  <div className="flex-1 h-px bg-[var(--surface-border-soft)]" />
+                  <span className="eyebrow numeric">
+                    {(rows?.length ?? 0).toString().padStart(2, "0")}
+                  </span>
+                </div>
 
-              <ul className="space-y-2">
-                {(rows ?? []).map((it) => (
-                  <li
-                    key={it.id}
-                    className="lift group grid grid-cols-[auto_1fr_auto_auto_auto] items-center gap-5 rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-4 hover:border-primary-500/40"
-                  >
+                <ul className="space-y-2">
+                  {(rows ?? []).map((it, itemIdx) => {
+                    const itemDelay = sectionDelay + (itemIdx * 40);
+                    return (
+                      <li
+                        key={it.id}
+                        style={{ animationDelay: `${itemDelay}ms` }}
+                        className="lift rise-in group grid grid-cols-[auto_1fr_auto_auto_auto] items-center gap-5 rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-4 hover:border-primary-500/40"
+                      >
                     {it.photo_url ? (
                       <Image
                         src={it.photo_url}
@@ -120,10 +129,12 @@ export default async function AdminMenuPage() {
                       isAvailable={!!it.is_available}
                     />
                   </li>
-                ))}
-              </ul>
-            </section>
-          ))}
+                );
+              })}
+            </ul>
+          </section>
+        );
+      })}
         </div>
       )}
     </div>

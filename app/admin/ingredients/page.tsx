@@ -4,7 +4,13 @@ import { IngredientsManager } from "./manager";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminIngredientsPage() {
+export default async function AdminIngredientsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ filter?: string }>;
+}) {
+  const { filter } = await searchParams;
+  const initialFilter = filter === "low" ? "low" : "all";
   const supabase = await createClient();
 
   const [{ data: ingredients }, { data: usage }] = await Promise.all([
@@ -70,6 +76,7 @@ export default async function AdminIngredientsPage() {
               low_stock_threshold: Number(i.low_stock_threshold),
               used_in: usageMap[i.id] ?? [],
             }))}
+            initialFilter={initialFilter}
           />
         </div>
       )}

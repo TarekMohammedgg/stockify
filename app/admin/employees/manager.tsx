@@ -75,10 +75,10 @@ export function EmployeesManager({ employees }: { employees: Employee[] }) {
               key={tab.key}
               type="button"
               onClick={() => setFilter(tab.key)}
-              className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ease-out cursor-pointer ${
                 filter === tab.key
                   ? "bg-[var(--surface-ink)] text-[var(--surface-bg)] shadow-sm"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  : "text-[var(--text-secondary)] hover:bg-[var(--surface-canvas)] hover:text-[var(--text-primary)]"
               }`}
             >
               {tab.label}
@@ -100,7 +100,7 @@ export function EmployeesManager({ employees }: { employees: Employee[] }) {
           <button
             type="button"
             onClick={() => setOpen({ employee: null, role: "cashier" })}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--surface-border-soft)] bg-[var(--surface-input)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-all hover:bg-primary-500/10 hover:border-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--surface-border-soft)] bg-[var(--surface-input)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-all hover:bg-primary-500/10 hover:border-primary-400 hover:text-primary-700 dark:hover:text-primary-300 cursor-pointer"
           >
             <Plus className="h-3.5 w-3.5" />
             إضافة كاشير
@@ -108,7 +108,7 @@ export function EmployeesManager({ employees }: { employees: Employee[] }) {
           <button
             type="button"
             onClick={() => setOpen({ employee: null, role: "delivery" })}
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ink)] px-4 py-2 text-sm font-medium text-[var(--surface-bg)] transition-all hover:bg-primary-600"
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ink)] px-4 py-2 text-sm font-medium text-[var(--surface-bg)] transition-all hover:bg-primary-600 cursor-pointer"
           >
             <Plus className="h-3.5 w-3.5" />
             إضافة مندوب توصيل
@@ -118,54 +118,58 @@ export function EmployeesManager({ employees }: { employees: Employee[] }) {
 
       {/* ── Employee grid ──────────────────────────────────── */}
       {filtered.length > 0 && (
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {filtered.map((emp, idx) => (
-            <li
-              key={emp.id}
-              className="lift group rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-5"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-center gap-4 min-w-0">
-                  <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/20 to-accent-500/15 font-display text-lg text-primary-700 dark:text-primary-300">
-                    {initials(emp.name) || "؟"}
-                    <span
-                      className={`absolute -bottom-0.5 -end-0.5 h-3.5 w-3.5 rounded-full ring-2 ring-[var(--surface-card)] ${
-                        emp.is_active ? "bg-emerald-500" : "bg-zinc-400"
-                      }`}
-                      aria-hidden
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <p className="font-display text-base text-[var(--text-primary)] truncate">
-                        {emp.name}
-                      </p>
-                      <RoleBadge role={emp.role} />
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {filtered.map((emp, idx) => {
+            const itemDelay = idx * 40;
+            return (
+              <li
+                key={emp.id}
+                style={{ animationDelay: `${itemDelay}ms` }}
+                className="lift rise-in group rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-5 hover:border-primary-500/40"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/20 to-accent-500/15 font-display text-lg text-primary-700 dark:text-primary-300 transition-transform duration-300 group-hover:scale-105">
+                      {initials(emp.name) || "؟"}
+                      <span
+                        className={`absolute -bottom-0.5 -end-0.5 h-3.5 w-3.5 rounded-full ring-2 ring-[var(--surface-card)] ${
+                          emp.is_active ? "bg-emerald-500" : "bg-zinc-400"
+                        }`}
+                        aria-hidden
+                      />
                     </div>
-                    <p className="text-xs text-[var(--text-muted)] truncate" dir="ltr">
-                      {emp.email}
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <p className="font-display text-base text-[var(--text-primary)] truncate">
+                          {emp.name}
+                        </p>
+                        <RoleBadge role={emp.role} />
+                      </div>
+                      <p className="text-xs text-[var(--text-muted)] truncate" dir="ltr">
+                        {emp.email}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="font-display text-[10px] tracking-[0.2em] text-[var(--text-faint)]">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <div className="mt-5 flex items-center justify-between gap-4 pt-4 border-t border-dashed border-[var(--surface-border-soft)]">
+                  <div className="min-w-0">
+                    <p className="eyebrow mb-0.5">الهاتف</p>
+                    <p
+                      className="text-sm text-[var(--text-secondary)] truncate numeric"
+                      dir="ltr"
+                    >
+                      {emp.phone || "—"}
                     </p>
                   </div>
+                  <RowActions employee={emp} onEdit={() => setOpen({ employee: emp, role: emp.role })} />
                 </div>
-                <span className="font-display text-[10px] tracking-[0.2em] text-[var(--text-faint)]">
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-              </div>
-
-              <div className="mt-5 flex items-center justify-between gap-4 pt-4 border-t border-dashed border-[var(--surface-border-soft)]">
-                <div className="min-w-0">
-                  <p className="eyebrow mb-0.5">الهاتف</p>
-                  <p
-                    className="text-sm text-[var(--text-secondary)] truncate numeric"
-                    dir="ltr"
-                  >
-                    {emp.phone || "—"}
-                  </p>
-                </div>
-                <RowActions employee={emp} onEdit={() => setOpen({ employee: emp, role: emp.role })} />
-              </div>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
       )}
 
@@ -210,13 +214,13 @@ function RowActions({
 }) {
   const [pending, start] = useTransition();
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out">
       <button
         type="button"
         onClick={onEdit}
         title="تعديل"
         aria-label="تعديل"
-        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
       >
         <Pencil className="h-4 w-4" />
       </button>
@@ -230,7 +234,7 @@ function RowActions({
             await setCashierActive(employee.id, !employee.is_active);
           })
         }
-        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] disabled:opacity-50 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] disabled:opacity-50 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
       >
         {employee.is_active ? (
           <PowerOff className="h-4 w-4" />
@@ -255,7 +259,7 @@ function RowActions({
             if (res?.error) alert(res.error);
           });
         }}
-        className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
       >
         <Trash2 className="h-4 w-4" />
       </button>
@@ -302,13 +306,13 @@ function EmployeeDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--surface-ink)]/50 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--surface-ink)]/50 backdrop-fade p-4"
       onClick={onClose}
     >
       <form
         onSubmit={onSubmit}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-md rounded-3xl bg-[var(--surface-card)] overflow-hidden shadow-2xl border border-[var(--surface-border-soft)] rise-in"
+        className="w-full max-w-md rounded-3xl bg-[var(--surface-card)] overflow-hidden shadow-2xl border border-[var(--surface-border-soft)] slide-up"
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--surface-border-soft)] bg-[var(--surface-canvas)]/50">
           <div>
@@ -323,7 +327,7 @@ function EmployeeDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] transition-colors"
+            className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
             aria-label="إغلاق"
           >
             <X className="h-4 w-4" />
@@ -368,14 +372,14 @@ function EmployeeDialog({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-full border border-[var(--surface-border)] px-5 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--surface-input)] transition-colors"
+              className="rounded-full border border-[var(--surface-border)] px-5 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--surface-input)] transition-colors cursor-pointer"
             >
               إلغاء
             </button>
             <button
               type="submit"
               disabled={pending}
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ink)] px-5 py-2.5 text-sm font-medium text-[var(--surface-bg)] hover:bg-primary-600 disabled:opacity-50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-ink)] px-5 py-2.5 text-sm font-medium text-[var(--surface-bg)] hover:bg-primary-600 disabled:opacity-50 transition-colors cursor-pointer"
             >
               {pending && <Loader2 className="h-4 w-4 animate-spin" />}
               {employee ? "حفظ" : "إنشاء"}

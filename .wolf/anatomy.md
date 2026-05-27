@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-26T18:42:43.299Z
-> Files: 66 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T03:20:18.889Z
+> Files: 86 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -9,6 +9,7 @@
 - `AGENTS.md` — Stockify — Agent Guide (~1135 tok)
 - `CLAUDE.md` — OpenWolf (~1830 tok)
 - `next.config.ts` — Declares nextConfig with Unsplash remotePatterns (~68 tok)
+- `PLAN.md` — Plan: Admin Home Final Touches — Real Data + Clickable Drill-downs (~2275 tok)
 - `proxy.ts` — Exports proxy (~626 tok)
 - `tasks.md` — Stockify — Build Tasks (~3961 tok)
 
@@ -24,13 +25,16 @@
 
 ## C:/Users/USER/.claude/plans/
 
+- `1-insights-not-work-bright-pillow.md` — Plan: Fix Chatbot Insights + Mobile Overflow (~1598 tok)
+- `glimmering-mixing-tower.md` — Plan: Customer Profile Page (~1027 tok)
+- `jazzy-cuddling-steele.md` — Plan: Admin Home Final Touches — Real Data + Clickable Drill-downs (~2662 tok)
 - `peaceful-purring-naur.md` — Plan: Phase 5 — Chatbot Widget + OpenRouter Integration (~1204 tok)
 
 ## app/
 
 - `globals.css` — Styles: 17 rules, 53 vars (~1684 tok)
 - `layout.tsx` — almarai (~300 tok)
-- `page.tsx` — HomePage (~309 tok)
+- `page.tsx` — HomePage (~202 tok)
 
 ## app/(auth)/complete-profile/
 
@@ -38,7 +42,7 @@
 
 ## app/(auth)/login/
 
-- `page.tsx` — LoginForm — renders form (~1888 tok)
+- `page.tsx` — LoginForm — renders form (~1927 tok)
 
 ## app/(auth)/register/
 
@@ -48,7 +52,12 @@
 
 - `layout.tsx` — AdminLayout (~293 tok)
 - `loading.tsx` — Loading (~647 tok)
-- `page.tsx` — AdminHomePage (~2750 tok)
+- `page.tsx` — dynamic (~3359 tok)
+
+## app/admin/customers/
+
+- `customers-list.tsx` — formatRelative (~4291 tok)
+- `page.tsx` — dynamic (~600 tok)
 
 ## app/admin/employees/
 
@@ -59,8 +68,8 @@
 ## app/admin/ingredients/
 
 - `loading.tsx` — Loading (~682 tok)
-- `manager.tsx` — UNIT_LABELS — renders form (~3257 tok)
-- `page.tsx` — dynamic (~880 tok)
+- `manager.tsx` — UNIT_LABELS — renders form (~4101 tok)
+- `page.tsx` — dynamic (~940 tok)
 
 ## app/admin/menu/
 
@@ -77,13 +86,23 @@
 
 - `page.tsx` — NewMenuItemPage (~502 tok)
 
+## app/admin/orders/
+
+- `loading.tsx` — Loading (~180 tok)
+- `orders-panel.tsx` — STATUS_LABELS (~4749 tok)
+- `page.tsx` — dynamic (~152 tok)
+
+## app/admin/revenue/
+
+- `page.tsx` — dynamic (~2555 tok)
+
 ## app/api/chat/
 
-- `route.ts` — POST: two-phase AI call (conversation + JSON extraction). Detects ORDER_CONFIRMED, extracts item names, resolves names→IDs server-side, inserts orders + order_items, upserts chatbot_insights (~3100 tok)
+- `route.ts` — Next.js API route: POST (~3050 tok)
 
 ## app/api/chat/extract-insights/
 
-- `route.ts` — Next.js API route: POST (~1541 tok)
+- `route.ts` — Next.js API route: POST (~1871 tok)
 
 ## app/api/insights/
 
@@ -111,7 +130,7 @@
 
 ## app/auth/callback/
 
-- `route.ts` — Next.js API route: GET (~502 tok)
+- `route.ts` — Next.js API route: GET (~580 tok)
 
 ## app/cashier/
 
@@ -126,41 +145,63 @@
 
 ## app/delivery/
 
-- `delivery-panel.tsx` — STATUS_LABELS (~3678 tok)
+- `delivery-panel.tsx` — STATUS_LABELS (~4985 tok)
 - `layout.tsx` — DeliveryLayout — renders form (~528 tok)
 - `loading.tsx` — DeliveryLoading (~660 tok)
-- `page.tsx` — DeliveryPage (~77 tok)
+- `page.tsx` — DeliveryPage (~123 tok)
 
 ## app/menu/
 
-- `page.tsx` — MenuPage (~805 tok)
+- `page.tsx` — MenuPage (~937 tok)
+
+## app/profile/
+
+- `page.tsx` — ProfilePage — Server Component; auth+role guard, fetches users + chatbot_insights + menu_items; passes to ProfileForm (~400 tok)
+- `page.tsx` — ProfilePage (~447 tok)
+- `profile-form.tsx` — ProfileForm — Client Component; editable personal info + read-only chatbot insights; calls updateProfile server action (~700 tok)
+- `profile-form.tsx` — getInitials (~2938 tok)
 
 ## components/admin/
 
-- `sidebar.tsx` — PendingDot — renders form (~1880 tok)
+- `sidebar.tsx` — nav — renders form (~1990 tok)
 
 ## components/public/
 
-- `chatbot-widget.tsx` — MarkdownComponents (~3511 tok)
+- `cart-widget.tsx` — CartWidget — renders modal (~1454 tok)
+- `chatbot-widget.tsx` — MarkdownComponents (~3875 tok)
 - `landing-page.tsx` — COPY (~5273 tok)
 - `public-menu.tsx` — PublicMenu (~3474 tok)
-- `site-header.tsx` — getInitials — renders form (~1853 tok)
+- `site-header.tsx` — getInitials — renders form (~1851 tok)
 
 ## docs/
 
 - `PRD.md` — PRD — Stockify Restaurant Management Website (~4981 tok)
 - `SUPABASE_SCHEMA.md` — STOCKIFY — Supabase PostgreSQL Schema + Dummy Data (~7377 tok)
 
+## lib/
+
+- `time.ts` — Cairo timezone helpers — robust to DST (Egypt is +02 winter / +03 summer (~358 tok)
+
 ## lib/actions/
 
-- `admin.ts` — API routes: GET (19 endpoints) (~2627 tok)
-- `auth.ts` — API routes: GET (9 endpoints) (~874 tok)
+- `admin.ts` — API routes: GET (13 endpoints) (~4334 tok)
+- `auth.ts` — API routes: GET (9 endpoints) (~892 tok)
 - `cashier.ts` — Exports OrderStatus, OrderItem, Order, LowStockItem + 7 more (~1647 tok)
-- `delivery.ts` — Exports DeliveryStatus, OrderItem, DeliveryOrder, listDeliveryOrders, updateDeliveryOrderStatus (~921 tok)
+- `delivery.ts` — Exports DeliveryStatus, OrderItem, DeliveryOrder, listDeliveryOrders, updateDeliveryOrderStatus (~998 tok)
+- `profile.ts` — Exports updateProfile (~322 tok)
 
 ## lib/chatbot/
 
-- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt, buildSystemPrompt (~699 tok)
+- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt, buildSystemPrompt (~946 tok)
+
+## lib/hooks/
+
+- `use-cart-sync.ts` — useCartSync(userId) hook: loads cart from Supabase on mount/userId change, syncs mutations back (~80 tok)
+- `use-cart-sync.ts` — Exports useCartSync (~957 tok)
+
+## lib/store/
+
+- `cart.ts` — Exports CartItem, useCartStore (~441 tok)
 
 ## lib/supabase/
 
@@ -169,4 +210,4 @@
 
 ## supabase/
 
-- `schema.sql` — Database schema (~2483 tok)
+- `schema.sql` — Database schema (~2667 tok)

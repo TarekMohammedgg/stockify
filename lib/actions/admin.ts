@@ -3,8 +3,212 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import type { Order, OrderStatus } from "@/lib/actions/cashier";
 
 type ActionResult = { error?: string; ok?: true };
+
+// ───────────────────────────────────────────────────────────────
+// ORDERS (admin — full permissions)
+// ───────────────────────────────────────────────────────────────
+
+const VALID_ORDER_STATUSES: OrderStatus[] = [
+  "pending",
+  "on_delivery",
+  "complete",
+  "cancelled",
+];
+
+export async function listAllOrders(): Promise<Order[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("v_orders")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("[listAllOrders]", error.message);
+    throw new Error(error.message);
+  }
+  return (data ?? []) as Order[];
+}
+
+export async function updateOrderStatusAdmin(
+  id: string,
+  status: OrderStatus,
+): Promise<ActionResult> {
+  if (!VALID_ORDER_STATUSES.includes(status)) {
+    console.error("[updateOrderStatusAdmin] invalid status", id, status);
+    return { error: "حالة غير صالحة" };
+  }
+
+  const supabase = await createClient();
+  const { data: updated, error } = await supabase
+    .from("orders")
+    .update({ status })
+    .eq("id", id)
+    .select("id")
+    .maybeSingle();
+
+  if (error) {
+    console.error("[updateOrderStatusAdmin]", id, error.message);
+    return { error: error.message };
+  }
+  if (!updated) {
+    console.error("[updateOrderStatusAdmin] 0 rows updated (RLS?)", id);
+    return { error: "تعذّر تحديث الطلب — تحقق من الصلاحيات" };
+  }
+
+  revalidatePath("/admin/orders");
+  revalidatePath("/admin");
+  return { ok: true };
+}
+
+// ───────────────────────────────────────────────────────────────
+// CUSTOMERS (admin view — profile + insights + order summary)
+// ───────────────────────────────────────────────────────────────
+
+export type CustomerInsight = {
+  default_address: string | null;
+  favourite_items: string[];
+  favourite_item_names: string[];
+  last_seen: string | null;
+};
+
+export type CustomerRow = {
+  id: string;
+  name: string;
+  phone: string | null;
+  email: string | null;
+  address: string | null;
+  auth_provider: string;
+  is_active: boolean;
+  created_at: string;
+  insights: CustomerInsight | null;
+  order_count: number;
+  last_order_at: string | null;
+  last_order_status: string | null;
+  total_spend: number;
+};
+
+export async function listCustomers(): Promise<CustomerRow[]> {
+  const supabase = await createClient();
+
+  const [usersRes, insightsRes, ordersRes] = await Promise.all([
+    supabase
+      .from("users")
+      .select(
+        "id, name, phone, email, address, auth_provider, is_active, created_at",
+      )
+      .eq("role", "customer"),
+    supabase
+      .from("chatbot_insights")
+      .select("user_id, favourite_items, default_address, last_seen"),
+    supabase
+      .from("orders")
+      .select("customer_id, status, total_price, created_at")
+      .not("customer_id", "is", null),
+  ]);
+
+  if (usersRes.error) {
+    console.error("[listCustomers] users", usersRes.error.message);
+    throw new Error(usersRes.error.message);
+  }
+
+  const insightsByUser = new Map<
+    string,
+    {
+      favourite_items: string[];
+      default_address: string | null;
+      last_seen: string | null;
+    }
+  >();
+  for (const row of insightsRes.data ?? []) {
+    insightsByUser.set(row.user_id, {
+      favourite_items: (row.favourite_items ?? []) as string[],
+      default_address: row.default_address,
+      last_seen: row.last_seen,
+    });
+  }
+
+  // Resolve favourite menu item ids → names in one batched fetch
+  const allFavIds = new Set<string>();
+  for (const v of insightsByUser.values()) {
+    for (const fid of v.favourite_items) allFavIds.add(fid);
+  }
+  const favNameMap = new Map<string, string>();
+  if (allFavIds.size > 0) {
+    const { data: menuRows, error: menuErr } = await supabase
+      .from("menu_items")
+      .select("id, name_ar")
+      .in("id", Array.from(allFavIds));
+    if (menuErr) {
+      console.error("[listCustomers] menu_items", menuErr.message);
+    } else {
+      for (const r of menuRows ?? []) favNameMap.set(r.id, r.name_ar);
+    }
+  }
+
+  // Aggregate orders per customer
+  type Agg = { count: number; last_at: string | null; last_status: string | null; spend: number };
+  const orderAgg = new Map<string, Agg>();
+  for (const o of ordersRes.data ?? []) {
+    if (!o.customer_id) continue;
+    const cur = orderAgg.get(o.customer_id) ?? {
+      count: 0,
+      last_at: null,
+      last_status: null,
+      spend: 0,
+    };
+    cur.count += 1;
+    if (o.status === "complete") cur.spend += Number(o.total_price ?? 0);
+    if (!cur.last_at || new Date(o.created_at) > new Date(cur.last_at)) {
+      cur.last_at = o.created_at;
+      cur.last_status = o.status;
+    }
+    orderAgg.set(o.customer_id, cur);
+  }
+
+  const rows: CustomerRow[] = (usersRes.data ?? []).map((u) => {
+    const ins = insightsByUser.get(u.id) ?? null;
+    const agg = orderAgg.get(u.id);
+    return {
+      id: u.id,
+      name: u.name,
+      phone: u.phone,
+      email: u.email,
+      address: u.address,
+      auth_provider: u.auth_provider,
+      is_active: u.is_active,
+      created_at: u.created_at,
+      insights: ins
+        ? {
+            default_address: ins.default_address,
+            favourite_items: ins.favourite_items,
+            favourite_item_names: ins.favourite_items
+              .map((id) => favNameMap.get(id))
+              .filter((s): s is string => !!s),
+            last_seen: ins.last_seen,
+          }
+        : null,
+      order_count: agg?.count ?? 0,
+      last_order_at: agg?.last_at ?? null,
+      last_order_status: agg?.last_status ?? null,
+      total_spend: agg?.spend ?? 0,
+    };
+  });
+
+  rows.sort((a, b) => {
+    if (a.last_order_at && b.last_order_at)
+      return (
+        new Date(b.last_order_at).getTime() -
+        new Date(a.last_order_at).getTime()
+      );
+    if (a.last_order_at) return -1;
+    if (b.last_order_at) return 1;
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+
+  return rows;
+}
 
 // ───────────────────────────────────────────────────────────────
 // MENU ITEMS

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { createClient } from "@/lib/supabase/client";
 import {
   listDeliveryOrders,
@@ -15,6 +15,8 @@ import {
   Clock,
   RefreshCw,
   Package,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 
 // ── Helpers ────────────────────────────────────────────────────────────────
@@ -48,7 +50,6 @@ function sortOrders(orders: DeliveryOrder[]): DeliveryOrder[] {
     const aIdx = STATUS_ORDER.indexOf(a.status);
     const bIdx = STATUS_ORDER.indexOf(b.status);
     if (aIdx !== bIdx) return aIdx - bIdx;
-    // Within same group: newest first
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
   });
 }
@@ -66,29 +67,30 @@ function statusChipClass(status: DeliveryStatus) {
   }
 }
 
+function statusDotClass(status: DeliveryStatus) {
+  switch (status) {
+    case "pending":     return "bg-amber-500";
+    case "on_delivery": return "bg-blue-500";
+    case "complete":    return "bg-green-500";
+    case "cancelled":   return "bg-zinc-400";
+  }
+}
+
 function statusChipIcon(status: DeliveryStatus) {
   switch (status) {
-    case "pending":
-      return <Clock className="h-3 w-3" />;
-    case "on_delivery":
-      return <Truck className="h-3 w-3" />;
-    case "complete":
-      return <CheckCircle className="h-3 w-3" />;
-    case "cancelled":
-      return <XCircle className="h-3 w-3" />;
+    case "pending":     return <Clock className="h-3 w-3" />;
+    case "on_delivery": return <Truck className="h-3 w-3" />;
+    case "complete":    return <CheckCircle className="h-3 w-3" />;
+    case "cancelled":   return <XCircle className="h-3 w-3" />;
   }
 }
 
 function statusCardBorder(status: DeliveryStatus) {
   switch (status) {
-    case "pending":
-      return "border-s-amber-400";
-    case "on_delivery":
-      return "border-s-blue-400";
-    case "complete":
-      return "border-s-green-400";
-    case "cancelled":
-      return "border-s-zinc-300 dark:border-s-zinc-600";
+    case "pending":     return "border-s-amber-400";
+    case "on_delivery": return "border-s-blue-400";
+    case "complete":    return "border-s-green-400";
+    case "cancelled":   return "border-s-zinc-300 dark:border-s-zinc-600";
   }
 }
 
@@ -101,16 +103,49 @@ function formatTime(iso: string) {
   return d.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
 }
 
+function formatClock(d: Date) {
+  return d.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
+}
+
 function shortId(id: string) {
   return id.slice(-4).toUpperCase();
 }
 
 // ── Order card ──────────────────────────────────────────────────────────────
 
-function OrderCard({ order }: { order: DeliveryOrder }) {
+function OrderCard({
+  order,
+  onTransition,
+}: {
+  order: DeliveryOrder;
+  onTransition: (next: DeliveryStatus) => Promise<{ error?: string }>;
+}) {
   const [isPending, startTransition] = useTransition();
+  const [cardError, setCardError] = useState<string | null>(null);
+  const [flash, setFlash] = useState(false);
+  const prevStatus = useRef(order.status);
   const isTerminal =
     order.status === "complete" || order.status === "cancelled";
+
+  // Flash highlight when status changes from outside (realtime / refetch)
+  useEffect(() => {
+    if (prevStatus.current !== order.status) {
+      prevStatus.current = order.status;
+      setFlash(true);
+      const t = setTimeout(() => setFlash(false), 600);
+      return () => clearTimeout(t);
+    }
+  }, [order.status]);
+
+  function runTransition(next: DeliveryStatus) {
+    setCardError(null);
+    startTransition(async () => {
+      const res = await onTransition(next);
+      if (res.error) {
+        setCardError(res.error);
+      }
+    });
+  }
 
   function handleAdvance() {
     const next: DeliveryStatus | null =
@@ -120,9 +155,7 @@ function OrderCard({ order }: { order: DeliveryOrder }) {
           ? "complete"
           : null;
     if (!next) return;
-    startTransition(async () => {
-      await updateDeliveryOrderStatus(order.id, next);
-    });
+    runTransition(next);
   }
 
   function handleCancel() {
@@ -132,9 +165,7 @@ function OrderCard({ order }: { order: DeliveryOrder }) {
       )
     )
       return;
-    startTransition(async () => {
-      await updateDeliveryOrderStatus(order.id, "cancelled");
-    });
+    runTransition("cancelled");
   }
 
   const nextLabel =
@@ -151,9 +182,13 @@ function OrderCard({ order }: { order: DeliveryOrder }) {
         ? CheckCircle
         : null;
 
+  const isLive = order.status === "pending" || order.status === "on_delivery";
+
   return (
     <div
-      className={`bg-[var(--surface-card)] rounded-2xl border border-[var(--surface-border-soft)] border-s-4 ${statusCardBorder(order.status)} flex flex-col gap-3 p-4 transition-opacity ${isPending ? "opacity-60" : ""}`}
+      className={`bg-[var(--surface-card)] rounded-2xl border border-[var(--surface-border-soft)] border-s-4 ${statusCardBorder(order.status)} flex flex-col gap-3 p-4 transition-all duration-500 ${
+        flash ? "ring-2 ring-primary-400 ring-offset-1 ring-offset-[var(--surface-bg)]" : ""
+      } ${isPending ? "opacity-70" : ""}`}
     >
       {/* Header row */}
       <div className="flex items-start justify-between gap-2">
@@ -164,6 +199,14 @@ function OrderCard({ order }: { order: DeliveryOrder }) {
           <span
             className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${statusChipClass(order.status)}`}
           >
+            <span className="relative flex h-2 w-2 items-center justify-center">
+              {isLive && (
+                <span
+                  className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${statusDotClass(order.status)}`}
+                />
+              )}
+              <span className={`relative inline-flex h-2 w-2 rounded-full ${statusDotClass(order.status)}`} />
+            </span>
             {statusChipIcon(order.status)}
             {STATUS_LABELS[order.status]}
           </span>
@@ -237,6 +280,23 @@ function OrderCard({ order }: { order: DeliveryOrder }) {
         </p>
       </div>
 
+      {/* Per-card error */}
+      {cardError && (
+        <div className="flex items-start justify-between gap-2 rounded-xl border border-red-300 bg-red-50 dark:border-red-800 dark:bg-red-950/30 px-3 py-2">
+          <p className="flex items-center gap-1.5 text-xs text-red-700 dark:text-red-400">
+            <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+            {cardError}
+          </p>
+          <button
+            onClick={() => setCardError(null)}
+            className="text-red-500 hover:text-red-700 text-xs"
+            aria-label="إغلاق"
+          >
+            <XCircle className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
+
       {/* Actions — only for non-terminal orders */}
       {!isTerminal && (
         <div className="flex gap-2 pt-1">
@@ -244,16 +304,25 @@ function OrderCard({ order }: { order: DeliveryOrder }) {
             <button
               onClick={handleAdvance}
               disabled={isPending}
-              className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium py-2 transition-colors disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <NextIcon className="h-4 w-4" />
-              {nextLabel}
+              {isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  جاري التحديث…
+                </>
+              ) : (
+                <>
+                  <NextIcon className="h-4 w-4" />
+                  {nextLabel}
+                </>
+              )}
             </button>
           )}
           <button
             onClick={handleCancel}
             disabled={isPending}
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-[var(--surface-border)] hover:border-red-400 hover:text-red-600 text-[var(--text-muted)] text-sm py-2 px-3 transition-colors disabled:opacity-50"
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-[var(--surface-border)] hover:border-red-400 hover:text-red-600 text-[var(--text-muted)] text-sm py-2 px-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <XCircle className="h-4 w-4" />
             <span className="hidden sm:inline">إلغاء</span>
@@ -274,19 +343,56 @@ export default function DeliveryPanel({
   const [orders, setOrders] = useState<DeliveryOrder[]>(initialOrders);
   const [filter, setFilter] = useState<FilterStatus>("all");
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [isRefreshing, startRefreshTransition] = useTransition();
 
+  // Sync local state with server-revalidated props (after revalidatePath)
+  useEffect(() => {
+    setOrders(initialOrders);
+    setLastUpdated(new Date());
+  }, [initialOrders]);
+
+  async function refetch(): Promise<DeliveryOrder[] | null> {
+    try {
+      const fresh = await listDeliveryOrders();
+      setOrders(fresh);
+      setLastUpdated(new Date());
+      setError(null);
+      return fresh;
+    } catch (err) {
+      console.error("[DeliveryPanel] refetch", err);
+      setError("تعذّر تحميل الطلبات. تحقق من الاتصال بالإنترنت.");
+      return null;
+    }
+  }
+
   function refresh() {
-    setError(null);
     startRefreshTransition(async () => {
-      try {
-        const fresh = await listDeliveryOrders();
-        setOrders(fresh);
-      } catch (err) {
-        console.error("[DeliveryPanel] refresh", err);
-        setError("تعذّر تحميل الطلبات. تحقق من الاتصال بالإنترنت.");
-      }
+      await refetch();
     });
+  }
+
+  // Optimistic transition: update local state, call action, refetch authoritative state on completion.
+  async function handleTransition(
+    orderId: string,
+    next: DeliveryStatus,
+  ): Promise<{ error?: string }> {
+    const snapshot = orders;
+    setOrders((curr) =>
+      curr.map((o) => (o.id === orderId ? { ...o, status: next } : o)),
+    );
+
+    const res = await updateDeliveryOrderStatus(orderId, next);
+
+    if (res.error) {
+      // Roll back
+      setOrders(snapshot);
+      return { error: res.error };
+    }
+
+    // Authoritative refetch (covers realtime drops + recomputes derived fields)
+    await refetch();
+    return {};
   }
 
   useEffect(() => {
@@ -303,26 +409,28 @@ export default function DeliveryPanel({
           filter: "type=eq.delivery",
         },
         () => {
-          // Refetch on any delivery order change
-          listDeliveryOrders()
-            .then((fresh) => setOrders(fresh))
-            .catch((err) => {
-              console.error("[DeliveryPanel] realtime refresh", err);
-            });
+          refetch();
         },
       )
-      .subscribe();
+      .subscribe((status) => {
+        if (status === "SUBSCRIBED") {
+          // Catch up on any events missed during connect
+          refetch();
+        } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+          console.warn("[DeliveryPanel] realtime channel status:", status);
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Apply filter
   const filtered =
     filter === "all" ? orders : orders.filter((o) => o.status === filter);
 
-  // Sort: pending/on_delivery first, then complete/cancelled — by created_at desc within groups
   const sorted = sortOrders(filtered);
 
   const countByStatus = (s: FilterStatus) =>
@@ -332,9 +440,23 @@ export default function DeliveryPanel({
     <div>
       {/* Page title + filter tabs */}
       <div className="mb-5">
-        <h1 className="font-display text-2xl text-[var(--text-primary)] mb-4">
-          طلبات التوصيل
-        </h1>
+        <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+          <h1 className="font-display text-2xl text-[var(--text-primary)]">
+            طلبات التوصيل
+          </h1>
+          <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+            <span className="inline-flex h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+            <span>آخر تحديث: {formatClock(lastUpdated)}</span>
+            <button
+              onClick={refresh}
+              disabled={isRefreshing}
+              className="ms-1 inline-flex items-center gap-1 rounded-lg border border-[var(--surface-border)] px-2 py-1 hover:bg-[var(--surface-input)] disabled:opacity-50"
+              aria-label="تحديث"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+            </button>
+          </div>
+        </div>
         <div className="flex gap-1.5 flex-wrap">
           {FILTERS.map((f) => {
             const count = countByStatus(f.key);
@@ -391,7 +513,11 @@ export default function DeliveryPanel({
       ) : (
         <div className="space-y-4">
           {sorted.map((order) => (
-            <OrderCard key={order.id} order={order} />
+            <OrderCard
+              key={order.id}
+              order={order}
+              onTransition={(next) => handleTransition(order.id, next)}
+            />
           ))}
         </div>
       )}

@@ -3,6 +3,9 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+## 2026-05-27
+| 00:00 | Added last_order_status field to CustomerRow + listCustomers aggregation; StatusBadge component shows status in row + expanded panel | lib/actions/admin.ts, app/admin/customers/customers-list.tsx | done | ~1k |
+
 ## 2026-05-26
 | 21:43 | /steer: conflict-checked docs/PRD.md, docs/SUPABASE_SCHEMA.md, CLAUDE.md, AGENTS.md; user resolved 5 conflicts | CLAUDE.md, AGENTS.md | rewrote both files (≤200 lines each) with PRD-aligned order status enum + delivery role + pinned versions (Next 16.2.6, React 19.2.4, TW v4) | ~6k |
 
@@ -515,3 +518,143 @@
 | 21:42 | Created CLAUDE.md | — | ~1952 |
 | 21:42 | Created AGENTS.md | — | ~1211 |
 | 21:44 | Session end: 2 writes across 2 files (CLAUDE.md, AGENTS.md) | 6 reads | ~18032 tok |
+
+
+
+## Session: 2026-05-26 22:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 22:00 | Polished and animated the Admin user experience using /impeccable constraints | app/globals.css, components/admin/sidebar.tsx, app/admin/page.tsx, app/admin/menu/page.tsx, app/admin/menu/row-actions.tsx, app/admin/ingredients/manager.tsx, app/admin/employees/manager.tsx | Added CSS animation staggered delays, slide-up drawers/modals, refined .lift stats card hover transitions, and verified Next.js build success | ~5k |
+| 00:25 | Edited lib/actions/auth.ts | modified safeNext() | ~69 |
+| 00:25 | Edited lib/actions/auth.ts | 5→5 lines | ~37 |
+| 00:25 | Edited lib/actions/auth.ts | modified if() | ~25 |
+| 00:25 | Edited app/auth/callback/route.ts | inline fix | ~15 |
+| 00:25 | Edited app/(auth)/login/page.tsx | inline fix | ~16 |
+| 00:25 | Edited app/page.tsx | reduced (-12 lines) | ~63 |
+| 00:26 | Created app/page.tsx | — | ~202 |
+| 00:26 | route customers post-login directly to /menu | lib/actions/auth.ts, app/auth/callback/route.ts, app/(auth)/login/page.tsx, app/page.tsx | ok | ~600 |
+| 00:26 | Session end: 7 writes across 3 files (auth.ts, route.ts, page.tsx) | 11 reads | ~9181 tok |
+
+## Session: 2026-05-26 00:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 00:39 | Created C:/Users/USER/.claude/plans/1-insights-not-work-bright-pillow.md | — | ~1705 |
+| 00:42 | Edited components/public/chatbot-widget.tsx | inline fix | ~19 |
+| 00:42 | Edited components/public/chatbot-widget.tsx | CSS: msgs, messages, keepalive | ~221 |
+| 00:43 | Edited components/public/chatbot-widget.tsx | added optional chaining | ~308 |
+| 00:43 | Edited components/public/chatbot-widget.tsx | 7→7 lines | ~112 |
+| 00:43 | Edited app/api/chat/extract-insights/route.ts | 14→16 lines | ~200 |
+| 00:44 | Edited app/api/chat/extract-insights/route.ts | added 3 condition(s) | ~296 |
+| 00:44 | Edited app/api/chat/extract-insights/route.ts | 13→13 lines | ~122 |
+| 00:46 | Created lib/chatbot/system-prompt.ts | — | ~779 |
+| 00:46 | Edited app/api/chat/route.ts | 19→20 lines | ~190 |
+| 00:47 | Edited app/api/chat/route.ts | added optional chaining | ~294 |
+| 00:51 | Session end: 11 writes across 4 files (1-insights-not-work-bright-pillow.md, chatbot-widget.tsx, route.ts, system-prompt.ts) | 8 reads | ~20054 tok |
+| 01:07 | Edited app/menu/page.tsx | CSS: Fallback | ~224 |
+| 01:09 | Edited app/api/chat/extract-insights/route.ts | added optional chaining | ~307 |
+| 01:10 | Edited lib/chatbot/system-prompt.ts | expanded (+6 lines) | ~427 |
+| 01:12 | Session end: 14 writes across 5 files (1-insights-not-work-bright-pillow.md, chatbot-widget.tsx, route.ts, system-prompt.ts, page.tsx) | 9 reads | ~21012 tok |
+
+## Session: 2026-05-27 03:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 03:06
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 03:07 | Created lib/store/cart.ts | — | ~441 |
+| 03:08 | Created lib/hooks/use-cart-sync.ts | — | ~920 |
+| 03:09 | Edited components/public/cart-widget.tsx | added 1 import(s) | ~118 |
+| 03:09 | Edited components/public/cart-widget.tsx | added optional chaining | ~79 |
+| 03:10 | Created C:/Users/USER/.claude/plans/jazzy-cuddling-steele.md | — | ~1737 |
+| 03:11 | Edited supabase/schema.sql | 1→2 lines | ~33 |
+| 03:13 | Edited supabase/schema.sql | expanded (+15 lines) | ~201 |
+| 03:14 | Edited lib/actions/delivery.ts | modified listDeliveryOrders() | ~122 |
+| 03:14 | Edited lib/hooks/use-cart-sync.ts | 11→13 lines | ~74 |
+| 03:14 | Edited lib/actions/delivery.ts | added 1 condition(s) | ~169 |
+| 03:14 | Edited lib/hooks/use-cart-sync.ts | added 1 condition(s) | ~146 |
+| 03:16 | Created app/delivery/delivery-panel.tsx | — | ~4985 |
+| 03:16 | Edited app/delivery/page.tsx | added error handling | ~122 |
+|  | Fix delivery start-trip no-op: optimistic UI + prop sync + per-card errors + live indicators | app/delivery/delivery-panel.tsx, app/delivery/page.tsx, lib/actions/delivery.ts | working | ~600 |
+| 03:18 | Fix delivery start-trip no-op: optimistic UI + prop sync + per-card errors + live indicators | app/delivery/delivery-panel.tsx, app/delivery/page.tsx, lib/actions/delivery.ts | working | ~600 |
+| 03:19 | Session end: 13 writes across 8 files (cart.ts, use-cart-sync.ts, cart-widget.tsx, jazzy-cuddling-steele.md, schema.sql) | 6 reads | ~17326 tok |
+| 03:20 | Edited lib/hooks/use-cart-sync.ts | 17→15 lines | ~130 |
+| 03:25 | Session end: 14 writes across 8 files (cart.ts, use-cart-sync.ts, cart-widget.tsx, jazzy-cuddling-steele.md, schema.sql) | 6 reads | ~17456 tok |
+| 03:26 | Polished and colorized the customer cart widget: updated button background to terracotta (bg-accent-500) and badge background to saffron (bg-primary-600), replaced animate-in/slide-in-from-bottom-10 with a custom springy scale-pop animation (animate-cart-pop) to ensure it does not start at opacity 0 | components/public/cart-widget.tsx, app/globals.css | completed | ~400 |
+| 03:41 | Edited app/auth/callback/route.ts | modified if() | ~383 |
+
+## Session: 2026-05-27 03:42
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 03:42 | Edited app/(auth)/login/page.tsx | 8→11 lines | ~124 |
+| 03:45 | Session end: 1 writes across 1 files (page.tsx) | 8 reads | ~13349 tok |
+| 03:45 | Created C:/Users/USER/.claude/plans/glimmering-mixing-tower.md | — | ~1095 |
+| 03:47 | Created lib/actions/profile.ts | — | ~322 |
+| 03:47 | Created app/profile/page.tsx | — | ~447 |
+
+## Session: 2026-05-27 03:48
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 03:48 | Created app/profile/profile-form.tsx | — | ~2938 |
+| 03:49 | Edited components/public/site-header.tsx | 5→5 lines | ~50 |
+| 03:49 | Edited components/public/site-header.tsx | expanded (+9 lines) | ~309 |
+| 03:54 | Created C:/Users/USER/.claude/plans/jazzy-cuddling-steele.md | — | ~2840 |
+
+| 03:54 | Built customer profile page: app/profile/page.tsx + profile-form.tsx + lib/actions/profile.ts; added profile link in site-header.tsx avatar dropdown | app/profile/, lib/actions/profile.ts, components/public/site-header.tsx | done | ~2000 |
+| 03:55 | Session end: 4 writes across 3 files (profile-form.tsx, site-header.tsx, jazzy-cuddling-steele.md) | 10 reads | ~27428 tok |
+| 04:00 | Created PLAN.md | — | ~2427 |
+| 04:03 | Edited lib/actions/admin.ts | added optional chaining | ~1717 |
+| 04:03 | Edited app/admin/page.tsx | expanded (+14 lines) | ~411 |
+| 04:04 | Edited app/admin/page.tsx | 7→7 lines | ~46 |
+| 04:04 | Edited app/admin/page.tsx | 13→14 lines | ~102 |
+| 04:05 | Edited app/admin/page.tsx | expanded (+9 lines) | ~186 |
+| 04:06 | Created app/admin/orders/page.tsx | — | ~152 |
+| 04:07 | Created app/admin/orders/loading.tsx | — | ~180 |
+| 04:08 | Created app/admin/orders/orders-panel.tsx | — | ~4749 |
+| 04:09 | Edited app/admin/ingredients/page.tsx | CSS: searchParams | ~76 |
+| 04:10 | Edited app/admin/ingredients/page.tsx | 8→9 lines | ~96 |
+| 04:11 | Edited app/admin/ingredients/manager.tsx | added 1 import(s) | ~82 |
+| 04:12 | Edited app/admin/ingredients/manager.tsx | modified IngredientsManager() | ~976 |
+| 04:13 | Edited app/admin/ingredients/manager.tsx | 5→6 lines | ~19 |
+| 04:14 | Created app/admin/customers/page.tsx | — | ~600 |
+| 04:16 | Created app/admin/customers/customers-list.tsx | — | ~3917 |
+| 04:17 | Edited components/admin/sidebar.tsx | 15→19 lines | ~192 |
+| 04:23 | admin: fix revenue enum + add monthly + wire cards + new /admin/orders, /admin/customers, ingredients ?filter=low | app/admin/*, lib/actions/admin.ts, components/admin/sidebar.tsx | OK | ~3500 |
+| 04:27 | Session end: 21 writes across 11 files (profile-form.tsx, site-header.tsx, jazzy-cuddling-steele.md, PLAN.md, admin.ts) | 13 reads | ~50095 tok |
+
+## Session: 2026-05-27 04:51
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 04:52 | Edited app/admin/page.tsx | 10→12 lines | ~68 |
+| 04:53 | Edited app/admin/page.tsx | CSS: timeZone | ~119 |
+
+## Session: 2026-05-27 04:54
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 04:55 | Edited app/admin/page.tsx | CSS: hover, group-hover, group-hover | ~265 |
+| 04:57 | Edited lib/actions/admin.ts | 14→15 lines | ~101 |
+| 04:57 | Edited lib/actions/admin.ts | modified for() | ~192 |
+| 04:58 | Edited lib/actions/admin.ts | 3→4 lines | ~48 |
+| 04:58 | Edited app/admin/customers/customers-list.tsx | added 2 condition(s) | ~285 |
+| 04:59 | Edited app/admin/customers/customers-list.tsx | 3→6 lines | ~92 |
+| 04:59 | Edited app/admin/customers/customers-list.tsx | 9→12 lines | ~204 |
+| 05:00 | Session end: 7 writes across 3 files (page.tsx, admin.ts, customers-list.tsx) | 4 reads | ~13475 tok |
+| 05:01 | Created app/admin/revenue/page.tsx | — | ~2585 |
+| 03:52 | Fixed broken Hummus menu image by finding a valid, high-quality Unsplash food image and patching it directly in the Supabase database | scratch/test-unsplash.mjs, scratch/patch-hummus.mjs | success | ~400 |
+| 04:02 | Removed chatbot preferences panel from profile-form.tsx, synchronized the home and delivery address inputs to a single profile field, and centered the personal info card | app/profile/profile-form.tsx | completed | ~600 |
+| 05:10 | Resolved admin homepage build error by correcting a mismatched closing tag (replacing </div> with </Link>) on line 171 | app/admin/page.tsx | completed | ~150 |
+| 06:12 | Created lib/time.ts | — | ~358 |
+| 06:15 | Edited app/admin/page.tsx | added 1 import(s) | ~39 |
+| 06:16 | Edited app/admin/page.tsx | removed 10 lines | ~22 |
+| 06:17 | Edited app/admin/revenue/page.tsx | added 1 import(s) | ~80 |
+| 06:18 | Edited app/admin/revenue/page.tsx | 8→3 lines | ~32 |
+| 06:20 | Edited app/admin/revenue/page.tsx | inline fix | ~16 |
+| 06:22 | Session end: 14 writes across 4 files (page.tsx, admin.ts, customers-list.tsx, time.ts) | 4 reads | ~16607 tok |

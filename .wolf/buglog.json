@@ -2,6 +2,42 @@
   "version": 1,
   "bugs": [
     {
+      "id": "bug-admin-revenue-zero",
+      "timestamp": "2026-05-27T00:00:00.000Z",
+      "error_message": "Admin dashboard 'إيرادات اليوم' KPI always reads 0",
+      "file": "app/admin/page.tsx",
+      "root_cause": "Revenue query filtered by status='completed' but the canonical order_status enum value is 'complete' (PRD §7 + supabase/schema.sql). No rows ever matched, so the daily revenue sum was always 0.",
+      "fix": "Switched the .eq('status', ...) filter from 'completed' to 'complete' and added a second monthly query using the correct enum value. Surfaces a 'هذا الشهر' figure under the daily hero.",
+      "tags": [
+        "admin",
+        "kpi",
+        "order-status",
+        "enum-mismatch"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T00:00:00.000Z"
+    },
+    {
+      "id": "bug-delivery-start-trip",
+      "timestamp": "2026-05-27T00:00:00.000Z",
+      "error_message": "Delivery dashboard 'ابدأ التوصيل' button does nothing on click",
+      "file": "app/delivery/delivery-panel.tsx",
+      "root_cause": "OrderCard.handleAdvance ignored updateDeliveryOrderStatus's return value (silently dropped {error}), and DeliveryPanel seeded `orders` via useState(initialOrders) without resyncing when revalidatePath delivered new server props. The action's 'use server' update used .eq() with no .select(), so an RLS-blocked 0-row update returned no error and no rows -- producing silent failure paths.",
+      "fix": "1) lib/actions/delivery.ts: chain .select('id').maybeSingle() on the update and surface a 0-row case as { error }; have listDeliveryOrders throw on error so the caller can show an offline banner. 2) app/delivery/delivery-panel.tsx: rewrote OrderCard with a parent-supplied onTransition that does optimistic local update, calls the action, rolls back + shows a per-card red error banner on failure, then refetches authoritative state. Added useEffect to resync local orders when initialOrders prop changes, a 'آخر تحديث' clock, manual refresh button, pulsing live indicators on pending/on_delivery chips, spinner+'جاري التحديث…' on in-flight buttons, and a SUBSCRIBED-triggered refetch so realtime catch-up works. 3) app/delivery/page.tsx: try/catch around the now-throwing listDeliveryOrders.",
+      "tags": [
+        "delivery",
+        "rls",
+        "optimistic-ui",
+        "realtime",
+        "supabase",
+        "use-state-prop-sync"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T00:00:00.000Z"
+    },
+    {
       "id": "bug-001",
       "timestamp": "2026-05-26T17:33:52.373Z",
       "error_message": "Null/undefined access in ",
@@ -64,6 +100,358 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-26T18:24:46.527Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-05-26T21:25:13.044Z",
+      "error_message": "Wrong return value",
+      "file": "lib/actions/auth.ts",
+      "root_cause": "Was returning: \"/\";",
+      "fix": "Now returns: CUSTOMER_HOME;",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T21:25:13.044Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-05-26T21:25:33.354Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/page.tsx",
+      "root_cause": "12 lines replaced/restructured",
+      "fix": "Rewrote 19→7 lines (12 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T21:25:33.354Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-05-26T21:42:54.705Z",
+      "error_message": "Missing guard clause",
+      "file": "components/public/chatbot-widget.tsx",
+      "root_cause": "No early return/throw for edge case: msgs.length < 3",
+      "fix": "Added guard clause: if (msgs.length < 3)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T21:42:54.705Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-05-26T21:43:03.834Z",
+      "error_message": "Null/undefined access in ",
+      "file": "components/public/chatbot-widget.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T21:43:03.834Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-05-26T21:44:13.303Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/api/chat/extract-insights/route.ts",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 12→23 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T21:44:13.303Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-05-26T21:47:50.075Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/api/chat/route.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T21:47:50.075Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-05-26T22:07:47.021Z",
+      "error_message": "CSS fix: data",
+      "file": "app/menu/page.tsx",
+      "root_cause": "data: profile → insights",
+      "fix": "Changed data: profile → insights",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T22:07:47.021Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-05-26T22:09:07.857Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/api/chat/extract-insights/route.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T22:09:07.857Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-05-26T22:10:15.135Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/chatbot/system-prompt.ts",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 16→22 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-26T22:10:15.135Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-05-27T00:09:44.433Z",
+      "error_message": "Null/undefined access in ",
+      "file": "components/public/cart-widget.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T00:09:44.433Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-05-27T00:14:44.945Z",
+      "error_message": "Significant refactor of ",
+      "file": "lib/actions/delivery.ts",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 17→27 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T00:14:44.945Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-05-27T00:14:57.498Z",
+      "error_message": "Missing guard clause",
+      "file": "lib/hooks/use-cart-sync.ts",
+      "root_cause": "No early return/throw for edge case: !mi",
+      "fix": "Added guard clause: if (!mi)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T00:14:57.498Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-05-27T00:16:48.940Z",
+      "error_message": "Missing error handling in function",
+      "file": "app/delivery/page.tsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T00:16:48.940Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-05-27T01:03:19.683Z",
+      "error_message": "Null/undefined access in ",
+      "file": "lib/actions/admin.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T01:03:19.683Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-05-27T01:04:01.242Z",
+      "error_message": "CSS fix: href",
+      "file": "app/admin/page.tsx",
+      "root_cause": "href: \"/cashier\", → \"/admin/orders\",",
+      "fix": "Changed href: \"/cashier\", → \"/admin/orders\",",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-27T01:04:47.598Z"
+    },
+    {
+      "id": "bug-021",
+      "timestamp": "2026-05-27T01:09:21.409Z",
+      "error_message": "Type error",
+      "file": "app/admin/ingredients/page.tsx",
+      "root_cause": "Missing or incorrect type annotation",
+      "fix": "Added type assertion/annotation",
+      "tags": [
+        "auto-detected",
+        "type-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T01:09:21.409Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-05-27T01:12:07.779Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/admin/ingredients/manager.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 17→84 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T01:12:07.779Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-05-27T01:17:06.716Z",
+      "error_message": "CSS fix: href",
+      "file": "components/admin/sidebar.tsx",
+      "root_cause": "href: \"/admin/employees\", label: \"الموظفون\", en: \"Staff\", icon: Users → \"/admin/customers\", label: \"العملاء\", en: \"Customers\", icon: Users",
+      "fix": "Changed href: \"/admin/employees\", label: \"الموظفون\", en: \"Staff\", icon: Users → \"/admin/customers\", label: \"العملاء\", en: \"Customers\", icon: Users",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T01:17:06.716Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-05-27T01:53:34.794Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/admin/page.tsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→10 lines (2 removed) | Also: {/* Hero KPI — revenue today */}; <div>",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-27T01:55:39.606Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-05-27T01:58:33.310Z",
+      "error_message": "Missing guard clause",
+      "file": "app/admin/customers/customers-list.tsx",
+      "root_cause": "No early return/throw for edge case: !status",
+      "fix": "Added guard clause: if (!status)",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T01:58:33.310Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-05-27T03:18:27.484Z",
+      "error_message": "Significant refactor of ",
+      "file": "app/admin/revenue/page.tsx",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 8→3 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T03:18:27.484Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-05-27T03:20:18.946Z",
+      "error_message": "Wrong reference: cairoNow should be now",
+      "file": "app/admin/revenue/page.tsx",
+      "root_cause": "Used \"cairoNow\" instead of \"now\"",
+      "fix": "Changed cairoNow → now",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T03:20:18.946Z"
     }
   ]
 }

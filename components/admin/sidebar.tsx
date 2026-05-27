@@ -7,15 +7,19 @@ import {
   UtensilsCrossed,
   Carrot,
   Users,
+  Receipt,
+  UserCog,
   LogOut,
 } from "lucide-react";
 import { signOut } from "@/lib/actions/auth";
 
 const nav = [
   { href: "/admin", label: "الرئيسية", en: "Overview", icon: LayoutDashboard, exact: true },
+  { href: "/admin/orders", label: "الطلبات", en: "Orders", icon: Receipt },
   { href: "/admin/menu", label: "المنيو", en: "Menu", icon: UtensilsCrossed },
   { href: "/admin/ingredients", label: "المخزون", en: "Stock", icon: Carrot },
-  { href: "/admin/employees", label: "الموظفون", en: "Staff", icon: Users },
+  { href: "/admin/employees", label: "الموظفون", en: "Staff", icon: UserCog },
+  { href: "/admin/customers", label: "العملاء", en: "Customers", icon: Users },
 ];
 
 function Mark({ className = "" }: { className?: string }) {
@@ -67,16 +71,16 @@ export function AdminSidebar({ name }: { name: string }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`group flex items-center gap-4 rounded-xl px-4 py-3 text-sm transition-all relative ${
+              className={`group flex items-center gap-4 rounded-xl px-4 py-3 text-sm transition-all duration-300 ease-out hover:ps-5 relative ${
                 active
-                  ? "bg-[var(--surface-card)] text-[var(--text-primary)] shadow-[0_1px_0_oklch(0.85_0.025_70)]"
+                  ? "bg-[var(--surface-card)] text-[var(--text-primary)] shadow-[0_1px_0_oklch(0.85_0.025_70)] ps-5"
                   : "text-[var(--text-secondary)] hover:bg-[var(--surface-card)]/50 hover:text-[var(--text-primary)]"
               }`}
             >
               {active && (
-                <span className="absolute inset-y-2 start-0 w-0.5 rounded-full bg-primary-500" />
+                <span className="absolute inset-y-2 start-0 w-0.5 rounded-full bg-primary-500 transition-all duration-300 origin-center animate-fade-in" />
               )}
-              <Icon className={`h-4 w-4 shrink-0 transition-colors ${active ? "text-primary-600" : "text-[var(--text-muted)] group-hover:text-[var(--text-secondary)]"}`} />
+              <Icon className={`h-4 w-4 shrink-0 transition-all duration-300 ${active ? "text-primary-600 scale-110" : "text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] group-hover:scale-110 group-hover:rotate-3"}`} />
               <span className="flex-1 font-medium">{item.label}</span>
               <span className="font-display text-[10px] tracking-[0.18em] text-[var(--text-faint)]">
                 {String(i + 1).padStart(2, "0")}
@@ -86,7 +90,7 @@ export function AdminSidebar({ name }: { name: string }) {
         })}
       </nav>
 
-      <div className="mx-4 mb-5 mt-6 rounded-2xl bg-[var(--surface-card)] border border-[var(--surface-border-soft)] p-4">
+      <div className="mx-4 mb-5 mt-6 rounded-2xl bg-[var(--surface-card)] border border-[var(--surface-border-soft)] p-4 transition-all duration-300 hover:border-primary-500/20">
         <p className="eyebrow mb-1.5">مرحباً</p>
         <p className="font-display text-base text-[var(--text-primary)] truncate mb-3">
           {name}
@@ -94,10 +98,10 @@ export function AdminSidebar({ name }: { name: string }) {
         <form action={signOut}>
           <button
             type="submit"
-            className="flex w-full items-center justify-between gap-2 rounded-lg bg-[var(--surface-input)] px-3 py-2 text-xs font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-canvas)] hover:text-accent-600 transition-colors"
+            className="flex w-full items-center justify-between gap-2 rounded-lg bg-[var(--surface-input)] px-3 py-2 text-xs font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-canvas)] hover:text-accent-600 transition-colors duration-200"
           >
             <span>تسجيل الخروج</span>
-            <LogOut className="h-3.5 w-3.5" />
+            <LogOut className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </form>
       </div>
@@ -122,7 +126,7 @@ export function AdminTopbar({ name }: { name: string }) {
       <form action={signOut}>
         <button
           type="submit"
-          className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)]"
+          className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] transition-colors duration-200"
           aria-label="تسجيل الخروج"
         >
           <LogOut className="h-4 w-4" />
@@ -146,16 +150,16 @@ export function MobileTabBar() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex-1 flex flex-col items-center gap-1 py-2.5 text-[11px] relative ${
+            className={`flex-1 flex flex-col items-center gap-1 py-2.5 text-[11px] relative transition-colors duration-300 ${
               active
                 ? "text-primary-600"
                 : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             }`}
           >
             {active && (
-              <span className="absolute top-0 inset-x-6 h-0.5 rounded-full bg-primary-500" />
+              <span className="absolute top-0 inset-x-6 h-0.5 rounded-full bg-primary-500 animate-fade-in" />
             )}
-            <Icon className="h-5 w-5" />
+            <Icon className={`h-5 w-5 transition-transform duration-300 ${active ? "scale-110 text-primary-600" : "text-[var(--text-muted)]"}`} />
             <span className="font-medium">{item.label}</span>
           </Link>
         );

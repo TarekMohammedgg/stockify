@@ -9,7 +9,7 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 function LoginForm() {
   const searchParams = useSearchParams();
   const urlError = searchParams.get("error");
-  const nextParam = searchParams.get("next") ?? "/";
+  const nextParam = searchParams.get("next") ?? "/menu";
   const [showPassword, setShowPassword] = useState(false);
   const [pending, setPending] = useState(false);
   const [fieldError, setFieldError] = useState<string | null>(null);
@@ -69,6 +69,9 @@ function LoginForm() {
         </svg>
         المتابعة بـ Google
       </button>
+      <p className="text-center text-[11px] text-[var(--text-muted)]">
+        تسجيل الدخول بـ Google متاح للعملاء فقط
+      </p>
 
       <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
         <div className="h-px flex-1 bg-[var(--surface-border)]" />

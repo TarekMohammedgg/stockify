@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { Pencil, Trash2, Plus, X, Loader2, AlertTriangle, Carrot } from "lucide-react";
 import {
   saveIngredient,
@@ -27,12 +28,74 @@ const UNIT_LABELS: Record<Unit, string> = {
   ml: "مل",
 };
 
-export function IngredientsManager({ initial }: { initial: Ingredient[] }) {
+type StockFilter = "all" | "low";
+
+export function IngredientsManager({
+  initial,
+  initialFilter = "all",
+}: {
+  initial: Ingredient[];
+  initialFilter?: StockFilter;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [editing, setEditing] = useState<Ingredient | "new" | null>(null);
+  const [filter, setFilter] = useState<StockFilter>(initialFilter);
+
+  function changeFilter(next: StockFilter) {
+    setFilter(next);
+    router.replace(next === "low" ? `${pathname}?filter=low` : pathname);
+  }
+
+  const lowCount = initial.filter(
+    (i) => i.stock_quantity <= i.low_stock_threshold,
+  ).length;
+
+  const visible =
+    filter === "low"
+      ? initial.filter((i) => i.stock_quantity <= i.low_stock_threshold)
+      : initial;
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
       <div className="rounded-3xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] overflow-hidden">
+        {/* Filter toggle */}
+        <div className="flex items-center gap-2 px-6 py-3 border-b border-[var(--surface-border-soft)] bg-[var(--surface-canvas)]/40">
+          <button
+            type="button"
+            onClick={() => changeFilter("all")}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              filter === "all"
+                ? "bg-primary-500 text-white"
+                : "bg-[var(--surface-input)] text-[var(--text-secondary)] hover:bg-[var(--surface-border)] hover:text-[var(--text-primary)]"
+            }`}
+          >
+            الكل
+            <span
+              className={`text-xs rounded-full px-1.5 py-0.5 leading-none ${filter === "all" ? "bg-white/20" : "bg-[var(--surface-border)]"}`}
+            >
+              {initial.length}
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => changeFilter("low")}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+              filter === "low"
+                ? "bg-amber-500 text-white"
+                : "bg-[var(--surface-input)] text-[var(--text-secondary)] hover:bg-[var(--surface-border)] hover:text-[var(--text-primary)]"
+            }`}
+          >
+            <AlertTriangle className="h-3 w-3" />
+            منخفض فقط
+            <span
+              className={`text-xs rounded-full px-1.5 py-0.5 leading-none ${filter === "low" ? "bg-white/20" : "bg-[var(--surface-border)]"}`}
+            >
+              {lowCount}
+            </span>
+          </button>
+        </div>
+
         {/* Ledger header */}
         <div className="grid grid-cols-[2fr_1fr_1fr_1fr_auto] gap-4 px-6 py-4 border-b border-[var(--surface-border-soft)] bg-[var(--surface-canvas)]/60">
           <span className="eyebrow">المكوّن</span>
@@ -42,14 +105,21 @@ export function IngredientsManager({ initial }: { initial: Ingredient[] }) {
           <span className="eyebrow w-16 text-end">إجراءات</span>
         </div>
 
+        {visible.length === 0 ? (
+          <div className="px-6 py-12 text-center text-sm text-[var(--text-muted)]">
+            لا توجد مكوّنات في هذا التصنيف
+          </div>
+        ) : (
         <ul className="divide-y divide-dashed divide-[var(--surface-border-soft)]">
-          {initial.map((ing, idx) => {
+          {visible.map((ing, idx) => {
             const isLow = ing.stock_quantity <= ing.low_stock_threshold;
             const isOut = ing.stock_quantity === 0;
+            const itemDelay = idx * 40;
             return (
               <li
                 key={ing.id}
-                className="group grid grid-cols-[2fr_1fr_1fr_1fr_auto] items-center gap-4 px-6 py-4 transition-colors hover:bg-[var(--surface-canvas)]/40"
+                style={{ animationDelay: `${itemDelay}ms` }}
+                className="rise-in group grid grid-cols-[2fr_1fr_1fr_1fr_auto] items-center gap-4 px-6 py-4 transition-colors hover:bg-[var(--surface-canvas)]/40"
               >
                 <div className="flex items-baseline gap-3 min-w-0">
                   <span className="font-serif numeric text-xs text-[var(--text-faint)] w-7 shrink-0">
@@ -67,7 +137,7 @@ export function IngredientsManager({ initial }: { initial: Ingredient[] }) {
 
                 <div>
                   <span
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium transition-all duration-300 ${
                       isOut
                         ? "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-400"
                         : isLow
@@ -75,7 +145,7 @@ export function IngredientsManager({ initial }: { initial: Ingredient[] }) {
                           : "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
                     }`}
                   >
-                    {(isOut || isLow) && <AlertTriangle className="h-3 w-3" />}
+                    {(isOut || isLow) && <AlertTriangle className="h-3 w-3 animate-pulse" />}
                     <span className="numeric">{ing.stock_quantity}</span>{" "}
                     {UNIT_LABELS[ing.unit]}
                   </span>
@@ -107,6 +177,7 @@ export function IngredientsManager({ initial }: { initial: Ingredient[] }) {
             );
           })}
         </ul>
+        )}
       </div>
 
       <aside>
@@ -150,11 +221,11 @@ function RowActions({
 }) {
   const [pending, start] = useTransition();
   return (
-    <div className="flex items-center gap-1 opacity-60 transition-opacity group-hover:opacity-100">
+    <div className="flex items-center gap-1 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out">
       <button
         type="button"
         onClick={onEdit}
-        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
         title="تعديل"
         aria-label="تعديل"
       >
@@ -173,7 +244,7 @@ function RowActions({
             await deleteIngredient(ing.id);
           });
         }}
-        className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
         title="حذف"
         aria-label="حذف"
       >
@@ -207,7 +278,7 @@ function IngredientForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-3xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] overflow-hidden sticky top-6 rise-in"
+      className="rounded-3xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] overflow-hidden sticky top-6 slide-in-start shadow-xl"
     >
       <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--surface-border-soft)] bg-[var(--surface-canvas)]/50">
         <div>

@@ -1,0 +1,221 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Bot,
+  CheckCircle2,
+  Heart,
+  Home,
+  Loader2,
+  Lock,
+  Mail,
+  MapPin,
+  Phone,
+  Save,
+  User,
+  XCircle,
+} from "lucide-react";
+import { updateProfile } from "@/lib/actions/profile";
+
+type Props = {
+  profile: { name: string; phone: string; address: string; email: string };
+  insights: {
+    defaultAddress: string;
+    favouriteItems: string[];
+    lastSeen: string | null;
+  };
+};
+
+function getInitials(name: string): string {
+  const trimmed = name.trim();
+  if (!trimmed) return "؟";
+  return trimmed
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+function formatArabicDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("ar-EG", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+export default function ProfileForm({ profile, insights }: Props) {
+  const [name, setName] = useState(profile.name);
+  const [phone, setPhone] = useState(profile.phone);
+  const [address, setAddress] = useState(profile.address);
+  const [status, setStatus] = useState<null | "success" | "error">(null);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isPending, startTransition] = useTransition();
+
+  function handleSave() {
+    setStatus(null);
+    startTransition(async () => {
+      const result = await updateProfile({ name, phone, address, defaultAddress: address });
+      if (result?.error) {
+        setStatus("error");
+        setErrorMsg(result.error);
+      } else {
+        setStatus("success");
+      }
+    });
+  }
+
+  const inputBase =
+    "w-full rounded-xl border border-[var(--surface-border)] bg-[var(--surface-input)] px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-colors focus:border-[var(--primary-600)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-600)]/20";
+  const readOnlyInput =
+    "w-full rounded-xl border border-[var(--surface-border-soft)] bg-[var(--surface-canvas,var(--surface-bg))] px-4 py-3 text-sm text-[var(--text-muted)] cursor-default select-none";
+  const label =
+    "block text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-1.5";
+
+  return (
+    <div
+      className="min-h-screen bg-[var(--surface-bg)]"
+      dir="rtl"
+    >
+      <div className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
+
+        <Link
+          href="/menu"
+          className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--primary-600)] mb-8 group"
+        >
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+          العودة للقائمة
+        </Link>
+
+        <div className="mb-8 flex flex-col items-center gap-4 text-center">
+          <div
+            className="flex h-20 w-20 items-center justify-center rounded-full text-2xl font-bold text-white shadow-lg"
+            style={{ background: "var(--primary-600)" }}
+          >
+            {getInitials(name || profile.name)}
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+              {name || "ملفك الشخصي"}
+            </h1>
+            <p className="mt-0.5 text-sm text-[var(--text-muted)]" dir="ltr">
+              {profile.email}
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface-card)] p-6 sm:p-8 shadow-sm">
+          <div className="mb-5 flex items-center gap-2 border-b border-[var(--surface-border-soft)] pb-4">
+            <User className="h-4 w-4 text-[var(--primary-600)]" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">
+              المعلومات الشخصية
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <label className={label}>
+                <span className="flex items-center gap-1.5">
+                  <User className="h-3 w-3" />
+                  الاسم الكامل
+                </span>
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="اسمك الكامل"
+                className={inputBase}
+              />
+            </div>
+
+            <div>
+              <label className={label}>
+                <span className="flex items-center gap-1.5">
+                  <Phone className="h-3 w-3" />
+                  رقم الهاتف
+                </span>
+              </label>
+              <input
+                type="tel"
+                dir="ltr"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="01XXXXXXXXX"
+                className={inputBase}
+              />
+            </div>
+
+            <div>
+              <label className={label}>
+                <span className="flex items-center gap-1.5">
+                  <Mail className="h-3 w-3" />
+                  البريد الإلكتروني
+                </span>
+              </label>
+              <input
+                type="email"
+                dir="ltr"
+                value={profile.email}
+                readOnly
+                className={readOnlyInput}
+              />
+              <p className="mt-1.5 flex items-center gap-1 text-xs text-[var(--text-faint,var(--text-muted))]">
+                <Lock className="h-3 w-3" />
+                لا يمكن تعديل البريد الإلكتروني
+              </p>
+            </div>
+
+            <div>
+              <label className={label}>
+                <span className="flex items-center gap-1.5">
+                  <Home className="h-3 w-3" />
+                  عنوان المنزل / التوصيل
+                </span>
+              </label>
+              <input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="الشارع، الحي، المدينة"
+                className={inputBase}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 space-y-3">
+          {status === "success" && (
+            <div className="flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700 dark:border-green-800 dark:bg-green-950/30 dark:text-green-400">
+              <CheckCircle2 className="h-4 w-4 shrink-0" />
+              تم حفظ التغييرات بنجاح
+            </div>
+          )}
+          {status === "error" && (
+            <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-400">
+              <XCircle className="h-4 w-4 shrink-0" />
+              {errorMsg}
+            </div>
+          )}
+
+          <button
+            onClick={handleSave}
+            disabled={isPending}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary-600)] px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-[var(--primary-700)] active:scale-[0.99] disabled:opacity-60"
+          >
+            {isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Save className="h-4 w-4" />
+            )}
+            {isPending ? "جارٍ الحفظ..." : "حفظ التغييرات"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -18,7 +18,7 @@ export function MenuRowActions({
   const [pending, start] = useTransition();
 
   return (
-    <div className="flex items-center gap-1 opacity-60 transition-opacity group-hover:opacity-100">
+    <div className="flex items-center gap-1 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out">
       <button
         type="button"
         title={isAvailable ? "إخفاء" : "إظهار"}
@@ -29,7 +29,7 @@ export function MenuRowActions({
             await toggleMenuItemAvailability(id, !isAvailable);
           })
         }
-        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] disabled:opacity-50 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-[var(--text-primary)] disabled:opacity-50 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
       >
         {isAvailable ? (
           <Eye className="h-4 w-4" />
@@ -39,7 +39,7 @@ export function MenuRowActions({
       </button>
       <Link
         href={`/admin/menu/${id}`}
-        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--surface-input)] hover:text-primary-600 transition-all duration-200 hover:scale-110 active:scale-95"
         title="تعديل"
         aria-label="تعديل"
       >
@@ -56,7 +56,7 @@ export function MenuRowActions({
             await deleteMenuItem(id);
           });
         }}
-        className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-colors"
+        className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-600 disabled:opacity-50 transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
       >
         <Trash2 className="h-4 w-4" />
       </button>
