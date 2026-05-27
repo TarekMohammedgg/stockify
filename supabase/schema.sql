@@ -157,6 +157,21 @@ CREATE TABLE IF NOT EXISTS order_items (
 
 
 -- ─────────────────────────────────────────────
+-- TABLE: cart_items
+-- ─────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS cart_items (
+    id           UUID        PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id      UUID        NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    menu_item_id UUID        NOT NULL REFERENCES menu_items(id) ON DELETE CASCADE,
+    quantity     INTEGER     NOT NULL DEFAULT 1 CHECK (quantity > 0),
+    notes        TEXT,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE (user_id, menu_item_id)
+);
+
+
+-- ─────────────────────────────────────────────
 -- TABLE: chatbot_insights
 -- ─────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS chatbot_insights (
@@ -275,3 +290,4 @@ ALTER TABLE menu_item_allergens    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders                 ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chatbot_insights       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cart_items             ENABLE ROW LEVEL SECURITY;

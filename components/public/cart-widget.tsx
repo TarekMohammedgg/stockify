@@ -7,6 +7,7 @@ import { Modal } from "@/components/ui/modal";
 import CheckoutModal from "./checkout-modal";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useCartSync } from "@/lib/hooks/use-cart-sync";
 
 export default function CartWidget({ 
   isAr, 
@@ -19,6 +20,8 @@ export default function CartWidget({
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const { items, removeItem, updateQuantity, getTotal, getItemCount } = useCartStore();
   const router = useRouter();
+
+  useCartSync(userProfile?.id ?? null);
 
   const count = getItemCount();
 
@@ -37,10 +40,10 @@ export default function CartWidget({
     <>
       <button
         onClick={() => setIsCartOpen(true)}
-        className="fixed bottom-8 start-8 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--primary-600)] text-white shadow-xl shadow-[var(--primary-600)]/30 transition-transform hover:scale-110 animate-in slide-in-from-bottom-10"
+        className="fixed bottom-8 start-8 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-accent-500 text-white shadow-xl shadow-accent-500/30 transition-all hover:scale-110 hover:bg-accent-600 active:scale-95 animate-cart-pop focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-500"
       >
         <ShoppingBag className="h-6 w-6" />
-        <span className="absolute -top-2 -end-2 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--accent-600)] text-xs font-bold font-display shadow-sm">
+        <span className="absolute -top-2 -end-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary-600 text-xs font-bold font-display shadow-md text-white">
           {count}
         </span>
       </button>
