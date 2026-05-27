@@ -800,3 +800,4 @@
 | 21:51 | Edited docs/SUPABASE_SCHEMA.md | inline fix | ~24 |
 | 21:54 | Edited docs/SUPABASE_SCHEMA.md | 3→4 lines | ~139 |
 | 19:00 | Unit 1 staff provisioning: reset passwords via seed route, fixed admin layout role guard (rpc→DB query), verified all 3 staff logins redirect correctly | app/admin/layout.tsx, docs/SUPABASE_SCHEMA.md | success | ~4500 |
+| 22:55 | Session end: 8 writes across 4 files (lexical-soaring-sutton.md, route.ts, layout.tsx, SUPABASE_SCHEMA.md) | 21 reads | ~4114 tok |
