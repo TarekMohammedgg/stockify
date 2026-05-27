@@ -126,52 +126,50 @@ export default function PublicMenu({
         </div>
 
         {/* Typography-Led Category Selector */}
-        <div className="rise-in mb-16 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" style={{ animationDelay: '700ms' }}>
-          <div className="flex min-w-max items-end gap-8 border-b border-[var(--surface-border-soft)] pb-4">
+        <div className="rise-in mb-12 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" style={{ animationDelay: '700ms' }}>
+          <div className="flex min-w-max items-center gap-3 border-b border-[var(--surface-border-soft)] pb-4">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`relative min-h-[44px] pb-2 font-display text-2xl md:text-4xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-600)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--surface-bg)] rounded-sm ${
+              className={`relative flex min-h-[44px] items-center justify-center rounded-full px-6 py-2 font-display text-lg font-bold transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-600)] focus-visible:ring-offset-2 ${
                 activeCategory === "all"
-                  ? "text-[var(--accent-600)] font-bold scale-105 origin-bottom"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:-translate-y-1"
+                  ? "bg-[var(--primary-600)] text-white shadow-[0_6px_16px_0_oklch(0.58_0.18_48/0.25)]"
+                  : "bg-[var(--surface-card)] text-[var(--text-secondary)] border border-[var(--surface-border-soft)] hover:bg-[var(--surface-border-soft)] hover:text-[var(--text-primary)]"
               }`}
             >
               {isAr ? "الكل" : "All"}
-              <span className={`absolute -bottom-[17px] left-0 right-0 h-1 bg-[var(--accent-600)] transition-transform duration-300 origin-center ${activeCategory === 'all' ? 'scale-x-100' : 'scale-x-0'}`} />
             </button>
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.name_en)}
-                className={`relative min-h-[44px] pb-2 font-display text-2xl md:text-4xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-600)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--surface-bg)] rounded-sm ${
+                className={`relative flex min-h-[44px] items-center justify-center rounded-full px-6 py-2 font-display text-lg font-bold transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-600)] focus-visible:ring-offset-2 ${
                   activeCategory === cat.name_en
-                    ? "text-[var(--accent-600)] font-bold scale-105 origin-bottom"
-                    : "text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:-translate-y-1"
+                    ? "bg-[var(--primary-600)] text-white shadow-[0_6px_16px_0_oklch(0.58_0.18_48/0.25)]"
+                    : "bg-[var(--surface-card)] text-[var(--text-secondary)] border border-[var(--surface-border-soft)] hover:bg-[var(--surface-border-soft)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 {isAr ? cat.name_ar : cat.name_en}
-                <span className={`absolute -bottom-[17px] left-0 right-0 h-1 bg-[var(--accent-600)] transition-transform duration-300 origin-center ${activeCategory === cat.name_en ? 'scale-x-100' : 'scale-x-0'}`} />
               </button>
             ))}
           </div>
         </div>
 
-        {/* Staggered Masonry-ish Grid */}
-        <div className="columns-1 gap-8 sm:columns-2 lg:columns-3">
+        {/* Premium Editorial Grid */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {filteredItems.map((item, index) => (
             <article
               key={item.id}
-              className="rise-in group relative mb-8 break-inside-avoid overflow-hidden rounded-sm border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-4 shadow-sm lift"
+              className="rise-in group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] p-5 shadow-sm transition-all duration-300 hover:shadow-[0_24px_48px_-20px_oklch(0.18_0.02_60/0.15)] hover:border-[var(--primary-300)] dark:hover:border-[var(--primary-800)] lift h-full"
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              {/* Photo - Editorial tight crop */}
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--surface-canvas)] mb-6">
+              {/* Photo - Premium Rounded Crop */}
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--surface-canvas)] mb-6 rounded-2xl border border-[var(--surface-border-soft)]">
                 {item.photo_url ? (
                   <Image
                     src={item.photo_url}
                     alt={isAr ? item.name_ar : item.name_en}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 ) : (
@@ -181,48 +179,48 @@ export default function PublicMenu({
                 )}
                 
                 {!item.is_available && (
-                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-[var(--surface-bg)]/60 backdrop-blur-sm">
-                    <span className="border border-red-800/30 bg-red-50 px-6 py-2 font-display text-lg font-bold text-red-800 shadow-sm rotate-[-5deg]">
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-[var(--surface-bg)]/80 backdrop-blur-[2px]">
+                    <span className="border border-red-800/30 bg-red-50/90 dark:bg-red-950/80 dark:text-red-300 px-6 py-2 font-display text-base font-bold text-red-800 shadow-md rotate-[-3deg] rounded-lg tracking-wide">
                       {isAr ? "نفدت الكمية" : "Sold Out"}
                     </span>
                   </div>
                 )}
               </div>
 
-              {/* Content */}
-              <div className="relative z-10 flex flex-col">
-                <div className="mb-4">
-                  <h3 className="mb-2 font-display text-2xl font-bold leading-tight text-[var(--ink)]">
+              {/* Content Wrapper */}
+              <div className="relative z-10 flex flex-1 flex-col justify-between">
+                <div className="mb-5">
+                  <h3 className="mb-2 font-display text-2xl font-bold leading-tight text-[var(--ink)] transition-colors duration-200 group-hover:text-[var(--primary-600)]">
                     {isAr ? item.name_ar : item.name_en}
                   </h3>
                   
                   {item.ingredients.length > 0 && (
-                    <p className="text-sm italic text-[var(--text-secondary)] line-clamp-3">
+                    <p className="text-sm leading-relaxed text-[var(--text-secondary)] line-clamp-2 min-h-[2.5rem] mb-4">
                       {item.ingredients
                         .map((ing) => (isAr ? ing.name_ar : ing.name_en))
                         .join(" • ")}
                     </p>
                   )}
+
+                  {/* Badges */}
+                  {item.allergens.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {item.allergens.map((allergen, idx) => (
+                        <span
+                          key={idx}
+                          className="text-[10px] uppercase font-bold tracking-wider bg-[var(--surface-card-warm)] border border-[var(--surface-border)] px-2.5 py-1 text-[var(--accent-600)] rounded-md"
+                        >
+                          {isAr ? allergen.name_ar : allergen.name_en}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* Badges */}
-                {item.allergens.length > 0 && (
-                  <div className="mb-6 flex flex-wrap gap-2">
-                    {item.allergens.map((allergen, idx) => (
-                      <span
-                        key={idx}
-                        className="eyebrow inline-block bg-[var(--surface-card-warm)] px-2 py-1 text-[var(--accent-600)]"
-                      >
-                        {isAr ? allergen.name_ar : allergen.name_en}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
                 {/* Footer with Price & Action */}
-                <div className="mt-auto flex items-end justify-between border-t border-[var(--surface-border-soft)] pt-4">
+                <div className="mt-auto flex items-center justify-between border-t border-[var(--surface-border-soft)] pt-4">
                   <div className="flex flex-col">
-                    <span className="eyebrow mb-1 opacity-70">
+                    <span className="eyebrow mb-1 opacity-70 text-[10px]">
                       {isAr ? "السعر" : "Price"}
                     </span>
                     <span className="numeric text-3xl font-bold text-[var(--primary-700)]">
@@ -233,10 +231,10 @@ export default function PublicMenu({
                   <button
                     onClick={() => handleAddToCart(item)}
                     disabled={!item.is_available}
-                    className="flex h-12 w-12 min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-[var(--primary-600)] text-white shadow-[0_4px_14px_0_oklch(0.58_0.18_48/0.39)] transition-all hover:bg-[var(--primary-700)] hover:shadow-[0_6px_20px_0_oklch(0.58_0.18_48/0.23)] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-card)]"
+                    className="flex h-12 w-12 min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-[var(--primary-600)] text-white shadow-[0_4px_14px_0_oklch(0.58_0.18_48/0.39)] transition-all duration-300 hover:bg-[var(--primary-700)] hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-card)]"
                     aria-label={isAr ? "أضف إلى السلة" : "Add to Cart"}
                   >
-                    <Plus className="h-5 w-5" />
+                    <Plus className="h-5 w-5 transition-transform duration-300 group-hover:rotate-90" />
                   </button>
                 </div>
               </div>
