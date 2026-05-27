@@ -192,15 +192,15 @@ Derived from `docs/PRD.md` (v1.0). Organized by milestone phases.
 
 #### Open — to close Phase 5.2
 
-[ ] Task 5.2.A: Server-side guard — reject delivery orders missing address — COMPLEXITY:EASY
+[x] Task 5.2.A: Server-side guard — reject delivery orders missing address — COMPLEXITY:EASY
 - Requirements: In `app/api/chat/route.ts`, after extraction, if `orderData.type === 'delivery'` and `delivery_address` is empty/null, do NOT insert; return a recovery `reply` asking the user for the address instead of silently writing a delivery order with no address.
 - Verification: Manually drive the chatbot to confirm a delivery order without ever stating an address; confirm no row is written to `orders` and the bot re-asks. Check console logs include function name + user id.
 
-[ ] Task 5.2.B: Pre-fill phone + address from account (editable) — COMPLEXITY:MEDIUM
+[x] Task 5.2.B: Pre-fill phone + address from account (editable) — COMPLEXITY:MEDIUM
 - Requirements: Pass the customer's stored `phone` and `address` (already fetched in `/api/chat`) into the widget's initial state so the user can confirm/edit before the bot uses them. Prefer surfacing as an editable summary chip inside the chat panel rather than a separate form. On edit, send the updated value with the next message so the API/system prompt sees the corrected value.
 - Verification: Log in as a customer with stored phone+address, open widget, edit the displayed phone, place a delivery order — confirm the inserted `orders.customer_phone` matches the edited value, not the original.
 
-[ ] Task 5.2.C: E2E verification of full chatbot order flow — COMPLEXITY:MEDIUM
+[x] Task 5.2.C: E2E verification of full chatbot order flow — COMPLEXITY:MEDIUM
 - Requirements: Use DevTools MCP to drive the full happy path (greet → choose delivery → pick items → confirm) and a returning-customer path. Confirm the success card renders with the real order ID, the order appears in `/cashier` and (for delivery) `/delivery`, and `chatbot_insights` row reflects the new `favourite_items` + `last_seen`.
 - Verification: Screenshot the success card, screenshot the order on `/cashier`, and run a Supabase SQL select on `chatbot_insights` for the test user showing updated columns.
 

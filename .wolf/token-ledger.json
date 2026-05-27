@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-24T13:26:18.340Z",
   "lifetime": {
-    "total_tokens_estimated": 901864,
-    "total_reads": 412,
-    "total_writes": 491,
-    "total_sessions": 46,
-    "anatomy_hits": 359,
+    "total_tokens_estimated": 935596,
+    "total_reads": 417,
+    "total_writes": 505,
+    "total_sessions": 49,
+    "anatomy_hits": 364,
     "anatomy_misses": 47,
-    "repeated_reads_blocked": 127,
-    "estimated_savings_vs_bare_cli": 339641
+    "repeated_reads_blocked": 129,
+    "estimated_savings_vs_bare_cli": 353740
   },
   "sessions": [
     {
@@ -5816,6 +5816,157 @@
         "writes_count": 23,
         "repeated_reads_blocked": 11,
         "anatomy_lookups": 13
+      }
+    },
+    {
+      "id": "session-2026-05-27-1255",
+      "started": "2026-05-27T09:55:44.058Z",
+      "ended": "2026-05-27T10:07:12.105Z",
+      "reads": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md",
+          "tokens_estimated": 7377,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/USER/.claude/plans/virtual-riding-emerson.md",
+          "tokens_estimated": 1350,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/n8n.json",
+          "tokens_estimated": 5722,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 7377,
+        "output_tokens_estimated": 7072,
+        "reads_count": 1,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-27-1316",
+      "started": "2026-05-27T10:16:59.201Z",
+      "ended": "2026-05-27T10:21:50.982Z",
+      "reads": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md",
+          "tokens_estimated": 7377,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/n8n.json",
+          "tokens_estimated": 5722,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/supabase/schema.sql",
+          "tokens_estimated": 2673,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/n8n.json",
+          "tokens_estimated": 14,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/n8n.json",
+          "tokens_estimated": 21,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/supabase/schema.sql",
+          "tokens_estimated": 20,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md",
+          "tokens_estimated": 20,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 15772,
+        "output_tokens_estimated": 75,
+        "reads_count": 3,
+        "writes_count": 4,
+        "repeated_reads_blocked": 2,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-27-1353",
+      "started": "2026-05-27T10:53:48.116Z",
+      "ended": "2026-05-27T11:05:37.447Z",
+      "reads": [
+        {
+          "file": "C:/Users/USER/.claude/plans/virtual-riding-emerson.md",
+          "tokens_estimated": 1181,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/USER/.claude/plans/virtual-riding-emerson.md",
+          "tokens_estimated": 1564,
+          "action": "create"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/components/public/chatbot-widget.tsx",
+          "tokens_estimated": 23,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/components/public/chatbot-widget.tsx",
+          "tokens_estimated": 98,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/components/public/chatbot-widget.tsx",
+          "tokens_estimated": 57,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/components/public/chatbot-widget.tsx",
+          "tokens_estimated": 132,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/api/orders/route.ts",
+          "tokens_estimated": 86,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/api/chat/route.ts",
+          "tokens_estimated": 86,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/api/chat/route.ts",
+          "tokens_estimated": 209,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1181,
+        "output_tokens_estimated": 2255,
+        "reads_count": 1,
+        "writes_count": 8,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
       }
     }
   ],

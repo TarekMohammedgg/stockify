@@ -24,7 +24,7 @@ DO $$ BEGIN
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN
-    CREATE TYPE order_source AS ENUM ('online', 'onsite');
+    CREATE TYPE order_source AS ENUM ('online', 'onsite', 'whatsapp');
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
 DO $$ BEGIN

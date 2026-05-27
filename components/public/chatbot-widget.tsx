@@ -72,6 +72,7 @@ export default function ChatbotWidget({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const lastExtractedLenRef = useRef(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const orderIdRef = useRef<string | null>(null);
 
   const extractInsights = useCallback(
     (msgs: Message[]) => {
@@ -116,7 +117,7 @@ export default function ChatbotWidget({
       .then((r) => r.json())
       .then((data) => {
         const hasInsights =
-          data?.data?.favourite_items?.length > 0 || data?.data?.default_address;
+          data?.data?.favourite_items?.length > 0 || data?.data?.user_address;
         const greeting = hasInsights
           ? `أهلاً ${customerName}! 👋 عارف إنك بتحبوا أصنافنا 😊 هل تحب تطلب تاني؟`
           : `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`;
@@ -130,14 +131,14 @@ export default function ChatbotWidget({
       });
   }, [customerName, userId]);
 
+  // Keep ref in sync with orderId state for stale-closure-safe event handlers
+  useEffect(() => { orderIdRef.current = orderId; }, [orderId]);
+
   // Listen for "Order Now" button from menu
   useEffect(() => {
     const handler = () => {
       setIsOpen(true);
-      setOrderId((prev) => {
-        if (prev) startNewOrder();
-        return prev ? null : prev;
-      });
+      if (orderIdRef.current) startNewOrder();
     };
     window.addEventListener("open-chatbot", handler);
     return () => window.removeEventListener("open-chatbot", handler);
@@ -154,9 +155,10 @@ export default function ChatbotWidget({
   useEffect(() => {
     if (isPending) return;
     if (messages.length < 3) return;
+    if (orderId) return;
     const t = setTimeout(() => extractInsights(messages), 1500);
     return () => clearTimeout(t);
-  }, [messages, isPending, extractInsights]);
+  }, [messages, isPending, orderId, extractInsights]);
 
   // Best-effort save on tab close — sendBeacon survives navigation/unload.
   useEffect(() => {

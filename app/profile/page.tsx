@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "./profile-form";
+import type { Order } from "@/lib/actions/cashier";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -24,6 +25,13 @@ export default async function ProfilePage() {
     .eq("user_id", user.id)
     .maybeSingle();
 
+  const { data: ordersData } = await supabase
+    .from("v_orders")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  const orders = (ordersData ?? []) as Order[];
+
   return (
     <ProfileForm
       profile={{
@@ -37,6 +45,7 @@ export default async function ProfilePage() {
         favouriteItems: (insights?.favourite_items as string[]) ?? [],
         lastSeen: insights?.last_seen ?? null,
       }}
+      orders={orders}
     />
   );
 }

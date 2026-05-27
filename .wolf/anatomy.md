@@ -1,13 +1,14 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T06:33:02.374Z
-> Files: 90 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T11:02:29.907Z
+> Files: 92 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
 - `.prettierrc` (~34 tok)
 - `AGENTS.md` — Stockify — Agent Guide (~1135 tok)
 - `CLAUDE.md` — OpenWolf (~1830 tok)
+- `n8n.json` — Declares items (~5723 tok)
 - `next.config.ts` — Declares nextConfig with Unsplash remotePatterns (~68 tok)
 - `PLAN.md` — Plan: Admin Home Final Touches — Real Data + Clickable Drill-downs (~2275 tok)
 - `proxy.ts` — Exports proxy (~626 tok)
@@ -36,6 +37,7 @@
 - `in-status-line-make-steady-hickey.md` — Plan: Set Default Model to Sonnet 4.6 (~165 tok)
 - `jazzy-cuddling-steele.md` — Plan: Admin Home Final Touches — Real Data + Clickable Drill-downs (~2662 tok)
 - `peaceful-purring-naur.md` — Plan: Phase 5 — Chatbot Widget + OpenRouter Integration (~1204 tok)
+- `virtual-riding-emerson.md` — Plan: Fix 6 Chatbot Bugs (Audit Results) (~1368 tok)
 
 ## app/
 
@@ -105,7 +107,7 @@
 
 ## app/api/chat/
 
-- `route.ts` — Next.js API route: POST (~2859 tok)
+- `route.ts` — Next.js API route: POST (~3006 tok)
 
 ## app/api/chat/extract-insights/
 
@@ -129,7 +131,7 @@
 
 ## app/api/orders/
 
-- `route.ts` — Next.js API route: GET, POST (~782 tok)
+- `route.ts` — Next.js API route: GET, POST (~826 tok)
 
 ## app/api/orders/[id]/
 
@@ -175,7 +177,7 @@
 ## components/public/
 
 - `cart-widget.tsx` — CartWidget — renders modal (~1454 tok)
-- `chatbot-widget.tsx` — MarkdownComponents (~3897 tok)
+- `chatbot-widget.tsx` — MarkdownComponents (~4033 tok)
 - `landing-page.tsx` — COPY (~5273 tok)
 - `public-menu.tsx` — PublicMenu (~3474 tok)
 - `site-header.tsx` — getInitials — renders form (~1851 tok)
@@ -183,7 +185,7 @@
 ## docs/
 
 - `PRD.md` — PRD — Stockify Restaurant Management Website (~4981 tok)
-- `SUPABASE_SCHEMA.md` — STOCKIFY — Supabase PostgreSQL Schema + Dummy Data (~7377 tok)
+- `SUPABASE_SCHEMA.md` — ============================================================ (~7380 tok)
 
 ## lib/
 
@@ -217,4 +219,4 @@
 
 ## supabase/
 
-- `schema.sql` — Database schema (~2673 tok)
+- `schema.sql` — Database schema (~2676 tok)

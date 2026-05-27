@@ -612,6 +612,122 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-05-27T06:33:02.419Z"
+    },
+    {
+      "id": "bug-039",
+      "timestamp": "2026-05-27T10:19:06.816Z",
+      "error_message": "Incorrect value in code",
+      "file": "n8n.json",
+      "root_cause": "Had 'online'",
+      "fix": "Changed to 'whatsapp'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-27T10:19:26.734Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-05-27T10:58:51.874Z",
+      "error_message": "Wrong reference: default_address should be user_address",
+      "file": "components/public/chatbot-widget.tsx",
+      "root_cause": "Used \"default_address\" instead of \"user_address\"",
+      "fix": "Changed default_address → user_address",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T10:58:51.874Z"
+    },
+    {
+      "id": "bug-041",
+      "timestamp": "2026-05-27T11:02:29.961Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/api/chat/route.ts",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T11:02:29.961Z"
+    },
+    {
+      "id": "bug-chatbot-001",
+      "timestamp": "2026-05-27T00:00:00.000Z",
+      "error_message": "Returning-user greeting never fires in chatbot widget",
+      "file": "components/public/chatbot-widget.tsx:119",
+      "root_cause": "Field name was default_address but Supabase column is user_address",
+      "fix": "Changed data?.data?.default_address to data?.data?.user_address",
+      "tags": [
+        "chatbot",
+        "widget",
+        "users_insights",
+        "field-name"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27"
+    },
+    {
+      "id": "bug-chatbot-002",
+      "timestamp": "2026-05-27T00:00:00.000Z",
+      "error_message": "favourite_items overwritten on each order instead of growing",
+      "file": "app/api/chat/route.ts:280",
+      "root_cause": "Upsert set favourite_items to only the new order items, discarding existing ones",
+      "fix": "Fetch existing favourite_items first, then merge+dedup before upsert",
+      "tags": [
+        "chatbot",
+        "users_insights",
+        "favourite_items",
+        "upsert"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27"
+    },
+    {
+      "id": "bug-chatbot-003",
+      "timestamp": "2026-05-27T00:00:00.000Z",
+      "error_message": "POST /api/orders has no auth guard — unauthenticated callers can insert orders",
+      "file": "app/api/orders/route.ts:37",
+      "root_cause": "POST handler missing supabase.auth.getUser() check",
+      "fix": "Added auth guard at top of POST handler, returns 401 if not authenticated",
+      "tags": [
+        "orders",
+        "auth",
+        "security"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27"
+    },
+    {
+      "id": "bug-chatbot-004",
+      "timestamp": "2026-05-27T00:00:00.000Z",
+      "error_message": "open-chatbot event handler used setOrderId updater to call startNewOrder (React anti-pattern, stale closure risk)",
+      "file": "components/public/chatbot-widget.tsx:134",
+      "root_cause": "Side effect (startNewOrder) called inside state updater callback; orderId read from stale closure",
+      "fix": "Added orderIdRef to track orderId without closure issues; simplified handler to call startNewOrder() directly",
+      "tags": [
+        "chatbot",
+        "widget",
+        "react",
+        "stale-closure",
+        "event-handler"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27"
     }
   ]
 }

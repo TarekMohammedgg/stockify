@@ -14,7 +14,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ─────────────────────────────────────────────
 CREATE TYPE user_role       AS ENUM ('admin', 'cashier', 'customer');
 CREATE TYPE order_type      AS ENUM ('dine-in', 'takeaway', 'delivery');
-CREATE TYPE order_source    AS ENUM ('online', 'onsite');
+CREATE TYPE order_source    AS ENUM ('online', 'onsite', 'whatsapp');
 CREATE TYPE order_status    AS ENUM ('pending', 'preparing', 'ready', 'completed', 'cancelled');
 CREATE TYPE stock_unit      AS ENUM ('kg', 'liter', 'piece', 'gram', 'ml');
 

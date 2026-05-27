@@ -3,10 +3,13 @@
 > Chronological action log. Hooks and AI append to this file automatically.
 > Old sessions are consolidated by the daemon weekly.
 
+| 2026-05-27 | Fixed n8n.json WhatsApp workflow to match real Supabase schema | n8n.json | Removed Get Restaurant Info (users_insights table missing), fixed Get Menu to use v_menu view, fixed Build Context code (name_en/name_ar/category_en), fixed Save Order fields (source/type/status/owner_name), added Expand Order Items + Save Order Items nodes for order_items table insertion | ~3k |
+
 ## 2026-05-27
 | 00:00 | Added last_order_status field to CustomerRow + listCustomers aggregation; StatusBadge component shows status in row + expanded panel | lib/actions/admin.ts, app/admin/customers/customers-list.tsx | done | ~1k |
 | 06:05 | Added order date day under the clock time on Admin, Cashier, and Delivery order dashboards | app/admin/orders/orders-panel.tsx, app/cashier/orders-panel.tsx, app/delivery/delivery-panel.tsx | done | ~800 |
 | 09:50 | Added auto-refocus logic to chatbot widget input field when messages finish sending | components/public/chatbot-widget.tsx | done | ~150 |
+| 10:50 | Implemented polished, RTL-first expandable order history list on customer profile page | app/profile/page.tsx, app/profile/profile-form.tsx | done | ~1.5k |
 
 ## 2026-05-26
 | 21:43 | /steer: conflict-checked docs/PRD.md, docs/SUPABASE_SCHEMA.md, CLAUDE.md, AGENTS.md; user resolved 5 conflicts | CLAUDE.md, AGENTS.md | rewrote both files (≤200 lines each) with PRD-aligned order status enum + delivery role + pinned versions (Next 16.2.6, React 19.2.4, TW v4) | ~6k |
@@ -716,3 +719,36 @@
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+| 13:02 | Created C:/Users/USER/.claude/plans/virtual-riding-emerson.md | — | ~1260 |
+| 13:05 | Created n8n.json | — | ~5722 |
+| 13:07 | Session end: 2 writes across 2 files (virtual-riding-emerson.md, n8n.json) | 1 reads | ~14449 tok |
+
+## Session: 2026-05-27 13:16
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:19 | Edited n8n.json | "online" → "whatsapp" | ~14 |
+| 13:19 | Edited n8n.json | 2→2 lines | ~21 |
+| 13:20 | Edited supabase/schema.sql | inline fix | ~19 |
+| 13:21 | Edited docs/SUPABASE_SCHEMA.md | inline fix | ~19 |
+| 13:21 | Session end: 4 writes across 3 files (n8n.json, schema.sql, SUPABASE_SCHEMA.md) | 3 reads | ~15847 tok |
+
+## Session: 2026-05-27 13:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 13:53
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:54 | Created C:/Users/USER/.claude/plans/virtual-riding-emerson.md | — | ~1460 |
+| 13:58 | Edited components/public/chatbot-widget.tsx | inline fix | ~23 |
+| 13:59 | Edited components/public/chatbot-widget.tsx | added 1 condition(s) | ~98 |
+| 13:59 | Edited components/public/chatbot-widget.tsx | 3→4 lines | ~57 |
+| 14:00 | Edited components/public/chatbot-widget.tsx | 12→12 lines | ~132 |
+| 14:01 | Edited app/api/orders/route.ts | added 1 condition(s) | ~86 |
+| 14:01 | Edited app/api/chat/route.ts | added 1 condition(s) | ~86 |
+| 14:02 | Edited app/api/chat/route.ts | added optional chaining | ~209 |
+| 14:05 | Fixed 6 chatbot bugs: wrong field name in greeting, favourite_items overwrite, missing delivery guard, no auth on POST /api/orders, stale closure in event handler, double insight extraction | chatbot-widget.tsx, chat/route.ts, orders/route.ts | all fixes applied, tsc clean | ~800 |
+| 14:05 | Session end: 8 writes across 3 files (virtual-riding-emerson.md, chatbot-widget.tsx, route.ts) | 1 reads | ~3436 tok |

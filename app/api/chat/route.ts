@@ -194,6 +194,9 @@ ${menuNamesForExtraction}
       if (!Array.isArray(orderData.items) || orderData.items.length === 0) {
         throw new Error("No valid items in extracted order");
       }
+      if (orderData.type === "delivery" && !orderData.delivery_address) {
+        throw new Error("delivery_address missing for delivery order");
+      }
 
       // Map item names → real menu IDs and prices
       type ExtractedItem = { name: string; quantity: number; notes: string | null };
@@ -277,10 +280,19 @@ ${menuNamesForExtraction}
       const deliveryAddress: string | null = orderData.delivery_address ?? null;
       const customerPhone: string | null = orderData.customer_phone ?? null;
 
+      const { data: existingInsights } = await supabase
+        .from("users_insights")
+        .select("favourite_items")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      const existingFavourites: string[] = existingInsights?.favourite_items ?? [];
+      const mergedFavourites = Array.from(new Set([...existingFavourites, ...orderedItemNames]));
+
       await supabase.from("users_insights").upsert(
         {
           user_id: userId,
-          favourite_items: orderedItemNames,
+          favourite_items: mergedFavourites,
           ...(deliveryAddress && { user_address: deliveryAddress }),
           ...(customerPhone && { user_phone: customerPhone }),
           last_seen: new Date().toISOString(),

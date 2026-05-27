@@ -7,11 +7,11 @@
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "89dde850-85f2-418f-9421-1af3de395352",
+      "id": "6feca830-f3b0-4d08-a8a8-4ba7de7799a4",
       "name": "WASender Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
-      "position": [0, 208],
+      "position": [-1216, 432],
       "webhookId": "3a6ecbbc-8d0b-4d34-b6ca-6cea23e54bd8"
     },
     {
@@ -46,11 +46,11 @@
         },
         "options": {}
       },
-      "id": "9123be6c-4a6a-417e-9a03-2d14f9c8ce67",
+      "id": "2042ab75-0620-4008-b5ab-dbbf2ce38c41",
       "name": "Extract Message",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [224, 208]
+      "position": [-992, 432]
     },
     {
       "parameters": {
@@ -83,23 +83,23 @@
         },
         "options": {}
       },
-      "id": "c66a783d-9b71-426c-949a-116fd6870e0c",
+      "id": "89f8b42e-2a98-40e6-979a-a210d0543674",
       "name": "Is Real Message?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [448, 208]
+      "position": [-768, 432]
     },
     {
       "parameters": {
         "operation": "getAll",
-        "tableId": "menu_items",
+        "tableId": "v_menu",
         "returnAll": true
       },
-      "id": "7a62e9a1-574e-4d3d-93da-333c5466ee25",
+      "id": "136bd949-7fb9-49c3-a57b-15802c62e28a",
       "name": "Get Menu",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [672, 16],
+      "position": [-544, 336],
       "executeOnce": true,
       "credentials": {
         "supabaseApi": {
@@ -123,21 +123,21 @@
         "includeOtherFields": true,
         "options": {}
       },
-      "id": "ccec1ed3-2ed1-426f-822d-1ae48ca5ce43",
+      "id": "ff5f5744-f529-4a21-8d12-36417abeb452",
       "name": "Tag Menu Rows",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [896, 16]
+      "position": [-320, 336]
     },
     {
       "parameters": {
-        "jsCode": "\nconst items = $input.all();\nconst menuItems = [];\nlet restaurantInfo = {};\n\nfor (const item of items) {\n  if (item.json._source === 'menu') {\n    menuItems.push(item.json);\n  } else if (item.json._source === 'info') {\n    restaurantInfo = item.json;\n  }\n}\n\nconst menuText = menuItems.map(m =>\n  `• ${m.name} — ${m.description ?? ''} | Price: ${m.price} EGP${m.category ? ' | Category: ' + m.category : ''}`\n).join('\\n');\n\nreturn [{\n  json: {\n    menuContext: menuText || 'Menu not available at the moment.',\n    restaurantContext: `Name: ${restaurantInfo.name ?? 'Our Restaurant'}\\nAddress: ${restaurantInfo.address ?? 'N/A'}\\nPhone: ${restaurantInfo.phone ?? 'N/A'}\\nHours: ${restaurantInfo.working_hours ?? 'N/A'}`,\n    senderId: $('Extract Message').first().json.senderId,\n    messageText: $('Extract Message').first().json.messageText,\n    sessionKey: $('Extract Message').first().json.sessionKey\n  }\n}];\n"
+        "jsCode": "\nconst items = $input.all();\nconst menuItems = [];\n\nfor (const item of items) {\n  if (item.json._source === 'menu') {\n    menuItems.push(item.json);\n  }\n}\n\nconst menuText = menuItems\n  .filter(m => m.is_available !== false)\n  .map(m =>\n    `• [${m.id}] ${m.name_en} / ${m.name_ar} — Price: ${m.price} EGP | Category: ${m.category_en}`\n  ).join('\\n');\n\nreturn [{\n  json: {\n    menuContext: menuText || 'Menu not available at the moment.',\n    restaurantContext: 'Name: Stockify Restaurant\\nAddress: Contact us for details\\nPhone: Contact via WhatsApp\\nHours: Daily 10:00 AM – 11:00 PM',\n    senderId: $('Extract Message').first().json.senderId,\n    messageText: $('Extract Message').first().json.messageText,\n    sessionKey: $('Extract Message').first().json.sessionKey\n  }\n}];\n"
       },
-      "id": "94c6d507-db80-4989-a88e-539e727db809",
+      "id": "7218b325-c5df-4a5b-bc9f-214e01a0a365",
       "name": "Build Context",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1120, 112]
+      "position": [-96, 336]
     },
     {
       "parameters": {
@@ -149,65 +149,25 @@
           "responseCode": 200
         }
       },
-      "id": "b02711f1-be04-4e53-9ced-648971ef6d97",
+      "id": "f7c1c729-d5c2-49cb-ad35-f7151b8dec89",
       "name": "Acknowledge Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
-      "position": [2816, 208]
-    },
-    {
-      "parameters": {
-        "operation": "getAll",
-        "tableId": "users_insights",
-        "returnAll": true
-      },
-      "id": "fe4cd65e-2b16-405a-b39b-aad66202b3ac",
-      "name": "Get Restaurant Info",
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [672, 208],
-      "executeOnce": true,
-      "credentials": {
-        "supabaseApi": {
-          "id": "VmPkucuvo5DoyPHi",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "src-info",
-              "name": "_source",
-              "value": "info",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "id": "70f750df-f62f-4806-a1a6-dc5c00d68c8d",
-      "name": "Tag Info Rows",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [896, 208]
+      "position": [2048, 432]
     },
     {
       "parameters": {
         "promptType": "define",
         "text": "={{ $json.messageText }}",
         "options": {
-          "systemMessage": "=You are a friendly WhatsApp chatbot for a restaurant.\nAlways reply in the same language the customer uses (Arabic or English).\nBe concise, warm, and helpful.\n\n=== RESTAURANT INFORMATION ===\n{{ $json.restaurantContext }}\n\n=== MENU ===\n{{ $json.menuContext }}\n\n=== YOUR RESPONSIBILITIES ===\n- Answer questions about the menu (items, prices, ingredients, categories)\n- Share restaurant info: address, phone number, working hours\n- Help customers build and confirm their order\n- When a customer CONFIRMS their final order (e.g. says \"yes\", \"confirm\", \"order this\", \"طلبت\", \"اطلب\", \"تمام\", \"أكيد\"), output the order in the special format below\n- If asked about something you don't know, politely say you'll check and ask them to call the restaurant\n\n=== ORDER CONFIRMATION FORMAT ===\nWhen the customer confirms their order, your ENTIRE response must be ONLY this JSON block (no extra text before or after):\nORDER_CONFIRMED:{\"items\":[{\"name\":\"Item Name\",\"quantity\":1,\"price\":50}],\"total\":50,\"customer_phone\":\"{{ $json.senderId }}\",\"notes\":\"any special requests or empty string\"}\n\n=== RULES ===\n- Never make up menu items or prices — only use what is listed above\n- Keep replies short and friendly, suitable for WhatsApp\n- Use emojis sparingly 🍽️\n- Only output ORDER_CONFIRMED JSON when the customer has explicitly confirmed — not while they are still browsing"
+          "systemMessage": "=You are a friendly WhatsApp chatbot for a restaurant.\nAlways reply in the same language the customer uses (Arabic or English).\nBe concise, warm, and helpful.\n\n=== RESTAURANT INFORMATION ===\n{{ $json.restaurantContext }}\n\n=== MENU ===\n{{ $json.menuContext }}\n\n=== YOUR RESPONSIBILITIES ===\n- Answer questions about the menu (items, prices, ingredients, categories)\n- Share restaurant info: address, phone number, working hours\n- Help customers build and confirm their order\n- When a customer CONFIRMS their final order (e.g. says \"yes\", \"confirm\", \"order this\", \"طلبت\", \"اطلب\", \"تمام\", \"أكيد\"), output the order in the special format below\n- If asked about something you don't know, politely say you'll check and ask them to call the restaurant\n\n=== ORDER CONFIRMATION FORMAT ===\nWhen the customer confirms their order, your ENTIRE response must be ONLY this JSON block (no extra text before or after):\nORDER_CONFIRMED:{\"items\":[{\"id\":\"<UUID from [UUID] prefix in menu listing>\",\"name\":\"Item Name\",\"quantity\":1,\"price\":50}],\"total\":50,\"customer_phone\":\"{{ $json.senderId }}\",\"notes\":\"any special requests or empty string\"}\n\nIMPORTANT: For each item's \"id\" field, copy the exact UUID shown inside the square brackets [UUID] at the start of that menu item's line. Do NOT invent or modify UUIDs.\n\n=== RULES ===\n- Never make up menu items or prices — only use what is listed above\n- Keep replies short and friendly, suitable for WhatsApp\n- Use emojis sparingly 🍽️\n- Only output ORDER_CONFIRMED JSON when the customer has explicitly confirmed — not while they are still browsing"
         }
       },
-      "id": "57351317-d40a-4781-825c-4909d8a3a646",
+      "id": "c2797ca0-b3ee-4a48-86dd-a6a582b51eb9",
       "name": "Restaurant AI Chatbot",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
-      "position": [1344, 112]
+      "position": [128, 336]
     },
     {
       "parameters": {
@@ -217,11 +177,11 @@
           "temperature": 0.5
         }
       },
-      "id": "c48d3bf3-fc8f-4919-96be-7aaa44b7327b",
+      "id": "293fcc78-d165-4250-9e74-9b39c84f04ee",
       "name": "Gemini 2.5 Flash Lite",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
-      "position": [1360, 336],
+      "position": [144, 560],
       "credentials": {
         "openRouterApi": {
           "id": "vsbx3ymi6pBYje8s",
@@ -235,11 +195,11 @@
         "sessionKey": "={{ $json.sessionKey }}",
         "contextWindowLength": 10
       },
-      "id": "40b96ba8-d7d2-434b-84b8-7f28d16d4986",
+      "id": "7ca8731c-3848-4c7f-95e0-8f3ecb9affa2",
       "name": "Conversation Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.4,
-      "position": [1488, 336]
+      "position": [272, 560]
     },
     {
       "parameters": {
@@ -265,21 +225,21 @@
         },
         "options": {}
       },
-      "id": "e182d257-410b-494c-b1be-48537dd8c558",
+      "id": "b6d3df55-a0e6-4932-88af-9dfbef3ae24d",
       "name": "Order Confirmed?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
-      "position": [1696, 112]
+      "position": [480, 336]
     },
     {
       "parameters": {
-        "jsCode": "\nconst raw = $input.first().json.output;\nconst jsonStr = raw.replace('ORDER_CONFIRMED:', '').trim();\nconst order = JSON.parse(jsonStr);\n\nconst itemLines = order.items.map(i =>\n  `  • ${i.name} x${i.quantity} — ${i.price * i.quantity} EGP`\n).join('\\n');\n\nconst confirmationMsg =\n  `✅ تم استلام طلبك! / Order received!\\n\\n` +\n  `🧾 ${itemLines}\\n\\n` +\n  `💰 Total: ${order.total} EGP\\n` +\n  (order.notes ? `📝 Notes: ${order.notes}\\n` : '') +\n  `\\nسيتم التواصل معك قريباً / We will contact you soon! 🙏`;\n\nreturn [{\n  json: {\n    customer_phone: order.customer_phone,\n    items: JSON.stringify(order.items),\n    total_price: order.total,\n    status: 'pending',\n    type: 'whatsapp',\n    notes: order.notes || '',\n    replyText: confirmationMsg,\n    senderId: order.customer_phone\n  }\n}];\n"
+        "jsCode": "\nconst raw = $input.first().json.output;\nconst jsonStr = raw.replace('ORDER_CONFIRMED:', '').trim();\nconst order = JSON.parse(jsonStr);\n\nconst itemLines = order.items.map(i =>\n  `  • ${i.name} x${i.quantity} — ${i.price * i.quantity} EGP`\n).join('\\n');\n\nconst confirmationMsg =\n  `✅ تم استلام طلبك! / Order received!\\n\\n` +\n  `🧾 ${itemLines}\\n\\n` +\n  `💰 Total: ${order.total} EGP\\n` +\n  (order.notes ? `📝 Notes: ${order.notes}\\n` : '') +\n  `\\nسيتم التواصل معك قريباً / We will contact you soon! 🙏`;\n\nreturn [{\n  json: {\n    customer_phone: order.customer_phone,\n    items: order.items,\n    total_price: order.total,\n    source: 'whatsapp',\n    type: 'delivery',\n    status: 'pending',\n    notes: order.notes || '',\n    replyText: confirmationMsg,\n    senderId: order.customer_phone\n  }\n}];\n"
       },
-      "id": "8953eff8-de4f-48c5-93eb-7b44138dd1b1",
+      "id": "d36ac8f7-9106-4fad-93f0-deee4038634a",
       "name": "Parse Order",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1920, 16]
+      "position": [704, 240]
     },
     {
       "parameters": {
@@ -287,24 +247,74 @@
         "fieldsUi": {
           "fieldValues": [
             {
-              "fieldId": "customer_phone",
+              "fieldId": "source",
+              "fieldValue": "whatsapp"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "delivery"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "pending"
+            },
+            {
+              "fieldId": "owner_name",
               "fieldValue": "={{ $json.customer_phone }}"
             },
             {
-              "fieldId": "items",
-              "fieldValue": "={{ $json.items }}"
+              "fieldId": "notes",
+              "fieldValue": "={{ $json.notes }}"
             },
             {
               "fieldId": "total_price",
               "fieldValue": "={{ $json.total_price }}"
+            }
+          ]
+        }
+      },
+      "id": "2fc0191f-a977-448c-b082-310706bd669c",
+      "name": "Save Order",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [928, 240],
+      "credentials": {
+        "supabaseApi": {
+          "id": "VmPkucuvo5DoyPHi",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst orderId = $('Save Order').first().json.id;\nconst items = $('Parse Order').first().json.items;\n\nreturn items.map(item => ({\n  json: {\n    order_id: orderId,\n    menu_item_id: item.id,\n    quantity: item.quantity,\n    unit_price: item.price,\n    notes: ''\n  }\n}));\n"
+      },
+      "id": "ad540463-d621-45e4-bb1d-65f16b82accc",
+      "name": "Expand Order Items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1152, 240]
+    },
+    {
+      "parameters": {
+        "tableId": "order_items",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "order_id",
+              "fieldValue": "={{ $json.order_id }}"
             },
             {
-              "fieldId": "status",
-              "fieldValue": "={{ $json.status }}"
+              "fieldId": "menu_item_id",
+              "fieldValue": "={{ $json.menu_item_id }}"
             },
             {
-              "fieldId": "type",
-              "fieldValue": "={{ $json.type }}"
+              "fieldId": "quantity",
+              "fieldValue": "={{ $json.quantity }}"
+            },
+            {
+              "fieldId": "unit_price",
+              "fieldValue": "={{ $json.unit_price }}"
             },
             {
               "fieldId": "notes",
@@ -313,11 +323,11 @@
           ]
         }
       },
-      "id": "23d87e18-8758-4774-bd77-8288c243d2bf",
-      "name": "Save Order",
+      "id": "ffd38481-2942-4e52-86c0-585df46def13",
+      "name": "Save Order Items",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [2144, 16],
+      "position": [1376, 240],
       "credentials": {
         "supabaseApi": {
           "id": "VmPkucuvo5DoyPHi",
@@ -345,18 +355,19 @@
         },
         "options": {}
       },
-      "id": "98cd0d83-8b24-4c86-acfd-d86d3ece4679",
+      "id": "fe4a9960-b29b-44f5-b5d6-b6cd2146231a",
       "name": "Prepare Order Reply",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [2368, 16]
+      "position": [1600, 240],
+      "executeOnce": true
     },
     {
       "parameters": {
         "method": "POST",
         "url": "https://api.wasenderapi.com/api/send-message",
         "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "genericAuthType": "httpBearerAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -367,15 +378,36 @@
           ]
         },
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"to\": \"{{ $json.to }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{ $json.text }}\"\n  }\n}",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.to }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        },
         "options": {}
       },
-      "id": "aec19fea-cff3-4781-84ff-ee384a2a42ab",
+      "id": "245210d4-fb14-426a-b3f1-698dca3c2bf3",
       "name": "Send Order Reply",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
-      "position": [2592, 16]
+      "position": [1824, 240],
+      "executeOnce": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "5Ugm7BAr5vE5fpmf",
+          "name": "Header Auth account"
+        },
+        "httpBearerAuth": {
+          "id": "Z0C1kXjMI0QJ34as",
+          "name": "Bearer Auth account 4"
+        }
+      }
     },
     {
       "parameters": {
@@ -397,11 +429,11 @@
         },
         "options": {}
       },
-      "id": "2b748e3f-a49a-4ac7-a2de-797a4a7d160d",
+      "id": "e71d3cdf-e297-4aeb-830c-0726c5da54c8",
       "name": "Prepare Reply",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [2368, 208]
+      "position": [1152, 432]
     },
     {
       "parameters": {
@@ -434,11 +466,11 @@
         },
         "options": {}
       },
-      "id": "876c4df5-7bde-4285-8748-ce263b95fc86",
+      "id": "edd6fb54-e3f6-4f16-bd7c-4c1ebe7406d3",
       "name": "Send WhatsApp Reply",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
-      "position": [2592, 208],
+      "position": [1376, 432],
       "credentials": {
         "httpHeaderAuth": {
           "id": "5Ugm7BAr5vE5fpmf",
@@ -481,11 +513,6 @@
             "node": "Get Menu",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Get Restaurant Info",
-            "type": "main",
-            "index": 0
           }
         ],
         [
@@ -524,28 +551,6 @@
         [
           {
             "node": "Restaurant AI Chatbot",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Restaurant Info": {
-      "main": [
-        [
-          {
-            "node": "Tag Info Rows",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Tag Info Rows": {
-      "main": [
-        [
-          {
-            "node": "Build Context",
             "type": "main",
             "index": 0
           }
@@ -615,6 +620,28 @@
       ]
     },
     "Save Order": {
+      "main": [
+        [
+          {
+            "node": "Expand Order Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand Order Items": {
+      "main": [
+        [
+          {
+            "node": "Save Order Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Order Items": {
       "main": [
         [
           {
