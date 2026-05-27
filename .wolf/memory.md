@@ -783,3 +783,4 @@
 | 18:38 | Edited lib/actions/auth.ts | modified signInWithGoogle() | ~128 |
 | 18:35 | Fixed Google OAuth redirect: was falling back to http://localhost:3000/auth/callback in prod because NEXT_PUBLIC_SITE_URL was unset; replaced with dynamic host header derivation | lib/actions/auth.ts | done | ~150 |
 | 18:42 | Session end: 2 writes across 1 files (auth.ts) | 6 reads | ~1118 tok |
+| 19:00 | Session end: 2 writes across 1 files (auth.ts) | 6 reads | ~1118 tok |

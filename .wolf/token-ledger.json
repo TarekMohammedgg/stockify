@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-24T13:26:18.340Z",
   "lifetime": {
-    "total_tokens_estimated": 937714,
-    "total_reads": 432,
-    "total_writes": 509,
+    "total_tokens_estimated": 938832,
+    "total_reads": 438,
+    "total_writes": 511,
     "total_sessions": 52,
     "anatomy_hits": 366,
-    "anatomy_misses": 60,
-    "repeated_reads_blocked": 132,
-    "estimated_savings_vs_bare_cli": 355086
+    "anatomy_misses": 66,
+    "repeated_reads_blocked": 135,
+    "estimated_savings_vs_bare_cli": 356978
   },
   "sessions": [
     {
@@ -6175,6 +6175,69 @@
         "reads_count": 6,
         "writes_count": 2,
         "repeated_reads_blocked": 2,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-27-1822",
+      "started": "2026-05-27T15:22:24.671Z",
+      "ended": "2026-05-27T16:00:20.593Z",
+      "reads": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/(auth)/login/page.tsx",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/lib/actions/auth.ts",
+          "tokens_estimated": 946,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/docs/SUPABASE_SCHEMA.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/app/auth/callback/route.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/lib/supabase/server.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/.env.local",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "E:/root/Programming/web-development/stockify/lib/actions/auth.ts",
+          "tokens_estimated": 44,
+          "action": "edit"
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/lib/actions/auth.ts",
+          "tokens_estimated": 128,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 946,
+        "output_tokens_estimated": 172,
+        "reads_count": 6,
+        "writes_count": 2,
+        "repeated_reads_blocked": 3,
         "anatomy_lookups": 0
       }
     }
