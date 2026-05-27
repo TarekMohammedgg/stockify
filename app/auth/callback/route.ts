@@ -1,10 +1,33 @@
+/**
+ * Google OAuth callback handler.
+ *
+ * REQUIRED SETUP — Google Cloud Console (https://console.cloud.google.com):
+ *   OAuth 2.0 Client → Authorized redirect URIs must include ALL of:
+ *     • http://localhost:3000/auth/callback          (local dev)
+ *     • https://<your-vercel-domain>/auth/callback   (Vercel production / preview)
+ *     • https://miclzbzlggnlbrvnbzgq.supabase.co/auth/v1/callback  (Supabase internal)
+ *
+ *   In Supabase Dashboard → Authentication → Providers → Google:
+ *     • Client ID and Client Secret must match the Google Cloud Console OAuth credentials.
+ *     • Redirect URL shown there must be listed in the Google Console authorized URIs.
+ *
+ *   The "This browser or app may not be secure" error means the redirect URI used at
+ *   sign-in time is not in the Google Console's authorized list — add it there, no code
+ *   change is needed.
+ */
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+
+/** Validate and sanitise the `next` redirect target to prevent open-redirect attacks. */
+function safeNext(raw: string | null): string {
+  if (!raw || !raw.startsWith("/") || raw.startsWith("//")) return "/menu";
+  return raw;
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/menu";
+  const next = safeNext(searchParams.get("next"));
 
   if (code) {
     const supabase = await createClient();

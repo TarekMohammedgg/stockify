@@ -12,10 +12,10 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ─────────────────────────────────────────────
 -- ENUMS
 -- ─────────────────────────────────────────────
-CREATE TYPE user_role       AS ENUM ('admin', 'cashier', 'customer');
+CREATE TYPE user_role       AS ENUM ('admin', 'cashier', 'customer', 'delivery');
 CREATE TYPE order_type      AS ENUM ('dine-in', 'takeaway', 'delivery');
 CREATE TYPE order_source    AS ENUM ('online', 'onsite', 'whatsapp');
-CREATE TYPE order_status    AS ENUM ('pending', 'preparing', 'ready', 'completed', 'cancelled');
+CREATE TYPE order_status    AS ENUM ('pending', 'on_delivery', 'complete', 'cancelled');
 CREATE TYPE stock_unit      AS ENUM ('kg', 'liter', 'piece', 'gram', 'ml');
 
 
@@ -405,9 +405,10 @@ INSERT INTO menu_item_allergens (menu_item_id, allergen_id) VALUES
 -- (Run these UPDATEs after seeding auth.users with matching IDs)
 
 INSERT INTO users (id, name, phone, email, role, address, auth_provider, profile_complete, is_active) VALUES
-    ('u1000000-0000-0000-0000-000000000001', 'أحمد مدير',    '01011111111', 'admin@stockify.com',    'admin',    NULL,                              'email',  TRUE,  TRUE),
-    ('u1000000-0000-0000-0000-000000000002', 'محمود كاشير',  '01022222222', 'cashier1@stockify.com', 'cashier',  NULL,                              'email',  TRUE,  TRUE),
-    ('u1000000-0000-0000-0000-000000000003', 'سارة كاشيرة',  '01033333333', 'cashier2@stockify.com', 'cashier',  NULL,                              'email',  TRUE,  TRUE),
+    -- Test staff accounts (password: password123) — provisioned via /api/seed-test-users
+    ('u1000000-0000-0000-0000-000000000001', 'Test Admin',    '01011111111', 'admin@example.com',    'admin',    NULL, 'email',  TRUE,  TRUE),
+    ('u1000000-0000-0000-0000-000000000002', 'Test Cashier',  '01022222222', 'cashier1@example.com', 'cashier',  NULL, 'email',  TRUE,  TRUE),
+    ('u1000000-0000-0000-0000-000000000003', 'Test Delivery', '01033333333', 'delivery@example.com', 'delivery', NULL, 'email',  TRUE,  TRUE),
     -- Customer via email/password registration
     ('u1000000-0000-0000-0000-000000000004', 'مريم أحمد',    '01044444444', 'mariam@gmail.com',      'customer', '15 شارع النيل، المعادي، القاهرة', 'email',  TRUE,  TRUE),
     -- Customer via Google OAuth (profile_complete=TRUE means phone was collected after OAuth)

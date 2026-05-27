@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T15:38:36.538Z
-> Files: 1 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T18:54:00.796Z
+> Files: 6 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -17,6 +17,7 @@
 
 ## C:/Users/USER/.claude/plans/
 
+- `lexical-soaring-sutton.md` — Plan: Fix Authentication / Access Blocked — All Role Login Flows (~1158 tok)
 
 ## app/
 
@@ -32,6 +33,7 @@
 
 ## app/admin/
 
+- `layout.tsx` — AdminLayout: guards admin role via public.users table query (not JWT app_metadata) (~278 tok)
 
 ## app/admin/customers/
 
@@ -81,8 +83,13 @@
 ## app/api/orders/[id]/
 
 
+## app/api/seed-test-users/
+
+- `route.ts` — Next.js API route: GET (~557 tok)
+
 ## app/auth/callback/
 
+- `route.ts` — Google OAuth callback handler. (~897 tok)
 
 ## app/cashier/
 
@@ -107,6 +114,7 @@
 
 ## docs/
 
+- `SUPABASE_SCHEMA.md` — ============================================================ (~7382 tok)
 
 ## lib/
 

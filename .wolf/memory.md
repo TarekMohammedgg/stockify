@@ -784,3 +784,19 @@
 | 18:35 | Fixed Google OAuth redirect: was falling back to http://localhost:3000/auth/callback in prod because NEXT_PUBLIC_SITE_URL was unset; replaced with dynamic host header derivation | lib/actions/auth.ts | done | ~150 |
 | 18:42 | Session end: 2 writes across 1 files (auth.ts) | 6 reads | ~1118 tok |
 | 19:00 | Session end: 2 writes across 1 files (auth.ts) | 6 reads | ~1118 tok |
+
+## Session: 2026-05-27 19:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:33 | Created C:/Users/USER/.claude/plans/lexical-soaring-sutton.md | — | ~1236 |
+| 19:37 | Session end: 1 writes across 1 files (lexical-soaring-sutton.md) | 17 reads | ~2270 tok |
+| 19:38 | Created app/api/seed-test-users/route.ts | — | ~527 |
+| 19:39 | Edited app/api/seed-test-users/route.ts | 5→6 lines | ~124 |
+| 19:39 | Edited app/auth/callback/route.ts | added 1 condition(s) | ~406 |
+| 20:06 | Edited app/admin/layout.tsx | 10→9 lines | ~62 |
+| 20:10 | Session end: 5 writes across 3 files (lexical-soaring-sutton.md, route.ts, layout.tsx) | 21 reads | ~3916 tok |
+| 21:48 | Edited docs/SUPABASE_SCHEMA.md | inline fix | ~22 |
+| 21:51 | Edited docs/SUPABASE_SCHEMA.md | inline fix | ~24 |
+| 21:54 | Edited docs/SUPABASE_SCHEMA.md | 3→4 lines | ~139 |
+| 19:00 | Unit 1 staff provisioning: reset passwords via seed route, fixed admin layout role guard (rpc→DB query), verified all 3 staff logins redirect correctly | app/admin/layout.tsx, docs/SUPABASE_SCHEMA.md | success | ~4500 |

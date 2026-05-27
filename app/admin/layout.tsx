@@ -14,14 +14,13 @@ export default async function AdminLayout({
 
   if (!user) redirect("/login");
 
-  const { data: role } = await supabase.rpc("current_user_role");
-  if (role !== "admin") redirect("/");
-
   const { data: profile } = await supabase
     .from("users")
-    .select("name")
+    .select("role, name")
     .eq("id", user.id)
     .single();
+
+  if (profile?.role !== "admin") redirect("/");
 
   const name = profile?.name ?? "المدير";
 

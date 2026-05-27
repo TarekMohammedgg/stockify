@@ -26,6 +26,7 @@
 - **Auth callback** blocks Google OAuth for admin/cashier via `user.app_metadata.provider === "google"` check; signs out and redirects with `?error=oauth_not_allowed_for_staff`.
 - **Admin actions** that create or delete users (cashiers) require `SUPABASE_SERVICE_ROLE_KEY` and use a separately constructed `@supabase/supabase-js` admin client (NOT the SSR client) — `supabase.auth.admin.createUser/deleteUser`. Trigger `handle_new_auth_user` will auto-insert a profile row with role='customer'; then UPDATE role='cashier'.
 - **RTL sidebar** uses `border-s` (logical start) not `border-r`. Mobile shell uses topbar + bottom tab bar instead of off-canvas drawer for simplicity.
+- **Role guard in layouts**: always query `public.users.role` directly (`.select('role, name').eq('id', user.id).single()`), NOT `supabase.rpc('current_user_role')`. The RPC reads from JWT `app_metadata` which is only set when Supabase Auth custom claims are configured — test accounts and admin-created staff don't have it. Cashier and delivery layouts already use the correct pattern.
 
 ## Do-Not-Repeat
 
@@ -37,6 +38,7 @@
 - [2026-05-25] Used placeholder UUIDs like `i1000000-…` and `m1000000-…` in seed SQL → "invalid input syntax for type uuid" — UUIDs must be hex only (0-9, a-f). Use prefixes from {a,b,c,d,e,f} (e.g., `b` for ingredients, `d` for menu items, `e` for orders, `f` for users).
 - [2026-05-25] Created Supabase views without `security_invoker=true` → advisors flag SECURITY DEFINER on view. Always `ALTER VIEW … SET (security_invoker = true)` so RLS of the calling user is enforced.
 - [2026-05-26] Asked AI (Gemini 2.5 Flash Lite) to reproduce full UUIDs in JSON extraction prompts → truncated JSON (`"d1000000-0...`) causing `SyntaxError: Unterminated string`. NEVER ask AI to output UUIDs in extraction. Always use human-readable identifiers (item names) in extraction JSON, then resolve names → IDs server-side using the menu array already in memory.
+- [2026-05-27] Used `supabase.rpc('current_user_role')` in admin layout for role guard — returned 'customer' for all test accounts because JWT app_metadata.role is not set on admin-created accounts. Always use direct DB query `public.users.role` in layout guards (same as cashier/delivery layouts).
 - [2026-05-26] `<<ORDER_CONFIRMED>>` marker: Gemini follows the spirit (writes Arabic confirmation text) but drops the literal token. Always add fallback phrase detection (`"جاري تسجيل طلبك"`, `"تم تسجيل طلبك"`) alongside marker detection — never rely on a single signal.
 
 ## Key Learnings (continued)

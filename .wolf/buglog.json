@@ -728,6 +728,50 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-27"
+    },
+    {
+      "id": "bug-046",
+      "timestamp": "2026-05-27T16:39:18.634Z",
+      "error_message": "Wrong operator: ?? should be ||",
+      "file": "app/auth/callback/route.ts",
+      "root_cause": "Used \"??\" instead of \"||\"",
+      "fix": "Changed operator ?? → ||",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T16:39:18.634Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-05-27T18:51:34.383Z",
+      "error_message": "Incorrect value in code",
+      "file": "docs/SUPABASE_SCHEMA.md",
+      "root_cause": "Had 'preparing'",
+      "fix": "Changed to 'on_delivery'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T18:51:34.383Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-05-27T19:00:00.000Z",
+      "error_message": "Admin layout redirects logged-in admin to '/' — all staff logins fail to reach /admin",
+      "file": "app/admin/layout.tsx",
+      "root_cause": "AdminLayout used supabase.rpc('current_user_role') which reads from JWT app_metadata. Test accounts don't have app_metadata.role set, so current_user_role() returned 'customer' and the guard redirected them away from /admin.",
+      "fix": "Replaced rpc('current_user_role') + separate .select('name') with a single .select('role, name') query on public.users (same pattern as cashier/delivery layouts). Role check now reads from the database table, not JWT app_metadata.",
+      "tags": ["admin", "layout", "auth", "rls", "jwt-app-metadata", "role-guard"],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-27T19:00:00.000Z"
     }
   ]
 }
