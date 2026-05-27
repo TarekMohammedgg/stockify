@@ -51,23 +51,16 @@ export async function POST(request: Request) {
   }
 
   const { data: insightsData } = await supabase
-    .from("chatbot_insights")
-    .select("favourite_items, default_address, last_seen")
+    .from("users_insights")
+    .select("favourite_items, user_address, user_phone, last_seen")
     .eq("user_id", userId)
-    .maybeSingle();
-
-  const { data: userData } = await supabase
-    .from("users")
-    .select("phone, address")
-    .eq("id", userId)
     .maybeSingle();
 
   const menu = (menuData ?? []) as MenuItemForPrompt[];
   const insights: InsightsForPrompt = {
     favourite_items: insightsData?.favourite_items ?? null,
-    phone: userData?.phone ?? null,
-    address: userData?.address ?? null,
-    default_address: insightsData?.default_address ?? null,
+    user_phone: insightsData?.user_phone ?? null,
+    user_address: insightsData?.user_address ?? null,
     last_seen: insightsData?.last_seen ?? null,
   };
 
@@ -278,40 +271,22 @@ ${menuNamesForExtraction}
         });
       }
 
-      const orderedItemIds = resolvedItems.map((item) => item.menu_item_id);
+      const orderedItemNames = resolvedItems.map(
+        (item) => menu.find((m) => m.id === item.menu_item_id)?.name_ar ?? item.menu_item_id,
+      );
       const deliveryAddress: string | null = orderData.delivery_address ?? null;
+      const customerPhone: string | null = orderData.customer_phone ?? null;
 
-      await supabase.from("chatbot_insights").upsert(
+      await supabase.from("users_insights").upsert(
         {
           user_id: userId,
-          favourite_items: orderedItemIds,
-          ...(deliveryAddress && { default_address: deliveryAddress }),
+          favourite_items: orderedItemNames,
+          ...(deliveryAddress && { user_address: deliveryAddress }),
+          ...(customerPhone && { user_phone: customerPhone }),
           last_seen: new Date().toISOString(),
         },
         { onConflict: "user_id" },
       );
-
-      // Backfill users.phone / users.address if not already set.
-      const userPatch: { phone?: string; address?: string } = {};
-      if (orderData.customer_phone && !userData?.phone) {
-        userPatch.phone = orderData.customer_phone;
-      }
-      if (deliveryAddress && !userData?.address) {
-        userPatch.address = deliveryAddress;
-      }
-      if (Object.keys(userPatch).length > 0) {
-        const { error: backfillErr } = await supabase
-          .from("users")
-          .update(userPatch)
-          .eq("id", userId);
-        if (backfillErr) {
-          console.error(
-            "[POST /api/chat] backfill users",
-            userId,
-            backfillErr.message,
-          );
-        }
-      }
 
       return NextResponse.json({ reply: cleanReply, orderId: order.id });
     } catch (extractErr) {

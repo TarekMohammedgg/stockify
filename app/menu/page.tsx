@@ -33,12 +33,12 @@ export default async function MenuPage() {
     // promoted to users.address yet, surface it to manual checkout too.
     if (userId && !customerAddress) {
       const { data: insights } = await supabase
-        .from("chatbot_insights")
-        .select("default_address")
+        .from("users_insights")
+        .select("user_address")
         .eq("user_id", userId)
         .maybeSingle();
-      if (insights?.default_address) {
-        customerAddress = insights.default_address;
+      if (insights?.user_address) {
+        customerAddress = insights.user_address;
       }
     }
   }

@@ -216,9 +216,10 @@ function RevenueSection({
                   </p>
                   <p className="text-[11px] text-[var(--text-faint)] flex items-center gap-1">
                     <Clock className="h-3 w-3" />
-                    {showDate
-                      ? `${formatCairoDate(o.created_at)} ${formatCairoTime(o.created_at)}`
-                      : formatCairoTime(o.created_at)}
+                    {formatCairoTime(o.created_at)}
+                  </p>
+                  <p className="text-[10px] text-[var(--text-faint)] ms-4">
+                    {formatCairoDate(o.created_at)}
                   </p>
                 </div>
                 <span className="text-[10px] text-[var(--text-faint)] uppercase tracking-wider">

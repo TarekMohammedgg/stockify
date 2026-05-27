@@ -26,9 +26,9 @@ export async function updateProfile(formData: {
   }
 
   const { error: insightsError } = await supabase
-    .from("chatbot_insights")
+    .from("users_insights")
     .upsert(
-      { user_id: user.id, default_address: formData.defaultAddress, last_seen: new Date().toISOString() },
+      { user_id: user.id, user_address: formData.defaultAddress, last_seen: new Date().toISOString() },
       { onConflict: "user_id" }
     );
 

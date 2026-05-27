@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   }
 
   const { data, error } = await supabase
-    .from("chatbot_insights")
+    .from("users_insights")
     .select("*")
     .eq("user_id", userId)
     .maybeSingle();
@@ -43,21 +43,21 @@ export async function PATCH(request: Request) {
   }
 
   const body = await request.json();
-  const { user_id, favourite_items, default_address } = body as {
+  const { user_id, favourite_items, user_address } = body as {
     user_id: string;
     favourite_items?: string[];
-    default_address?: string;
+    user_address?: string;
   };
 
   if (!user_id) {
     return NextResponse.json({ error: "user_id is required" }, { status: 400 });
   }
 
-  const { error } = await supabase.from("chatbot_insights").upsert(
+  const { error } = await supabase.from("users_insights").upsert(
     {
       user_id,
       ...(favourite_items !== undefined && { favourite_items }),
-      ...(default_address !== undefined && { default_address }),
+      ...(user_address !== undefined && { user_address }),
       last_seen: new Date().toISOString(),
     },
     { onConflict: "user_id" },

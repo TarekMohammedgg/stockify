@@ -9,10 +9,9 @@ export type MenuItemForPrompt = {
 
 export type InsightsForPrompt = {
   favourite_items: string[] | null;
-  phone: string | null;
-  address: string | null;       // from users.address
-  default_address?: string | null; // from chatbot_insights.default_address (higher priority)
-  last_seen?: string | null;       // ISO timestamp from chatbot_insights
+  user_phone: string | null;
+  user_address: string | null;
+  last_seen?: string | null;
 } | null;
 
 export function buildSystemPrompt(
@@ -27,13 +26,9 @@ export function buildSystemPrompt(
     .join("\n");
 
   const favouriteNames = insights?.favourite_items?.length
-    ? insights.favourite_items
-        .map((id) => menu.find((m) => m.id === id)?.name_ar)
-        .filter(Boolean)
-        .join("، ")
+    ? insights.favourite_items.join("، ")
     : "";
 
-  const resolvedAddress = insights?.default_address ?? insights?.address ?? null;
   const lastSeen = insights?.last_seen
     ? new Date(insights.last_seen).toLocaleDateString("ar-EG", {
         year: "numeric",
@@ -44,8 +39,8 @@ export function buildSystemPrompt(
 
   const memoryLines = [
     `- الاسم: ${customerName}`,
-    `- رقم التليفون: ${insights?.phone ?? "غير محفوظ"}`,
-    `- العنوان المحفوظ: ${resolvedAddress ?? "غير محفوظ"}`,
+    `- رقم التليفون: ${insights?.user_phone ?? "غير محفوظ"}`,
+    `- العنوان المحفوظ: ${insights?.user_address ?? "غير محفوظ"}`,
     `- الأصناف المفضلة: ${favouriteNames || "لسه مفيش"}`,
     `- آخر زيارة: ${lastSeen ?? "أول مرة"}`,
   ].join("\n");

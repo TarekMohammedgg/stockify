@@ -128,7 +128,7 @@ export function CustomersList({ initial }: { initial: CustomerRow[] }) {
             {filtered.map((c, idx) => {
               const expanded = expandedId === c.id;
               const addressDisplay =
-                c.address ?? c.insights?.default_address ?? null;
+                c.address ?? c.insights?.user_address ?? null;
               return (
                 <li key={c.id} className="group">
                   <button
@@ -230,7 +230,7 @@ export function CustomersList({ initial }: { initial: CustomerRow[] }) {
                             <Row
                               icon={MapPin}
                               label="عنوان افتراضي"
-                              value={c.insights.default_address}
+                              value={c.insights.user_address}
                             />
                             <Row
                               icon={Clock}

@@ -5,6 +5,8 @@
 
 ## 2026-05-27
 | 00:00 | Added last_order_status field to CustomerRow + listCustomers aggregation; StatusBadge component shows status in row + expanded panel | lib/actions/admin.ts, app/admin/customers/customers-list.tsx | done | ~1k |
+| 06:05 | Added order date day under the clock time on Admin, Cashier, and Delivery order dashboards | app/admin/orders/orders-panel.tsx, app/cashier/orders-panel.tsx, app/delivery/delivery-panel.tsx | done | ~800 |
+| 09:50 | Added auto-refocus logic to chatbot widget input field when messages finish sending | components/public/chatbot-widget.tsx | done | ~150 |
 
 ## 2026-05-26
 | 21:43 | /steer: conflict-checked docs/PRD.md, docs/SUPABASE_SCHEMA.md, CLAUDE.md, AGENTS.md; user resolved 5 conflicts | CLAUDE.md, AGENTS.md | rewrote both files (≤200 lines each) with PRD-aligned order status enum + delivery role + pinned versions (Next 16.2.6, React 19.2.4, TW v4) | ~6k |
@@ -666,6 +668,51 @@
 | 07:44 | Created C:/Users/USER/.claude/plans/i-want-to-add-async-brook.md | — | ~2216 |
 
 ## Session: 2026-05-27 07:49
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 07:52 | Created C:/Users/USER/.claude/plans/in-status-line-make-steady-hickey.md | — | ~176 |
+| 07:52 | Edited C:/Users/USER/.claude/settings.json | inline fix | ~9 |
+| 07:53 | Session end: 2 writes across 2 files (in-status-line-make-steady-hickey.md, settings.json) | 4 reads | ~1080 tok |
+
+## Session: 2026-05-27 07:53
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:29 | Edited app/admin/revenue/page.tsx | 6→7 lines | ~106 |
+| 08:29 | Session end: 1 writes across 1 files (page.tsx) | 3 reads | ~10354 tok |
+
+## Session: 2026-05-27 09:07
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:15 | Created C:/Users/USER/.claude/plans/humble-coalescing-iverson.md | — | ~1267 |
+| 09:18 | Edited lib/chatbot/system-prompt.ts | modified buildSystemPrompt() | ~187 |
+| 09:19 | Edited lib/chatbot/system-prompt.ts | 4→4 lines | ~53 |
+| 09:19 | Edited app/api/chat/route.ts | reduced (-7 lines) | ~144 |
+| 09:20 | Edited app/api/chat/route.ts | reduced (-18 lines) | ~194 |
+| 09:21 | Edited app/api/chat/extract-insights/route.ts | reduced (-11 lines) | ~232 |
+| 09:21 | Edited app/api/chat/extract-insights/route.ts | added nullish coalescing | ~306 |
+| 09:22 | Edited app/api/insights/route.ts | 5→5 lines | ~38 |
+| 09:24 | Edited app/api/insights/route.ts | modified if() | ~168 |
+| 09:26 | Edited app/profile/page.tsx | reduced (-14 lines) | ~169 |
+| 09:26 | Edited components/public/chatbot-widget.tsx | modified if() | ~114 |
+| 09:27 | Edited components/public/chatbot-widget.tsx | setMessages() → startNewOrder() | ~108 |
+| 09:28 | Edited components/public/chatbot-widget.tsx | CSS: hover, hover | ~338 |
+| 09:28 | Edited supabase/schema.sql | chatbot_insights() → users_insights() | ~129 |
+| 09:28 | Edited supabase/schema.sql | inline fix | ~17 |
+| 09:29 | Edited app/menu/page.tsx | modified if() | ~74 |
+| 09:29 | Edited lib/actions/profile.ts | 6→6 lines | ~67 |
+| 09:31 | Edited lib/actions/admin.ts | 6→6 lines | ~45 |
+| 09:31 | Edited lib/actions/admin.ts | 3→3 lines | ~32 |
+| 09:31 | Edited lib/actions/admin.ts | modified for() | ~113 |
+| 09:32 | Edited lib/actions/admin.ts | 7→5 lines | ~52 |
+| 09:32 | Edited app/admin/customers/customers-list.tsx | 2→2 lines | ~29 |
+| 09:33 | Edited app/admin/customers/customers-list.tsx | inline fix | ~18 |
+| 09:37 | Chatbot insights overhaul: rename chatbot_insights→users_insights, favourite_items UUID[]→TEXT[], add user_phone+user_address, add Order Again button | DB migration + 8 files | ✓ | ~3000 |
+| 09:38 | Session end: 23 writes across 9 files (humble-coalescing-iverson.md, system-prompt.ts, route.ts, page.tsx, chatbot-widget.tsx) | 13 reads | ~35320 tok |
+
+## Session: 2026-05-27 12:55
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|

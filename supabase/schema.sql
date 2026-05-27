@@ -172,13 +172,14 @@ CREATE TABLE IF NOT EXISTS cart_items (
 
 
 -- ─────────────────────────────────────────────
--- TABLE: chatbot_insights
+-- TABLE: users_insights
 -- ─────────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS chatbot_insights (
+CREATE TABLE IF NOT EXISTS users_insights (
     id              UUID        PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id         UUID        UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    favourite_items UUID[]      DEFAULT '{}',
-    default_address TEXT,
+    favourite_items TEXT[]      DEFAULT '{}',
+    user_address    TEXT,
+    user_phone      TEXT,
     last_seen       TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -289,5 +290,5 @@ ALTER TABLE menu_item_ingredients  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE menu_item_allergens    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE orders                 ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items            ENABLE ROW LEVEL SECURITY;
-ALTER TABLE chatbot_insights       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE users_insights         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cart_items             ENABLE ROW LEVEL SECURITY;

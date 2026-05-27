@@ -19,24 +19,10 @@ export default async function ProfilePage() {
   if (!profile || profile.role !== "customer") redirect("/");
 
   const { data: insights } = await supabase
-    .from("chatbot_insights")
-    .select("favourite_items, default_address, last_seen")
+    .from("users_insights")
+    .select("favourite_items, user_address, user_phone, last_seen")
     .eq("user_id", user.id)
     .maybeSingle();
-
-  let favouriteNames: string[] = [];
-  if (insights?.favourite_items?.length) {
-    const { data: menuItems } = await supabase
-      .from("menu_items")
-      .select("id, name")
-      .in("id", insights.favourite_items);
-    if (menuItems) {
-      const nameMap = Object.fromEntries(menuItems.map((m) => [m.id, m.name]));
-      favouriteNames = (insights.favourite_items as string[]).map(
-        (id) => nameMap[id] ?? id
-      );
-    }
-  }
 
   return (
     <ProfileForm
@@ -47,8 +33,8 @@ export default async function ProfilePage() {
         email: user.email ?? "",
       }}
       insights={{
-        defaultAddress: insights?.default_address ?? "",
-        favouriteItems: favouriteNames,
+        defaultAddress: insights?.user_address ?? "",
+        favouriteItems: (insights?.favourite_items as string[]) ?? [],
         lastSeen: insights?.last_seen ?? null,
       }}
     />

@@ -71,6 +71,7 @@ export default function ChatbotWidget({
   const [orderId, setOrderId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const lastExtractedLenRef = useRef(0);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const extractInsights = useCallback(
     (msgs: Message[]) => {
@@ -92,19 +93,20 @@ export default function ChatbotWidget({
     extractInsights(messages);
   };
 
+  const startNewOrder = useCallback(() => {
+    setOrderId(null);
+    setMessages([{
+      role: "assistant",
+      content: `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`,
+    }]);
+  }, [customerName]);
+
   const handleToggle = () => {
     if (isOpen) {
       handleClose();
     } else {
       setIsOpen(true);
-      if (orderId) {
-        // Start fresh conversation after a completed order
-        setOrderId(null);
-        setMessages([{
-          role: "assistant",
-          content: `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`,
-        }]);
-      }
+      if (orderId) startNewOrder();
     }
   };
 
@@ -132,21 +134,14 @@ export default function ChatbotWidget({
   useEffect(() => {
     const handler = () => {
       setIsOpen(true);
-      // Reset completed-order state so user can place a new order
       setOrderId((prev) => {
-        if (prev) {
-          setMessages([{
-            role: "assistant",
-            content: `أهلاً ${customerName}! 👋 أنا مساعدك في ستوكيفاي. هل تحب تطلب ديليفري ولا تيك أواي؟`,
-          }]);
-          return null;
-        }
-        return prev;
+        if (prev) startNewOrder();
+        return prev ? null : prev;
       });
     };
     window.addEventListener("open-chatbot", handler);
     return () => window.removeEventListener("open-chatbot", handler);
-  }, [customerName]);
+  }, [startNewOrder]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -177,6 +172,13 @@ export default function ChatbotWidget({
     window.addEventListener("pagehide", handler);
     return () => window.removeEventListener("pagehide", handler);
   }, [messages, userId]);
+
+  // Refocus input field after sending a message (isPending transitions back to false)
+  useEffect(() => {
+    if (!isPending && isOpen && !orderId) {
+      inputRef.current?.focus();
+    }
+  }, [isPending, isOpen, orderId]);
 
   async function sendMessage() {
     const text = input.trim();
@@ -285,6 +287,12 @@ export default function ChatbotWidget({
                 <p className="mt-1 text-xs text-green-600/80 dark:text-green-500/80">
                   هيظهر الطلب عند الكاشير دلوقتي ✅
                 </p>
+                <button
+                  onClick={startNewOrder}
+                  className="mt-3 w-full rounded-lg bg-green-600 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
+                >
+                  اطلب مرة أخرى 🛍️
+                </button>
               </div>
             )}
 
@@ -314,6 +322,7 @@ export default function ChatbotWidget({
           <div className="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-3">
             <div className="flex items-end gap-2">
               <textarea
+                ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {

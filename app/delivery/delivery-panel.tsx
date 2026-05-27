@@ -103,6 +103,15 @@ function formatTime(iso: string) {
   return d.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
 }
 
+function formatOrderDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("ar-EG", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+}
+
 function formatClock(d: Date) {
   return d.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" });
 }
@@ -211,10 +220,15 @@ function OrderCard({
             {STATUS_LABELS[order.status]}
           </span>
         </div>
-        <span className="flex items-center gap-1 text-xs text-[var(--text-muted)] shrink-0">
-          <Clock className="h-3.5 w-3.5" />
-          {formatTime(order.created_at)}
-        </span>
+        <div className="flex flex-col items-end gap-0.5 text-xs text-[var(--text-muted)] shrink-0">
+          <span className="flex items-center gap-1">
+            <Clock className="h-3.5 w-3.5" />
+            {formatTime(order.created_at)}
+          </span>
+          <span className="text-[10px] text-[var(--text-faint)]">
+            {formatOrderDate(order.created_at)}
+          </span>
+        </div>
       </div>
 
       {/* Divider */}

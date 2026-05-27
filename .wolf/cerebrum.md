@@ -42,7 +42,7 @@
 ## Key Learnings (continued)
 
 - **Chatbot order extraction pattern**: Two-phase AI call — first for conversation reply, second for structured JSON extraction when order is confirmed. The extraction call uses `response_format: { type: "json_object" }` and `max_tokens: 512`. Item names (not UUIDs) are used in the JSON; backend resolves names → real IDs using the already-fetched menu array.
-- **`chatbot_insights` persistence**: After every confirmed order, upsert `user_id`, `favourite_items` (array of menu_item_id UUIDs), `default_address` (if delivery), and `last_seen`. On next chatbot session, route.ts fetches these and builds a personalised system prompt so the bot doesn't re-ask for address/phone.
+- **`users_insights` persistence**: After every confirmed order, upsert `user_id`, `favourite_items` (TEXT[] of item name strings with notes, e.g. "شاورما طاووق من غير طماطم"), `user_address` (if delivery), `user_phone` (if provided), and `last_seen`. On next chatbot session, route.ts fetches these and builds a personalised system prompt so the bot doesn't re-ask for address/phone. Table was renamed from `chatbot_insights` on 2026-05-27.
 - **Seed UUID `d1...` prefix** resolves to menu items (e.g., `d1000000-0000-0000-0000-00000000000c` = سندوتش فلافل).
 
 ## Decision Log

@@ -67,7 +67,7 @@ export async function updateOrderStatusAdmin(
 // ───────────────────────────────────────────────────────────────
 
 export type CustomerInsight = {
-  default_address: string | null;
+  user_address: string | null;
   favourite_items: string[];
   favourite_item_names: string[];
   last_seen: string | null;
@@ -100,8 +100,8 @@ export async function listCustomers(): Promise<CustomerRow[]> {
       )
       .eq("role", "customer"),
     supabase
-      .from("chatbot_insights")
-      .select("user_id, favourite_items, default_address, last_seen"),
+      .from("users_insights")
+      .select("user_id, favourite_items, user_address, last_seen"),
     supabase
       .from("orders")
       .select("customer_id, status, total_price, created_at")
@@ -117,34 +117,16 @@ export async function listCustomers(): Promise<CustomerRow[]> {
     string,
     {
       favourite_items: string[];
-      default_address: string | null;
+      user_address: string | null;
       last_seen: string | null;
     }
   >();
   for (const row of insightsRes.data ?? []) {
     insightsByUser.set(row.user_id, {
       favourite_items: (row.favourite_items ?? []) as string[],
-      default_address: row.default_address,
+      user_address: row.user_address,
       last_seen: row.last_seen,
     });
-  }
-
-  // Resolve favourite menu item ids → names in one batched fetch
-  const allFavIds = new Set<string>();
-  for (const v of insightsByUser.values()) {
-    for (const fid of v.favourite_items) allFavIds.add(fid);
-  }
-  const favNameMap = new Map<string, string>();
-  if (allFavIds.size > 0) {
-    const { data: menuRows, error: menuErr } = await supabase
-      .from("menu_items")
-      .select("id, name_ar")
-      .in("id", Array.from(allFavIds));
-    if (menuErr) {
-      console.error("[listCustomers] menu_items", menuErr.message);
-    } else {
-      for (const r of menuRows ?? []) favNameMap.set(r.id, r.name_ar);
-    }
   }
 
   // Aggregate orders per customer
@@ -181,11 +163,9 @@ export async function listCustomers(): Promise<CustomerRow[]> {
       created_at: u.created_at,
       insights: ins
         ? {
-            default_address: ins.default_address,
+            user_address: ins.user_address,
             favourite_items: ins.favourite_items,
-            favourite_item_names: ins.favourite_items
-              .map((id) => favNameMap.get(id))
-              .filter((s): s is string => !!s),
+            favourite_item_names: ins.favourite_items,
             last_seen: ins.last_seen,
           }
         : null,

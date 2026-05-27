@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T04:44:02.092Z
-> Files: 87 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T06:33:02.374Z
+> Files: 90 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -23,11 +23,17 @@
 
 - `openwolf.md` (~313 tok)
 
+## C:/Users/USER/.claude/
+
+- `settings.json` (~308 tok)
+
 ## C:/Users/USER/.claude/plans/
 
 - `1-insights-not-work-bright-pillow.md` — Plan: Fix Chatbot Insights + Mobile Overflow (~1598 tok)
 - `glimmering-mixing-tower.md` — Plan: Customer Profile Page (~1027 tok)
+- `humble-coalescing-iverson.md` — Plan: Chatbot Insights Overhaul — users_insights + Order Again Button (~1188 tok)
 - `i-want-to-add-async-brook.md` — Plan: WhatsApp Chatbot via WaSenderAPI + n8n (~2077 tok)
+- `in-status-line-make-steady-hickey.md` — Plan: Set Default Model to Sonnet 4.6 (~165 tok)
 - `jazzy-cuddling-steele.md` — Plan: Admin Home Final Touches — Real Data + Clickable Drill-downs (~2662 tok)
 - `peaceful-purring-naur.md` — Plan: Phase 5 — Chatbot Widget + OpenRouter Integration (~1204 tok)
 
@@ -57,7 +63,7 @@
 
 ## app/admin/customers/
 
-- `customers-list.tsx` — formatRelative (~4291 tok)
+- `customers-list.tsx` — formatRelative (~4290 tok)
 - `page.tsx` — dynamic (~600 tok)
 
 ## app/admin/employees/
@@ -95,19 +101,19 @@
 
 ## app/admin/revenue/
 
-- `page.tsx` — dynamic (~2555 tok)
+- `page.tsx` — dynamic (~2563 tok)
 
 ## app/api/chat/
 
-- `route.ts` — Next.js API route: POST (~3050 tok)
+- `route.ts` — Next.js API route: POST (~2859 tok)
 
 ## app/api/chat/extract-insights/
 
-- `route.ts` — Next.js API route: POST (~1871 tok)
+- `route.ts` — Next.js API route: POST (~1714 tok)
 
 ## app/api/insights/
 
-- `route.ts` — Next.js API route: GET, PATCH (~555 tok)
+- `route.ts` — Next.js API route: GET, PATCH (~550 tok)
 
 ## app/api/menu/
 
@@ -153,11 +159,11 @@
 
 ## app/menu/
 
-- `page.tsx` — MenuPage (~937 tok)
+- `page.tsx` — MenuPage (~934 tok)
 
 ## app/profile/
 
-- `page.tsx` — ProfilePage — Server Component; auth+role guard, fetches users + chatbot_insights + menu_items; passes to ProfileForm (~400 tok)
+- `page.tsx` — ProfilePage (~330 tok)
 - `page.tsx` — ProfilePage (~447 tok)
 - `profile-form.tsx` — ProfileForm — Client Component; editable personal info + read-only chatbot insights; calls updateProfile server action (~700 tok)
 - `profile-form.tsx` — getInitials (~2938 tok)
@@ -169,7 +175,7 @@
 ## components/public/
 
 - `cart-widget.tsx` — CartWidget — renders modal (~1454 tok)
-- `chatbot-widget.tsx` — MarkdownComponents (~3875 tok)
+- `chatbot-widget.tsx` — MarkdownComponents (~3897 tok)
 - `landing-page.tsx` — COPY (~5273 tok)
 - `public-menu.tsx` — PublicMenu (~3474 tok)
 - `site-header.tsx` — getInitials — renders form (~1851 tok)
@@ -185,15 +191,15 @@
 
 ## lib/actions/
 
-- `admin.ts` — API routes: GET (13 endpoints) (~4334 tok)
+- `admin.ts` — API routes: GET (13 endpoints) (~4120 tok)
 - `auth.ts` — API routes: GET (9 endpoints) (~892 tok)
 - `cashier.ts` — Exports OrderStatus, OrderItem, Order, LowStockItem + 7 more (~1647 tok)
 - `delivery.ts` — Exports DeliveryStatus, OrderItem, DeliveryOrder, listDeliveryOrders, updateDeliveryOrderStatus (~998 tok)
-- `profile.ts` — Exports updateProfile (~322 tok)
+- `profile.ts` — Exports updateProfile (~320 tok)
 
 ## lib/chatbot/
 
-- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt, buildSystemPrompt (~946 tok)
+- `system-prompt.ts` — Exports MenuItemForPrompt, InsightsForPrompt, buildSystemPrompt (~854 tok)
 
 ## lib/hooks/
 
@@ -211,4 +217,4 @@
 
 ## supabase/
 
-- `schema.sql` — Database schema (~2667 tok)
+- `schema.sql` — Database schema (~2673 tok)

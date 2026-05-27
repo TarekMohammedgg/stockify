@@ -30,28 +30,17 @@ export async function POST(request: Request) {
     );
   }
 
-  const { data: menuData } = await supabase
-    .from("v_menu")
-    .select("id, name_ar")
-    .eq("is_available", true);
-
-  const menuText = (menuData ?? [])
-    .map((item) => `- ${item.name_ar} (ID: ${item.id})`)
-    .join("\n");
-
   const systemPrompt = `أنت مساعد لتحليل المحادثات. استخرج فقط المعلومات الصريحة المذكورة:
 
 1. address: عنوان التوصيل (اسم شارع/منطقة/حي/مدينة/رقم عمارة). نص أو null. **يجب ألا يكون رقم تليفون.**
 2. phone: رقم تليفون مصري (يبدأ بـ 01 أو +20، طوله 10-13 رقم، أرقام فقط بدون كلمات). نص أو null.
-3. favourite_items: مصفوفة IDs للأصناف اللي العميل طلبها أو أعجب بيها. مصفوفة نصوص أو [].
-
-قائمة الأصناف للربط:
-${menuText}
+3. favourite_items: مصفوفة نصوص لأسماء الأصناف اللي العميل طلبها أو أعجب بيها، مع ملاحظاته عليها (مثل "شاورما طاووق من غير طماطم"). مصفوفة نصوص أو [].
 
 أمثلة:
 - "عنواني المعادي شارع 9" → address: "المعادي شارع 9", phone: null
 - "تليفوني 01007362202" → address: null, phone: "01007362202"
 - "01234567890" بدون كلمة عنوان → phone، مش address.
+- "طلبت شاورما طاووق من غير طماطم" → favourite_items: ["شاورما طاووق من غير طماطم"]
 
 الرد JSON فقط بهذا الهيكل بالضبط:
 {"address": null, "phone": null, "favourite_items": []}`;
@@ -139,53 +128,35 @@ ${menuText}
       }
     }
 
-    // Update chatbot_insights for favourite_items
-    // Append to existing or create new
+    // Update users_insights: append favourite_items, save user_phone, user_address
+    const insightsUpsert: Record<string, unknown> = {
+      user_id: userId,
+      last_seen: new Date().toISOString(),
+    };
+
+    if (insights.phone) insightsUpsert.user_phone = insights.phone;
+    if (insights.address && !phoneLike.test(insights.address.trim())) {
+      insightsUpsert.user_address = insights.address;
+    }
+
     if (Array.isArray(insights.favourite_items) && insights.favourite_items.length > 0) {
       const { data: existingInsights } = await supabase
-        .from("chatbot_insights")
-        .select("id, favourite_items")
+        .from("users_insights")
+        .select("favourite_items")
         .eq("user_id", userId)
         .maybeSingle();
 
-      let newFavourites = existingInsights?.favourite_items || [];
-      let added = false;
-      
-      // add new items without duplicates
+      const existing: string[] = existingInsights?.favourite_items ?? [];
+      const merged = [...existing];
       for (const item of insights.favourite_items) {
-        if (!newFavourites.includes(item)) {
-          newFavourites.push(item);
-          added = true;
-        }
+        if (!merged.includes(item)) merged.push(item);
       }
-
-      if (added) {
-        if (existingInsights) {
-          await supabase
-            .from("chatbot_insights")
-            .update({ favourite_items: newFavourites })
-            .eq("user_id", userId);
-        } else {
-          await supabase
-            .from("chatbot_insights")
-            .insert({ user_id: userId, favourite_items: newFavourites });
-        }
-      }
+      insightsUpsert.favourite_items = merged;
     }
 
-    // Also save default_address if address was extracted (and is not a phone)
-    if (insights.address && !phoneLike.test(insights.address.trim())) {
-      await supabase
-        .from("chatbot_insights")
-        .upsert(
-          {
-            user_id: userId,
-            default_address: insights.address,
-            last_seen: new Date().toISOString(),
-          },
-          { onConflict: "user_id" },
-        );
-    }
+    await supabase
+      .from("users_insights")
+      .upsert(insightsUpsert, { onConflict: "user_id" });
 
     return NextResponse.json({ success: true, insights });
   } catch (err) {
