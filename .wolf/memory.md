@@ -773,3 +773,13 @@
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 18:22
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 18:22 | Fixed all E2E auth failures: reset passwords to `password123` for 6 test accounts + fixed roles (admin@example.com→admin, cashier1@example.com→cashier, delivery@example.com→delivery, delivery-tester@test.com→delivery) via SQL on live Supabase | supabase auth.users + public.users | done | ~400 |
+| 18:37 | Edited lib/actions/auth.ts | added 1 import(s) | ~44 |
+| 18:38 | Edited lib/actions/auth.ts | modified signInWithGoogle() | ~128 |
+| 18:35 | Fixed Google OAuth redirect: was falling back to http://localhost:3000/auth/callback in prod because NEXT_PUBLIC_SITE_URL was unset; replaced with dynamic host header derivation | lib/actions/auth.ts | done | ~150 |
+| 18:42 | Session end: 2 writes across 1 files (auth.ts) | 6 reads | ~1118 tok |

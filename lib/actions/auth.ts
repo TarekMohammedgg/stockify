@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 const CUSTOMER_HOME = "/menu";
 
@@ -81,11 +82,15 @@ export async function signUp(formData: FormData) {
 
 export async function signInWithGoogle() {
   const supabase = await createClient();
+  const headersList = await headers();
+  const host = headersList.get("host") ?? "localhost:3000";
+  const proto = host.startsWith("localhost") ? "http" : "https";
+  const origin = `${proto}://${host}`;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/callback`,
+      redirectTo: `${origin}/auth/callback`,
     },
   });
 
