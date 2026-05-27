@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 
 export type DeliveryStatus = "pending" | "on_delivery" | "complete" | "cancelled";
@@ -39,6 +40,17 @@ const VALID_TRANSITIONS: Partial<Record<DeliveryStatus, DeliveryStatus[]>> = {
   on_delivery: ["complete", "cancelled"],
 };
 
+function getAdminClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    return null;
+  }
+  return createAdminClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
+
 export async function listDeliveryOrders(): Promise<DeliveryOrder[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -64,7 +76,7 @@ export async function updateDeliveryOrderStatus(
   // Fetch the current order to validate type and current status
   const { data: order, error: fetchErr } = await supabase
     .from("orders")
-    .select("type, status")
+    .select("type, status, notes")
     .eq("id", orderId)
     .single();
 
@@ -109,9 +121,35 @@ export async function updateDeliveryOrderStatus(
     return { error: "انتقال حالة غير مسموح به" };
   }
 
-  const { data: updated, error: updateErr } = await supabase
+  let updatedNotes = order.notes || "";
+  if (status === "on_delivery") {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data: driverProfile } = await supabase
+        .from("users")
+        .select("name, phone")
+        .eq("id", user.id)
+        .single();
+      if (driverProfile && driverProfile.name) {
+        const driverName = driverProfile.name;
+        const driverPhone = driverProfile.phone || "";
+        const driverInfo = `\n(سائق التوصيل: ${driverName} - ${driverPhone})`;
+        if (!updatedNotes.includes(driverInfo)) {
+          updatedNotes = updatedNotes.trim() + driverInfo;
+        }
+      }
+    }
+  }
+
+  const adminClient = getAdminClient();
+  if (!adminClient) {
+    console.error("[updateDeliveryOrderStatus] SUPABASE_SERVICE_ROLE_KEY not configured");
+    return { error: "خطأ في الاتصال بالخادم" };
+  }
+
+  const { data: updated, error: updateErr } = await adminClient
     .from("orders")
-    .update({ status })
+    .update({ status, notes: updatedNotes })
     .eq("id", orderId)
     .select("id")
     .maybeSingle();

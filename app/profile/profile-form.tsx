@@ -4,14 +4,11 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
-  Bot,
   CheckCircle2,
-  Heart,
   Home,
   Loader2,
   Lock,
   Mail,
-  MapPin,
   Phone,
   Save,
   User,
@@ -119,14 +116,67 @@ function typeLabel(type: "dine-in" | "takeaway" | "delivery") {
   }
 }
 
-export default function ProfileForm({ profile, insights, orders }: Props) {
+export default function ProfileForm({ profile, insights: _insights, orders }: Props) {
   const [name, setName] = useState(profile.name);
   const [phone, setPhone] = useState(profile.phone);
   const [address, setAddress] = useState(profile.address);
   const [status, setStatus] = useState<null | "success" | "error">(null);
   const [errorMsg, setErrorMsg] = useState("");
   const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<OrderStatus | "all">("all");
   const [isPending, startTransition] = useTransition();
+
+  const filterOptions: { status: OrderStatus | "all"; label: string; icon: React.ReactNode; activeClass: string }[] = [
+    {
+      status: "all",
+      label: "الكل",
+      icon: <ShoppingBag className="h-3.5 w-3.5" />,
+      activeClass: "bg-[var(--primary-600)] text-white border-[var(--primary-600)] shadow-xs scale-[1.02]",
+    },
+    {
+      status: "pending",
+      label: "قيد الانتظار",
+      icon: <Clock className="h-3.5 w-3.5" />,
+      activeClass: "bg-amber-600 dark:bg-amber-700 text-white border-amber-600 dark:border-amber-700 shadow-xs scale-[1.02]",
+    },
+    {
+      status: "on_delivery",
+      label: "في الطريق",
+      icon: <Truck className="h-3.5 w-3.5" />,
+      activeClass: "bg-blue-600 dark:bg-blue-700 text-white border-blue-600 dark:border-blue-700 shadow-xs scale-[1.02]",
+    },
+    {
+      status: "complete",
+      label: "مكتمل",
+      icon: <CheckCircle className="h-3.5 w-3.5" />,
+      activeClass: "bg-green-600 dark:bg-green-700 text-white border-green-600 dark:border-green-700 shadow-xs scale-[1.02]",
+    },
+    {
+      status: "cancelled",
+      label: "ملغي",
+      icon: <XCircle className="h-3.5 w-3.5" />,
+      activeClass: "bg-red-600 dark:bg-red-700 text-white border-red-600 dark:border-red-700 shadow-xs scale-[1.02]",
+    },
+  ];
+
+  const getStatusCount = (status: OrderStatus | "all") => {
+    if (status === "all") return orders.length;
+    if (status === "complete") {
+      return orders.filter(
+        (o) => o.status === "complete" || (o.status as string) === "completed"
+      ).length;
+    }
+    return orders.filter((o) => o.status === status).length;
+  };
+
+  const filteredOrders = statusFilter === "all"
+    ? orders
+    : orders.filter((o) => {
+        if (statusFilter === "complete") {
+          return o.status === "complete" || (o.status as string) === "completed";
+        }
+        return o.status === statusFilter;
+      });
 
   function handleSave() {
     setStatus(null);
@@ -298,7 +348,7 @@ export default function ProfileForm({ profile, insights, orders }: Props) {
           </div>
 
           {orders.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-[var(--surface-border)] bg-[var(--surface-card)] p-12 text-center text-[var(--text-muted)] shadow-sm">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-[var(--surface-border)] bg-[var(--surface-card)] p-12 text-center text-[var(--text-muted)] shadow-sm animate-fade-in">
               <ShoppingBag className="h-10 w-10 text-[var(--text-faint)] mb-4 opacity-50" />
               <p className="text-sm font-semibold">لم تقم بإجراء أي طلبات بعد</p>
               <p className="text-xs text-[var(--text-faint)] mt-1">تصفح قائمتنا اللذيذة واطلب الآن!</p>
@@ -310,126 +360,177 @@ export default function ProfileForm({ profile, insights, orders }: Props) {
               </Link>
             </div>
           ) : (
-            <div className="space-y-4">
-              {orders.map((order) => {
-                const shortId = order.id.slice(-4).toUpperCase();
-                const dateStr = formatArabicDate(order.created_at);
-                const isExpanded = expandedOrderId === order.id;
+            <div className="space-y-6">
+              {/* Filter Chips */}
+              <div className="flex flex-wrap gap-2.5 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+                {filterOptions.map((opt) => {
+                  const count = getStatusCount(opt.status);
+                  const isSelected = statusFilter === opt.status;
 
-                return (
-                  <div
-                    key={order.id}
-                    className="lift rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] overflow-hidden shadow-sm transition-all duration-300"
-                  >
-                    {/* Collapsed Header Bar (Clickable) */}
+                  return (
                     <button
+                      key={opt.status}
                       type="button"
-                      onClick={() => setExpandedOrderId(isExpanded ? null : order.id)}
-                      className="w-full text-start flex items-center justify-between gap-4 p-4 hover:bg-[var(--surface-canvas)]/40 transition-colors focus:outline-none"
+                      onClick={() => setStatusFilter(opt.status)}
+                      className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-300 active:scale-[0.98] select-none cursor-pointer ${
+                        isSelected
+                          ? opt.activeClass
+                          : "bg-[var(--surface-card)] hover:bg-[var(--surface-canvas)]/60 border-[var(--surface-border-soft)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                      }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-input)] text-[var(--text-secondary)]">
-                          {typeIcon(order.type)}
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-serif text-sm font-bold text-[var(--text-primary)]">
-                              #{shortId}
-                            </span>
-                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${statusChipClass(order.status)}`}>
-                              {statusIcon(order.status)}
-                              {STATUS_LABELS[order.status]}
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-[var(--text-faint,var(--text-muted))] mt-0.5">
-                            {dateStr}
-                          </p>
-                        </div>
-                      </div>
+                      {opt.icon}
+                      <span>{opt.label}</span>
+                      <span
+                        className={`inline-flex items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold transition-colors duration-300 ${
+                          isSelected
+                            ? "bg-white/25 text-white"
+                            : "bg-[var(--surface-input)] text-[var(--text-muted)]"
+                        }`}
+                      >
+                        {count.toLocaleString("ar-EG")}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
 
-                      <div className="flex items-center gap-2.5">
-                        <div className="text-end">
-                          <p className="font-serif text-sm font-semibold text-[var(--text-primary)]">
-                            {order.total_price.toLocaleString("ar-EG")} ج
-                          </p>
-                          <p className="text-[10px] text-[var(--text-muted)] mt-0.5">
-                            {order.items.length} {order.items.length === 1 ? "صنف" : "أصناف"}
-                          </p>
-                        </div>
-                        {isExpanded ? (
-                          <ChevronUp className="h-4 w-4 text-[var(--text-muted)]" />
-                        ) : (
-                          <ChevronDown className="h-4 w-4 text-[var(--text-muted)]" />
+              {filteredOrders.length === 0 ? (
+                <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--surface-border)] bg-[var(--surface-card)]/40 p-12 text-center text-[var(--text-muted)] shadow-xs animate-fade-in">
+                  <ShoppingBag className="h-10 w-10 text-[var(--text-faint)] mb-4 opacity-40" />
+                  <p className="text-sm font-semibold">
+                    لا توجد طلبات{" "}
+                    {statusFilter !== "all" ? STATUS_LABELS[statusFilter] : ""}
+                  </p>
+                  <p className="text-xs text-[var(--text-faint)] mt-1.5">
+                    {statusFilter === "pending" && "جميع طلباتك تم التعامل معها!"}
+                    {statusFilter === "on_delivery" && "لا توجد طلبات قيد التوصيل حالياً."}
+                    {statusFilter === "complete" && "لا توجد طلبات مكتملة في هذا القسم."}
+                    {statusFilter === "cancelled" && "لا توجد طلبات ملغاة."}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {filteredOrders.map((order) => {
+                    const shortId = order.id.slice(-4).toUpperCase();
+                    const dateStr = formatArabicDate(order.created_at);
+                    const isExpanded = expandedOrderId === order.id;
+
+                    return (
+                      <div
+                        key={order.id}
+                        className="lift rounded-2xl border border-[var(--surface-border-soft)] bg-[var(--surface-card)] overflow-hidden shadow-sm transition-all duration-300"
+                      >
+                        {/* Collapsed Header Bar (Clickable) */}
+                        <button
+                          type="button"
+                          onClick={() => setExpandedOrderId(isExpanded ? null : order.id)}
+                          className="w-full text-start flex items-center justify-between gap-4 p-4 hover:bg-[var(--surface-canvas)]/40 transition-colors focus:outline-none"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-input)] text-[var(--text-secondary)]">
+                              {typeIcon(order.type)}
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-serif text-sm font-bold text-[var(--text-primary)]">
+                                  #{shortId}
+                                </span>
+                                <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${statusChipClass(order.status)}`}>
+                                  {statusIcon(order.status)}
+                                  {STATUS_LABELS[order.status]}
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-[var(--text-faint,var(--text-muted))] mt-0.5">
+                                {dateStr}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2.5">
+                            <div className="text-end">
+                              <p className="font-serif text-sm font-semibold text-[var(--text-primary)]">
+                                {order.total_price.toLocaleString("ar-EG")} ج
+                              </p>
+                              <p className="text-[10px] text-[var(--text-muted)] mt-0.5">
+                                {order.items.length} {order.items.length === 1 ? "صنف" : "أصناف"}
+                              </p>
+                            </div>
+                            {isExpanded ? (
+                              <ChevronUp className="h-4 w-4 text-[var(--text-muted)]" />
+                            ) : (
+                              <ChevronDown className="h-4 w-4 text-[var(--text-muted)]" />
+                            )}
+                          </div>
+                        </button>
+
+                        {/* Expandable Details Area */}
+                        {isExpanded && (
+                          <div className="border-t border-[var(--surface-border-soft)] bg-[var(--surface-canvas)]/30 p-4 space-y-4">
+                            {/* Order Items Table */}
+                            <div className="space-y-2">
+                              <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">
+                                تفاصيل الطلب
+                              </p>
+                              <ul className="divide-y divide-dashed divide-[var(--surface-border-soft)]">
+                                {order.items.map((item, idx) => (
+                                  <li
+                                    key={idx}
+                                    className="flex justify-between items-start py-2 text-xs text-[var(--text-secondary)]"
+                                  >
+                                    <div>
+                                      <span className="font-semibold">{item.quantity}×</span> {item.name_ar}
+                                      {item.notes && (
+                                        <p className="text-[10px] text-[var(--text-faint,var(--text-muted))] mt-0.5">
+                                          ملاحظة: {item.notes}
+                                        </p>
+                                      )}
+                                    </div>
+                                    <span className="font-serif text-[var(--text-primary)]">
+                                      {(item.unit_price * item.quantity).toLocaleString("ar-EG")} ج
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            {/* Extra Meta details */}
+                            <div className="grid gap-3 sm:grid-cols-2 text-xs border-t border-[var(--surface-border-soft)] pt-3">
+                              <div>
+                                <span className="block text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
+                                  نوع الطلب
+                                </span>
+                                <span className="text-[var(--text-secondary)] font-medium">
+                                  {typeLabel(order.type)}
+                                </span>
+                              </div>
+                              {order.delivery_address && (
+                                <div>
+                                  <span className="block text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
+                                    عنوان التوصيل
+                                  </span>
+                                  <span className="text-[var(--text-secondary)] font-medium break-all">
+                                    {order.delivery_address}
+                                  </span>
+                                </div>
+                              )}
+                              {order.notes && (
+                                <div className="sm:col-span-2">
+                                  <span className="block text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
+                                    ملاحظات عامة
+                                  </span>
+                                  <span className="text-[var(--text-secondary)] italic">
+                                    &quot;{order.notes}&quot;
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
                         )}
                       </div>
-                    </button>
-
-                    {/* Expandable Details Area */}
-                    {isExpanded && (
-                      <div className="border-t border-[var(--surface-border-soft)] bg-[var(--surface-canvas)]/30 p-4 space-y-4">
-                        {/* Order Items Table */}
-                        <div className="space-y-2">
-                          <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">
-                            تفاصيل الطلب
-                          </p>
-                          <ul className="divide-y divide-dashed divide-[var(--surface-border-soft)]">
-                            {order.items.map((item, idx) => (
-                              <li
-                                key={idx}
-                                className="flex justify-between items-start py-2 text-xs text-[var(--text-secondary)]"
-                              >
-                                <div>
-                                  <span className="font-semibold">{item.quantity}×</span> {item.name_ar}
-                                  {item.notes && (
-                                    <p className="text-[10px] text-[var(--text-faint,var(--text-muted))] mt-0.5">
-                                      ملاحظة: {item.notes}
-                                    </p>
-                                  )}
-                                </div>
-                                <span className="font-serif text-[var(--text-primary)]">
-                                  {(item.unit_price * item.quantity).toLocaleString("ar-EG")} ج
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Extra Meta details */}
-                        <div className="grid gap-3 sm:grid-cols-2 text-xs border-t border-[var(--surface-border-soft)] pt-3">
-                          <div>
-                            <span className="block text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
-                              نوع الطلب
-                            </span>
-                            <span className="text-[var(--text-secondary)] font-medium">
-                              {typeLabel(order.type)}
-                            </span>
-                          </div>
-                          {order.delivery_address && (
-                            <div>
-                              <span className="block text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
-                                عنوان التوصيل
-                              </span>
-                              <span className="text-[var(--text-secondary)] font-medium break-all">
-                                {order.delivery_address}
-                              </span>
-                            </div>
-                          )}
-                          {order.notes && (
-                            <div className="sm:col-span-2">
-                              <span className="block text-[10px] text-[var(--text-muted)] uppercase tracking-wider mb-0.5">
-                                ملاحظات عامة
-                              </span>
-                              <span className="text-[var(--text-secondary)] italic">
-                                &quot;{order.notes}&quot;
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
         </div>

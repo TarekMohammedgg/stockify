@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { MessageCircle, Send, X, Loader2, CheckCircle } from "lucide-react";
+import { MessageCircle, Send, X, Loader2, CheckCircle, Phone, Truck } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -69,10 +70,60 @@ export default function ChatbotWidget({
   const [input, setInput] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderStatus, setOrderStatus] = useState<string | null>(null);
+  const [orderNotes, setOrderNotes] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const lastExtractedLenRef = useRef(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const orderIdRef = useRef<string | null>(null);
+
+  // Subscribe to order status and notes changes
+  useEffect(() => {
+    if (!orderId) {
+      setOrderStatus(null);
+      setOrderNotes(null);
+      return;
+    }
+
+    const supabase = createClient();
+
+    // Fetch initial order details
+    supabase
+      .from("orders")
+      .select("status, notes")
+      .eq("id", orderId)
+      .single()
+      .then(({ data }) => {
+        if (data) {
+          setOrderStatus(data.status);
+          setOrderNotes(data.notes);
+        }
+      });
+
+    // Realtime channel
+    const channel = supabase
+      .channel(`order-track-${orderId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "orders",
+          filter: `id=eq.${orderId}`,
+        },
+        (payload) => {
+          if (payload.new) {
+            setOrderStatus(payload.new.status);
+            setOrderNotes(payload.new.notes);
+          }
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [orderId]);
 
   const extractInsights = useCallback(
     (msgs: Message[]) => {
@@ -281,14 +332,57 @@ export default function ChatbotWidget({
               <div className="mx-2 rounded-xl border border-green-200 bg-green-50 p-4 text-sm dark:border-green-900/40 dark:bg-green-950/30">
                 <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
                   <CheckCircle size={18} className="shrink-0" />
-                  <span className="font-bold">تم تأكيد طلبك!</span>
+                  <span className="font-bold">
+                    {orderStatus === "pending" && "تم تأكيد طلبك!"}
+                    {orderStatus === "on_delivery" && "طلبك في الطريق! 🚴"}
+                    {orderStatus === "complete" && "تم توصيل طلبك بنجاح! 🎉"}
+                    {orderStatus === "cancelled" && "تم إلغاء الطلب ❌"}
+                    {!orderStatus && "تم تأكيد طلبك!"}
+                  </span>
                 </div>
                 <p className="mt-1 text-green-600 dark:text-green-500">
                   رقم الطلب: <span className="font-mono font-bold">#{orderId.slice(-8).toUpperCase()}</span>
                 </p>
-                <p className="mt-1 text-xs text-green-600/80 dark:text-green-500/80">
-                  هيظهر الطلب عند الكاشير دلوقتي ✅
-                </p>
+                <div className="mt-1 text-xs text-green-600/80 dark:text-green-500/80 space-y-1">
+                  {orderStatus === "pending" && <p>هيظهر الطلب عند الكاشير دلوقتي وجاري تجهيزه ✅</p>}
+                  {orderStatus === "on_delivery" && <p>الطلب خرج مع طيار التوصيل وهو في الطريق إليك الآن.</p>}
+                  {orderStatus === "complete" && <p>بالهناء والشفاء! نتمنى أن تعجبك وجبتك ❤️</p>}
+                  {orderStatus === "cancelled" && <p className="text-red-600 dark:text-red-400">عذراً، تم إلغاء الطلب من قبل الإدارة.</p>}
+                  {!orderStatus && <p>هيظهر الطلب عند الكاشير دلوقتي ✅</p>}
+                </div>
+
+                {/* Driver Info if status is on_delivery */}
+                {orderStatus === "on_delivery" && (() => {
+                  let driverName = "";
+                  let driverPhone = "";
+                  if (orderNotes) {
+                    const match = orderNotes.match(/\(سائق التوصيل: (.+?) - (\d+?)\)/);
+                    if (match) {
+                      driverName = match[1];
+                      driverPhone = match[2];
+                    }
+                  }
+                  if (!driverName || !driverPhone) return null;
+                  return (
+                    <div className="mt-3 rounded-lg border border-primary-200 bg-primary-50/50 p-3 dark:border-primary-900/30 dark:bg-primary-950/20">
+                      <p className="text-xs font-bold text-primary-800 dark:text-primary-300 mb-1.5 flex items-center gap-1">
+                        <Truck size={14} className="text-primary-500" />
+                        بيانات سائق التوصيل:
+                      </p>
+                      <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-2">
+                        {driverName}
+                      </p>
+                      <a
+                        href={`tel:${driverPhone}`}
+                        className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary-500 hover:bg-primary-600 text-white text-xs font-bold py-2 transition-colors animate-pulse"
+                      >
+                        <Phone size={12} />
+                        اتصل بالسائق ({driverPhone})
+                      </a>
+                    </div>
+                  );
+                })()}
+
                 <button
                   onClick={startNewOrder}
                   className="mt-3 w-full rounded-lg bg-green-600 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"

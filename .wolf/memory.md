@@ -10,6 +10,7 @@
 | 06:05 | Added order date day under the clock time on Admin, Cashier, and Delivery order dashboards | app/admin/orders/orders-panel.tsx, app/cashier/orders-panel.tsx, app/delivery/delivery-panel.tsx | done | ~800 |
 | 09:50 | Added auto-refocus logic to chatbot widget input field when messages finish sending | components/public/chatbot-widget.tsx | done | ~150 |
 | 10:50 | Implemented polished, RTL-first expandable order history list on customer profile page | app/profile/page.tsx, app/profile/profile-form.tsx | done | ~1.5k |
+| 15:35 | Added order status filter chips with dynamic counts and custom empty states to customer profile page order history | app/profile/profile-form.tsx | done | ~1.2k |
 
 ## 2026-05-26
 | 21:43 | /steer: conflict-checked docs/PRD.md, docs/SUPABASE_SCHEMA.md, CLAUDE.md, AGENTS.md; user resolved 5 conflicts | CLAUDE.md, AGENTS.md | rewrote both files (≤200 lines each) with PRD-aligned order status enum + delivery role + pinned versions (Next 16.2.6, React 19.2.4, TW v4) | ~6k |
