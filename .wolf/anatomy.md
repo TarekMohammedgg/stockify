@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T03:20:18.889Z
-> Files: 86 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T04:44:02.092Z
+> Files: 87 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -27,6 +27,7 @@
 
 - `1-insights-not-work-bright-pillow.md` — Plan: Fix Chatbot Insights + Mobile Overflow (~1598 tok)
 - `glimmering-mixing-tower.md` — Plan: Customer Profile Page (~1027 tok)
+- `i-want-to-add-async-brook.md` — Plan: WhatsApp Chatbot via WaSenderAPI + n8n (~2077 tok)
 - `jazzy-cuddling-steele.md` — Plan: Admin Home Final Touches — Real Data + Clickable Drill-downs (~2662 tok)
 - `peaceful-purring-naur.md` — Plan: Phase 5 — Chatbot Widget + OpenRouter Integration (~1204 tok)
 
