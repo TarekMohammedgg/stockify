@@ -43,8 +43,6 @@ export async function signIn(formData: FormData) {
   if (role === "cashier") redirect("/cashier");
   if (role === "delivery") redirect("/delivery");
 
-  if (profile?.profile_complete === false) redirect("/complete-profile");
-
   redirect(next);
 }
 
@@ -56,7 +54,7 @@ export async function signUp(formData: FormData) {
 
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -69,9 +67,7 @@ export async function signUp(formData: FormData) {
   }
 
   // Update phone in users table (trigger creates the row)
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = data?.user;
 
   if (user) {
     await supabase.from("users").update({ phone, profile_complete: true }).eq("id", user.id);
@@ -108,6 +104,7 @@ export async function signOut() {
 }
 
 export async function completeProfile(formData: FormData) {
+  const name = formData.get("name") as string;
   const phone = formData.get("phone") as string;
   const address = formData.get("address") as string;
 
@@ -120,12 +117,23 @@ export async function completeProfile(formData: FormData) {
 
   const { error } = await supabase
     .from("users")
-    .update({ phone, address, profile_complete: true })
+    .update({ name, phone, address, profile_complete: true })
     .eq("id", user.id);
 
   if (error) {
     return { error: error.message };
   }
 
-  redirect(CUSTOMER_HOME);
+  const { error: insightsError } = await supabase
+    .from("users_insights")
+    .upsert(
+      { user_id: user.id, user_phone: phone, user_address: address, last_seen: new Date().toISOString() },
+      { onConflict: "user_id" }
+    );
+
+  if (insightsError) {
+    console.error("[completeProfile] users_insights upsert failed", insightsError.message);
+  }
+
+  return { ok: true };
 }

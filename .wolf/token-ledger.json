@@ -2,12 +2,12 @@
   "version": 1,
   "created_at": "2026-05-24T13:26:18.340Z",
   "lifetime": {
-    "total_tokens_estimated": 949132,
-    "total_reads": 497,
-    "total_writes": 525,
-    "total_sessions": 53,
+    "total_tokens_estimated": 949160,
+    "total_reads": 502,
+    "total_writes": 526,
+    "total_sessions": 56,
     "anatomy_hits": 371,
-    "anatomy_misses": 120,
+    "anatomy_misses": 125,
     "repeated_reads_blocked": 167,
     "estimated_savings_vs_bare_cli": 364600
   },
@@ -6714,6 +6714,74 @@
         "writes_count": 8,
         "repeated_reads_blocked": 14,
         "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-27-0207",
+      "started": "2026-05-27T23:07:03.310Z",
+      "ended": "2026-05-27T23:08:51.186Z",
+      "reads": [
+        {
+          "file": "C:/Users/tarek/.claude/settings.json",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/tarek/AppData/Roaming/Claude/settings.json",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "E:/root/Programming/web-development/stockify/.claude/settings.json",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/tarek/AppData/Local/Claude/settings.json",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 4,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-27-0223",
+      "started": "2026-05-27T23:23:45.450Z",
+      "ended": "2026-05-27T23:25:24.194Z",
+      "reads": [
+        {
+          "file": "C:/Users/USER/.claude/settings.json",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/USER/.claude/settings.json",
+          "tokens_estimated": 28,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 28,
+        "reads_count": 1,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
       }
     }
   ],

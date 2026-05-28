@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import PublicMenu from "@/components/public/public-menu";
 import ChatbotWidget from "@/components/public/chatbot-widget";
+import FirstTimeLoginDialog from "@/components/public/first-time-login-dialog";
 
 export default async function MenuPage() {
   const supabase = await createClient();
@@ -13,6 +14,7 @@ export default async function MenuPage() {
   let customerName: string | null = null;
   let customerPhone: string | null = null;
   let customerAddress: string | null = null;
+  let isProfileComplete = true;
   if (user) {
     const { data: role } = await supabase.rpc("current_user_role");
     if (role === "admin") redirect("/admin");
@@ -21,13 +23,14 @@ export default async function MenuPage() {
 
     const { data: profile } = await supabase
       .from("users")
-      .select("id, name, phone, address")
+      .select("id, name, phone, address, profile_complete")
       .eq("id", user.id)
       .single();
     userId = profile?.id ?? null;
     customerName = profile?.name ?? null;
     customerPhone = profile?.phone ?? null;
     customerAddress = profile?.address ?? null;
+    isProfileComplete = profile?.profile_complete ?? false;
 
     // Fallback: if the chatbot collected an address but it hasn't been
     // promoted to users.address yet, surface it to manual checkout too.
@@ -99,10 +102,13 @@ export default async function MenuPage() {
         userProfile={userProfile}
       />
       {!!user && userId && (
-        <ChatbotWidget
-          userId={userId}
-          customerName={customerName ?? "صديقنا"}
-        />
+        <>
+          <ChatbotWidget
+            userId={userId}
+            customerName={customerName ?? "صديقنا"}
+          />
+          <FirstTimeLoginDialog isProfileComplete={isProfileComplete} initialName={customerName ?? ""} />
+        </>
       )}
     </>
   );

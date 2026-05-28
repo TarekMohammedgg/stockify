@@ -70,9 +70,7 @@ export async function GET(request: NextRequest) {
           .update({ auth_provider: "google" })
           .eq("id", user.id);
 
-        if (!profile?.profile_complete) {
-          return NextResponse.redirect(`${origin}/complete-profile`);
-        }
+        // Remove the profile_complete check since we show a dialog on /menu
       }
 
       return NextResponse.redirect(`${origin}${next}`);

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T18:54:00.796Z
-> Files: 6 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T23:25:20.553Z
+> Files: 7 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -14,6 +14,7 @@
 
 ## C:/Users/USER/.claude/
 
+- `settings.json` (~299 tok)
 
 ## C:/Users/USER/.claude/plans/
 

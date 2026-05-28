@@ -801,3 +801,21 @@
 | 21:54 | Edited docs/SUPABASE_SCHEMA.md | 3→4 lines | ~139 |
 | 19:00 | Unit 1 staff provisioning: reset passwords via seed route, fixed admin layout role guard (rpc→DB query), verified all 3 staff logins redirect correctly | app/admin/layout.tsx, docs/SUPABASE_SCHEMA.md | success | ~4500 |
 | 22:55 | Session end: 8 writes across 4 files (lexical-soaring-sutton.md, route.ts, layout.tsx, SUPABASE_SCHEMA.md) | 21 reads | ~4114 tok |
+
+## Session: 2026-05-27 02:07
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-27 02:23
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 02:25 | Edited C:/Users/USER/.claude/settings.json | 5→4 lines | ~28 |
+| 02:25 | Session end: 1 writes across 1 files (settings.json) | 1 reads | ~28 tok |
+
+## Session: 2026-05-27 02:25
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| now | Fixed new account creation (use user from signUp response instead of getUser) and updated profile order history to fetch from orders table (enforcing RLS) instead of v_orders | lib/actions/auth.ts, app/profile/page.tsx | done | ~1k |
