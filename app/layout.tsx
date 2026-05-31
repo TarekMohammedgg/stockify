@@ -13,6 +13,10 @@ const almarai = Almarai({
 export const metadata: Metadata = {
   title: "Stockify — إدارة المطعم",
   description: "نظام إدارة مطعم شامل للطلبات والمخزون والكاشير",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
