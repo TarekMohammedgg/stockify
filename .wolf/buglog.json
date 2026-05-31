@@ -768,10 +768,105 @@
       "file": "app/admin/layout.tsx",
       "root_cause": "AdminLayout used supabase.rpc('current_user_role') which reads from JWT app_metadata. Test accounts don't have app_metadata.role set, so current_user_role() returned 'customer' and the guard redirected them away from /admin.",
       "fix": "Replaced rpc('current_user_role') + separate .select('name') with a single .select('role, name') query on public.users (same pattern as cashier/delivery layouts). Role check now reads from the database table, not JWT app_metadata.",
-      "tags": ["admin", "layout", "auth", "rls", "jwt-app-metadata", "role-guard"],
+      "tags": [
+        "admin",
+        "layout",
+        "auth",
+        "rls",
+        "jwt-app-metadata",
+        "role-guard"
+      ],
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-27T19:00:00.000Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-05-31T13:31:33.529Z",
+      "error_message": "Wrong return value",
+      "file": "lib/actions/auth.ts",
+      "root_cause": "Was returning: { error: error.message };",
+      "fix": "Now returns: { error: toArabicError(error.message) };",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "ts"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T13:31:33.529Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-05-31T00:00:00.000Z",
+      "error_message": "Redundant inline style alongside equivalent Tailwind class",
+      "file": "components/public/service-landing.tsx",
+      "root_cause": "Live-total span had `style={{ fontVariantNumeric: 'tabular-nums' }}` alongside the `tabular-nums` Tailwind class — inline style was redundant and violates CLAUDE.md rule",
+      "fix": "Removed the inline style attribute; Tailwind `tabular-nums` class already handles font-variant-numeric",
+      "tags": [
+        "tailwind",
+        "inline-style",
+        "claude-md-violation"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T00:00:00.000Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-05-31T15:12:38.411Z",
+      "error_message": "Null/undefined access in ",
+      "file": "app/menu/page.tsx",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "tsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T15:12:38.412Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-05-31T15:17:08.498Z",
+      "error_message": "Significant refactor of ",
+      "file": "test-tasks.md",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 8→14 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T15:17:08.499Z"
+    },
+    {
+      "id": "bug-053",
+      "timestamp": "2026-05-31T00:00:00.000Z",
+      "error_message": "app/menu/page.tsx routes staff to /menu instead of their dashboard when role is not in JWT app_metadata",
+      "file": "app/menu/page.tsx",
+      "root_cause": "Role guard called `supabase.rpc('current_user_role')` which reads from JWT app_metadata. Admin-created staff accounts don't have app_metadata.role set, so rpc returns null and all redirects are skipped — staff land on /menu.",
+      "fix": "Replaced rpc call with direct `.from('users').select('..., role').eq('id', user.id)` query. Also merged the two separate DB calls (rpc + profile) into one, saving a round-trip.",
+      "tags": ["menu", "role-guard", "rpc-broken-pattern", "supabase", "bug-036-related"],
+      "related_bugs": ["bug-036"],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T00:00:00.000Z"
+    },
+    {
+      "id": "bug-054",
+      "timestamp": "2026-05-31T00:00:00.000Z",
+      "error_message": "components/public/landing-page.tsx orphan file present in repo",
+      "file": "components/public/landing-page.tsx",
+      "root_cause": "Old landing page component superseded by service-landing.tsx but never deleted. app/page.tsx imports service-landing.tsx; landing-page.tsx was not imported anywhere.",
+      "fix": "Deleted components/public/landing-page.tsx",
+      "tags": ["orphan", "cleanup", "landing-page"],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-31T00:00:00.000Z"
     }
   ]
 }

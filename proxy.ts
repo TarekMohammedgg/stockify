@@ -54,7 +54,8 @@ export async function proxy(request: NextRequest) {
 
   // Redirect unauthenticated users to /login
   const publicPaths = ["/login", "/register", "/complete-profile"];
-  const isPublic = publicPaths.some((p) => pathname.startsWith(p));
+  const isPublic =
+    publicPaths.some((p) => pathname.startsWith(p)) || pathname === "/";
 
   if (!user && !isPublic) {
     const loginUrl = request.nextUrl.clone();
@@ -62,8 +63,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Redirect logged-in users away from auth pages to home
-  if (user && isPublic) {
+  // Redirect logged-in users away from auth pages to home (but not / itself)
+  if (user && isPublic && pathname !== "/") {
     const homeUrl = request.nextUrl.clone();
     homeUrl.pathname = "/";
     return NextResponse.redirect(homeUrl);

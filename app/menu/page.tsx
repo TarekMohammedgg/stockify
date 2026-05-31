@@ -16,16 +16,16 @@ export default async function MenuPage() {
   let customerAddress: string | null = null;
   let isProfileComplete = true;
   if (user) {
-    const { data: role } = await supabase.rpc("current_user_role");
+    const { data: profile } = await supabase
+      .from("users")
+      .select("id, name, phone, address, profile_complete, role")
+      .eq("id", user.id)
+      .single();
+
+    const role = profile?.role;
     if (role === "admin") redirect("/admin");
     if (role === "cashier") redirect("/cashier");
     if (role === "delivery") redirect("/delivery");
-
-    const { data: profile } = await supabase
-      .from("users")
-      .select("id, name, phone, address, profile_complete")
-      .eq("id", user.id)
-      .single();
     userId = profile?.id ?? null;
     customerName = profile?.name ?? null;
     customerPhone = profile?.phone ?? null;

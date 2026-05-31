@@ -4,12 +4,13 @@ import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { signIn, signInWithGoogle } from "@/lib/actions/auth";
-import { Eye, EyeOff, LogIn } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, LogIn } from "lucide-react";
 
 function LoginForm() {
   const searchParams = useSearchParams();
   const urlError = searchParams.get("error");
   const nextParam = searchParams.get("next") ?? "/menu";
+  const fromLanding = searchParams.get("back") === "1";
   const [showPassword, setShowPassword] = useState(false);
   const [pending, setPending] = useState(false);
   const [fieldError, setFieldError] = useState<string | null>(null);
@@ -32,6 +33,23 @@ function LoginForm() {
 
   return (
     <>
+      {/* Back to landing form banner */}
+      {fromLanding && (
+        <div className="fixed bottom-6 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+          <Link
+            href="/#request-form"
+            className="pointer-events-auto flex items-center gap-3 rounded-2xl bg-gradient-to-l from-amber-500 to-orange-500 px-6 py-3.5 text-sm font-bold text-white shadow-2xl shadow-amber-500/50 transition hover:scale-105 hover:shadow-amber-500/70"
+          >
+            <span className="relative flex size-2 shrink-0">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60" />
+              <span className="relative inline-flex size-2 rounded-full bg-white" />
+            </span>
+            ارجع واطلب موقعك
+            <ArrowRight size={15} />
+          </Link>
+        </div>
+      )}
+
       {/* Error banner */}
       {(fieldError || urlError) && (
         <div className="rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">

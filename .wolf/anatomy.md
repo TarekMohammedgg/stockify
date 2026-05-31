@@ -1,10 +1,12 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-27T23:25:20.553Z
-> Files: 7 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-31T15:17:08.231Z
+> Files: 11 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
+- `proxy.ts` — Session proxy; now allows anonymous access to `/` (exact-match) in addition to /login /register /complete-profile (~644 tok)
+- `test-tasks.md` — Test Tasks — Stockify Production Readiness (~2999 tok)
 
 ## .claude/
 
@@ -14,27 +16,27 @@
 
 ## C:/Users/USER/.claude/
 
-- `settings.json` (~299 tok)
 
 ## C:/Users/USER/.claude/plans/
 
-- `lexical-soaring-sutton.md` — Plan: Fix Authentication / Access Blocked — All Role Login Flows (~1158 tok)
+- `agile-petting-starlight.md` — Plan: Stockify Service Landing Page (~689 tok)
 
 ## app/
 
+- `page.tsx` — Root route: redirects staff to dashboards, customers to /menu; unauthenticated users see ServiceLandingPage (~80 tok)
 
 ## app/(auth)/complete-profile/
 
 
 ## app/(auth)/login/
 
+- `page.tsx` — LoginForm — renders form (~2195 tok)
 
 ## app/(auth)/register/
 
 
 ## app/admin/
 
-- `layout.tsx` — AdminLayout: guards admin role via public.users table query (not JWT app_metadata) (~278 tok)
 
 ## app/admin/customers/
 
@@ -86,11 +88,14 @@
 
 ## app/api/seed-test-users/
 
-- `route.ts` — Next.js API route: GET (~557 tok)
+
+## app/api/storage/sign-upload/
+
+- `route.ts` — POST: generates Supabase signed upload URL via service role; validates file type/size (~120 tok)
+- `route.ts` — Next.js API route: POST (~566 tok)
 
 ## app/auth/callback/
 
-- `route.ts` — Google OAuth callback handler. (~897 tok)
 
 ## app/cashier/
 
@@ -103,6 +108,7 @@
 
 ## app/menu/
 
+- `page.tsx` — MenuPage (~1019 tok)
 
 ## app/profile/
 
@@ -112,17 +118,18 @@
 
 ## components/public/
 
+- `service-landing.tsx` — Service landing page: hero, features, pricing, request form with Supabase PDF upload (~9869 tok)
 
 ## docs/
 
-- `SUPABASE_SCHEMA.md` — ============================================================ (~7382 tok)
 
 ## lib/
 
 
 ## lib/actions/
 
-- `auth.ts` — API routes: GET (10 endpoints) (~946 tok)
+- `auth.ts` — API routes: GET (11 endpoints) (~1192 tok)
+- `request-site.ts` — Exports SiteRequestPayload, submitSiteRequest (~604 tok)
 
 ## lib/chatbot/
 

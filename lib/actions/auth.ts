@@ -6,6 +6,19 @@ import { headers } from "next/headers";
 
 const CUSTOMER_HOME = "/menu";
 
+function toArabicError(msg: string): string {
+  const m = msg.toLowerCase();
+  if (m.includes("invalid login credentials") || m.includes("invalid email or password"))
+    return "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+  if (m.includes("email not confirmed"))
+    return "يرجى تأكيد بريدك الإلكتروني أولاً";
+  if (m.includes("too many requests"))
+    return "محاولات كثيرة، انتظر قليلاً ثم حاول مجدداً";
+  if (m.includes("user not found"))
+    return "لا يوجد حساب بهذا البريد الإلكتروني";
+  return "حدث خطأ في تسجيل الدخول، حاول مجدداً";
+}
+
 function safeNext(raw: FormDataEntryValue | null): string {
   const value = typeof raw === "string" ? raw : "";
   if (!value.startsWith("/") || value.startsWith("//")) return CUSTOMER_HOME;
@@ -21,7 +34,7 @@ export async function signIn(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return { error: error.message };
+    return { error: toArabicError(error.message) };
   }
 
   // Fetch role from users table

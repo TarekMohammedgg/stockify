@@ -819,3 +819,62 @@
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
 | now | Fixed new account creation (use user from signUp response instead of getUser) and updated profile order history to fetch from orders table (enforcing RLS) instead of v_orders | lib/actions/auth.ts, app/profile/page.tsx | done | ~1k |
+
+## Session: 2026-05-31 05:26
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 05:44 | Created C:/Users/USER/.claude/plans/agile-petting-starlight.md | — | ~735 |
+| 13:19 | Edited proxy.ts | modified if() | ~174 |
+| 13:22 | Created app/api/storage/sign-upload/route.ts | — | ~566 |
+| 13:24 | Created lib/actions/request-site.ts | — | ~604 |
+| 13:29 | Created components/public/service-landing.tsx | — | ~8414 |
+| 13:32 | Created app/page.tsx | — | ~203 |
+| 2026-05-31 | Built Stockify SaaS service landing page at root / (hero, features, pricing, form with Supabase PDF upload) | app/page.tsx, proxy.ts, components/public/service-landing.tsx, lib/actions/request-site.ts, app/api/storage/sign-upload/route.ts | complete | ~1200 |
+| 13:42 | Session end: 6 writes across 6 files (agile-petting-starlight.md, proxy.ts, route.ts, request-site.ts, service-landing.tsx) | 28 reads | ~10749 tok |
+
+## Session: 2026-05-31 15:30
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 15:36 | Created components/public/service-landing.tsx | — | ~9888 |
+| 15:37 | Edited app/(auth)/login/page.tsx | 5→5 lines | ~72 |
+| 15:37 | Edited app/(auth)/login/page.tsx | 2→3 lines | ~46 |
+| 15:37 | Edited app/(auth)/login/page.tsx | CSS: hover, hover | ~262 |
+| 15:38 | Enhanced landing page: live total price calc, amber 'شوف مثال حي' button with pulse animation, live-demo banner section, floating back-to-form button on /login?back=1 | service-landing.tsx, app/(auth)/login/page.tsx | done | ~800 tok |
+| 15:39 | Session end: 4 writes across 2 files (service-landing.tsx, page.tsx) | 2 reads | ~10768 tok |
+
+## Session: 2026-05-31 15:42
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 15:49 | Created test-tasks.md | — | ~2181 |
+| 15:50 | Session end: 1 writes across 1 files (test-tasks.md) | 6 reads | ~3785 tok |
+
+## Session: 2026-05-31 16:16
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 16:30 | Edited lib/actions/auth.ts | added 4 condition(s) | ~183 |
+| 16:31 | Edited lib/actions/auth.ts | modified if() | ~30 |
+| 16:32 | Edited test-tasks.md | added 1 condition(s) | ~692 |
+
+| 16:35 | Auth Flows QA pass: annotated test-tasks.md section 1 with findings | test-tasks.md, lib/actions/auth.ts | fixed English error message (bug-049 applied); flagged /complete-profile design conflict | ~1200 |
+| 16:37 | Session end: 3 writes across 2 files (auth.ts, test-tasks.md) | 10 reads | ~5065 tok |
+
+## Session: 2026-05-31 17:34
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:36 | Edited components/public/service-landing.tsx | 5→4 lines | ~49 |
+| 17:36 | Edited test-tasks.md | expanded (+7 lines) | ~522 |
+| 17:38 | Service Landing Page QA (Section 2): all 6 tests code-verified ✅; removed redundant inline style (bug-050); annotated test-tasks.md | components/public/service-landing.tsx, test-tasks.md, .wolf/buglog.json | complete | ~900 |
+| 17:41 | Session end: 2 writes across 2 files (service-landing.tsx, test-tasks.md) | 3 reads | ~12772 tok |
+| 18:12 | Edited app/menu/page.tsx | added optional chaining | ~106 |
+| 18:17 | Edited test-tasks.md | expanded (+6 lines) | ~509 |
+| 18:25 | Session end: 4 writes across 3 files (service-landing.tsx, test-tasks.md, page.tsx) | 4 reads | ~13423 tok |
+
+## Session: 2026-05-31 18:36
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
