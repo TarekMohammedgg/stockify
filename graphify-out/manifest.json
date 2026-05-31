@@ -1,0 +1,772 @@
+{
+  "E:\\root\\Programming\\web-development\\stockify\\eslint.config.mjs": {
+    "mtime": 1779538389.4400578,
+    "ast_hash": "dfa1f5f6a7037bf39dc510f30b180002",
+    "semantic_hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\n8n.json": {
+    "mtime": 1779879189.8347778,
+    "ast_hash": "965267ec1d76f72c1919a83f89dbf4b7",
+    "semantic_hash": "965267ec1d76f72c1919a83f89dbf4b7"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\next.config.ts": {
+    "mtime": 1779707303.2185683,
+    "ast_hash": "6623f9b4ca91e52889471f774c0307e1",
+    "semantic_hash": "6623f9b4ca91e52889471f774c0307e1"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\package.json": {
+    "mtime": 1779777077.0068955,
+    "ast_hash": "a659cf476f35fcbf032d03290966c5c4",
+    "semantic_hash": "a659cf476f35fcbf032d03290966c5c4"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\postcss.config.mjs": {
+    "mtime": 1779538389.470112,
+    "ast_hash": "239f3ebf717465dc636818a1a619398d",
+    "semantic_hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\proxy.ts": {
+    "mtime": 1780222768.7591994,
+    "ast_hash": "277dabac2fd7f62849ee037670e436a8",
+    "semantic_hash": "277dabac2fd7f62849ee037670e436a8"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\skills-lock.json": {
+    "mtime": 1779814172.5182729,
+    "ast_hash": "c097e9ab7aded4a5cfe32b4cc5392ebe",
+    "semantic_hash": "c097e9ab7aded4a5cfe32b4cc5392ebe"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\tsconfig.json": {
+    "mtime": 1779706938.5630188,
+    "ast_hash": "02fc19ad21338c2ab820a70136310db4",
+    "semantic_hash": "02fc19ad21338c2ab820a70136310db4"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\cleanup-deprecated.mjs": {
+    "mtime": 1779814170.1259518,
+    "ast_hash": "51208407b06e051bb6d8ceab244db39c",
+    "semantic_hash": "51208407b06e051bb6d8ceab244db39c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\command-metadata.json": {
+    "mtime": 1779814170.1264458,
+    "ast_hash": "b25ed9a4d6c24c83d5af46ec69b99a97",
+    "semantic_hash": "b25ed9a4d6c24c83d5af46ec69b99a97"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\critique-storage.mjs": {
+    "mtime": 1779814170.1270673,
+    "ast_hash": "69825b7f6236350030e72dd7dd3212b7",
+    "semantic_hash": "69825b7f6236350030e72dd7dd3212b7"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\design-parser.mjs": {
+    "mtime": 1779814170.1270673,
+    "ast_hash": "df65268bfe73ad8202ca309c2da3805c",
+    "semantic_hash": "df65268bfe73ad8202ca309c2da3805c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\detect.mjs": {
+    "mtime": 1779814170.1284873,
+    "ast_hash": "db2157bcff7ab1b222d68cf96cb8643c",
+    "semantic_hash": "db2157bcff7ab1b222d68cf96cb8643c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\impeccable-paths.mjs": {
+    "mtime": 1779814170.1284873,
+    "ast_hash": "0e34c40e77c7a30eeabb1bac897f58a2",
+    "semantic_hash": "0e34c40e77c7a30eeabb1bac897f58a2"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\is-generated.mjs": {
+    "mtime": 1779814170.129555,
+    "ast_hash": "81ada1894b5f562b0993fdff1756d82c",
+    "semantic_hash": "81ada1894b5f562b0993fdff1756d82c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-accept.mjs": {
+    "mtime": 1779814170.129555,
+    "ast_hash": "feee297789fa52b5901e21bb354e8a4f",
+    "semantic_hash": "feee297789fa52b5901e21bb354e8a4f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-browser-session.js": {
+    "mtime": 1779814170.1306036,
+    "ast_hash": "e54c01fe1a8287f757161759beaab916",
+    "semantic_hash": "e54c01fe1a8287f757161759beaab916"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-complete.mjs": {
+    "mtime": 1779814170.1325567,
+    "ast_hash": "0ed6226feb3d80adf38f2098b6d7efd4",
+    "semantic_hash": "0ed6226feb3d80adf38f2098b6d7efd4"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-completion.mjs": {
+    "mtime": 1779814170.1338818,
+    "ast_hash": "c51f1de5c7aae5aa3f2c67f5d9875d3e",
+    "semantic_hash": "c51f1de5c7aae5aa3f2c67f5d9875d3e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-poll.mjs": {
+    "mtime": 1779814170.1348138,
+    "ast_hash": "7b78710647b202a90d99852bdb7a5135",
+    "semantic_hash": "7b78710647b202a90d99852bdb7a5135"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-resume.mjs": {
+    "mtime": 1779814170.1348138,
+    "ast_hash": "9187fc4ae434c0573b7c84c95b05f744",
+    "semantic_hash": "9187fc4ae434c0573b7c84c95b05f744"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-session-store.mjs": {
+    "mtime": 1779814170.1365063,
+    "ast_hash": "b0c628113419432d164204b18587d681",
+    "semantic_hash": "b0c628113419432d164204b18587d681"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-status.mjs": {
+    "mtime": 1779814170.1375754,
+    "ast_hash": "f7f787396f44ef06c890f97c45d0ba75",
+    "semantic_hash": "f7f787396f44ef06c890f97c45d0ba75"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live-wrap.mjs": {
+    "mtime": 1779814170.1375754,
+    "ast_hash": "9612f1254ce763221690053592892110",
+    "semantic_hash": "9612f1254ce763221690053592892110"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\live.mjs": {
+    "mtime": 1779814170.138716,
+    "ast_hash": "073965c7d10925f8ad9651a336220ee8",
+    "semantic_hash": "073965c7d10925f8ad9651a336220ee8"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\modern-screenshot.umd.js": {
+    "mtime": 1779814170.139433,
+    "ast_hash": "c6afaf6ebceb162206f6a2e5b0ed653c",
+    "semantic_hash": "c6afaf6ebceb162206f6a2e5b0ed653c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\impeccable\\scripts\\pin.mjs": {
+    "mtime": 1779814170.1405036,
+    "ast_hash": "59e1f8315c2083fb7997e5ff3edfcb57",
+    "semantic_hash": "59e1f8315c2083fb7997e5ff3edfcb57"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.agents\\skills\\vercel-react-best-practices\\metadata.json": {
+    "mtime": 1779710748.6162848,
+    "ast_hash": "5cd9ae4fc688353236c3b92e8f06dfcc",
+    "semantic_hash": "5cd9ae4fc688353236c3b92e8f06dfcc"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\settings.json": {
+    "mtime": 1780076211.8636186,
+    "ast_hash": "9518d09dbbdd7d375735d9aa16568f4f",
+    "semantic_hash": "9518d09dbbdd7d375735d9aa16568f4f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\settings.local.json": {
+    "mtime": 1780074526.9723413,
+    "ast_hash": "341652822c6949812277b117470d4373",
+    "semantic_hash": "341652822c6949812277b117470d4373"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\cleanup-deprecated.mjs": {
+    "mtime": 1779814170.1259518,
+    "ast_hash": "51208407b06e051bb6d8ceab244db39c",
+    "semantic_hash": "51208407b06e051bb6d8ceab244db39c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\command-metadata.json": {
+    "mtime": 1779814170.1264458,
+    "ast_hash": "b25ed9a4d6c24c83d5af46ec69b99a97",
+    "semantic_hash": "b25ed9a4d6c24c83d5af46ec69b99a97"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\critique-storage.mjs": {
+    "mtime": 1779814170.1270673,
+    "ast_hash": "69825b7f6236350030e72dd7dd3212b7",
+    "semantic_hash": "69825b7f6236350030e72dd7dd3212b7"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\design-parser.mjs": {
+    "mtime": 1779814170.1270673,
+    "ast_hash": "df65268bfe73ad8202ca309c2da3805c",
+    "semantic_hash": "df65268bfe73ad8202ca309c2da3805c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\detect.mjs": {
+    "mtime": 1779814170.1284873,
+    "ast_hash": "db2157bcff7ab1b222d68cf96cb8643c",
+    "semantic_hash": "db2157bcff7ab1b222d68cf96cb8643c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\impeccable-paths.mjs": {
+    "mtime": 1779814170.1284873,
+    "ast_hash": "0e34c40e77c7a30eeabb1bac897f58a2",
+    "semantic_hash": "0e34c40e77c7a30eeabb1bac897f58a2"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\is-generated.mjs": {
+    "mtime": 1779814170.129555,
+    "ast_hash": "81ada1894b5f562b0993fdff1756d82c",
+    "semantic_hash": "81ada1894b5f562b0993fdff1756d82c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-accept.mjs": {
+    "mtime": 1779814170.129555,
+    "ast_hash": "feee297789fa52b5901e21bb354e8a4f",
+    "semantic_hash": "feee297789fa52b5901e21bb354e8a4f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-browser-session.js": {
+    "mtime": 1779814170.1306036,
+    "ast_hash": "e54c01fe1a8287f757161759beaab916",
+    "semantic_hash": "e54c01fe1a8287f757161759beaab916"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-complete.mjs": {
+    "mtime": 1779814170.1325567,
+    "ast_hash": "0ed6226feb3d80adf38f2098b6d7efd4",
+    "semantic_hash": "0ed6226feb3d80adf38f2098b6d7efd4"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-completion.mjs": {
+    "mtime": 1779814170.1338818,
+    "ast_hash": "c51f1de5c7aae5aa3f2c67f5d9875d3e",
+    "semantic_hash": "c51f1de5c7aae5aa3f2c67f5d9875d3e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-poll.mjs": {
+    "mtime": 1779814170.1348138,
+    "ast_hash": "7b78710647b202a90d99852bdb7a5135",
+    "semantic_hash": "7b78710647b202a90d99852bdb7a5135"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-resume.mjs": {
+    "mtime": 1779814170.1348138,
+    "ast_hash": "9187fc4ae434c0573b7c84c95b05f744",
+    "semantic_hash": "9187fc4ae434c0573b7c84c95b05f744"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-session-store.mjs": {
+    "mtime": 1779814170.1365063,
+    "ast_hash": "b0c628113419432d164204b18587d681",
+    "semantic_hash": "b0c628113419432d164204b18587d681"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-status.mjs": {
+    "mtime": 1779814170.1375754,
+    "ast_hash": "f7f787396f44ef06c890f97c45d0ba75",
+    "semantic_hash": "f7f787396f44ef06c890f97c45d0ba75"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live-wrap.mjs": {
+    "mtime": 1779814170.1375754,
+    "ast_hash": "9612f1254ce763221690053592892110",
+    "semantic_hash": "9612f1254ce763221690053592892110"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\live.mjs": {
+    "mtime": 1779814170.138716,
+    "ast_hash": "073965c7d10925f8ad9651a336220ee8",
+    "semantic_hash": "073965c7d10925f8ad9651a336220ee8"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\modern-screenshot.umd.js": {
+    "mtime": 1779814170.139433,
+    "ast_hash": "c6afaf6ebceb162206f6a2e5b0ed653c",
+    "semantic_hash": "c6afaf6ebceb162206f6a2e5b0ed653c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\impeccable\\scripts\\pin.mjs": {
+    "mtime": 1779814170.1405036,
+    "ast_hash": "59e1f8315c2083fb7997e5ff3edfcb57",
+    "semantic_hash": "59e1f8315c2083fb7997e5ff3edfcb57"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.claude\\skills\\vercel-react-best-practices\\metadata.json": {
+    "mtime": 1779710748.6162848,
+    "ast_hash": "5cd9ae4fc688353236c3b92e8f06dfcc",
+    "semantic_hash": "5cd9ae4fc688353236c3b92e8f06dfcc"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\buglog.json": {
+    "mtime": 1780240947.925568,
+    "ast_hash": "b32cc88174f3cbfc3cba80c4a55139ba",
+    "semantic_hash": "b32cc88174f3cbfc3cba80c4a55139ba"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\config.json": {
+    "mtime": 1778531898.517012,
+    "ast_hash": "7a6fbfd1104e00a49a2279d33edf995c",
+    "semantic_hash": "7a6fbfd1104e00a49a2279d33edf995c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\cron-manifest.json": {
+    "mtime": 1778531898.519658,
+    "ast_hash": "82f3966625fdb035f5b6c7ffe2cc1e5e",
+    "semantic_hash": "82f3966625fdb035f5b6c7ffe2cc1e5e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\cron-state.json": {
+    "mtime": 1780247812.4838576,
+    "ast_hash": "aa8c8eec03a8da261a784974052a34c8",
+    "semantic_hash": "aa8c8eec03a8da261a784974052a34c8"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\designqc-report.json": {
+    "mtime": 1779629178.315923,
+    "ast_hash": "54ee4dcccbaf769865db106a4ff7f3a3",
+    "semantic_hash": "54ee4dcccbaf769865db106a4ff7f3a3"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\suggestions.json": {
+    "mtime": 1780246183.356416,
+    "ast_hash": "0f013659f1306e146a906edf20719e81",
+    "semantic_hash": "0f013659f1306e146a906edf20719e81"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\package.json": {
+    "mtime": 1779629178.3585985,
+    "ast_hash": "d0707362e90f00edd12435e9d3b9d71c",
+    "semantic_hash": "d0707362e90f00edd12435e9d3b9d71c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\post-read.js": {
+    "mtime": 1778531898.1277843,
+    "ast_hash": "0a189e820069291ea72f8ca7c80d215d",
+    "semantic_hash": "0a189e820069291ea72f8ca7c80d215d"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\post-write.js": {
+    "mtime": 1778531898.4269538,
+    "ast_hash": "25255e2ee01554cc5d7c857fa3c4344e",
+    "semantic_hash": "25255e2ee01554cc5d7c857fa3c4344e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\pre-read.js": {
+    "mtime": 1778531898.431344,
+    "ast_hash": "097a84d5cad109a005827852ea5ac4d2",
+    "semantic_hash": "097a84d5cad109a005827852ea5ac4d2"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\pre-write.js": {
+    "mtime": 1778531898.4363122,
+    "ast_hash": "6a12db8b7758f7e912db6942d141dbf0",
+    "semantic_hash": "6a12db8b7758f7e912db6942d141dbf0"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\session-start.js": {
+    "mtime": 1778531898.4497123,
+    "ast_hash": "6b11797411a26b44033ba0371b9045de",
+    "semantic_hash": "6b11797411a26b44033ba0371b9045de"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\shared.js": {
+    "mtime": 1778531898.4580956,
+    "ast_hash": "f7c0a2fe764621823a2dc9722cccc814",
+    "semantic_hash": "f7c0a2fe764621823a2dc9722cccc814"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\stop.js": {
+    "mtime": 1778531898.466566,
+    "ast_hash": "bc7b2a7bd518f21516a0c664d3aa80e1",
+    "semantic_hash": "bc7b2a7bd518f21516a0c664d3aa80e1"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\.wolf\\hooks\\_session.json": {
+    "mtime": 1780248928.274946,
+    "ast_hash": "84eb3f2f1349eef95e8427936ad9f552",
+    "semantic_hash": "84eb3f2f1349eef95e8427936ad9f552"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\layout.tsx": {
+    "mtime": 1779816399.3346193,
+    "ast_hash": "39cf754ec68da9c3a349831404cc7a3f",
+    "semantic_hash": "39cf754ec68da9c3a349831404cc7a3f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\page.tsx": {
+    "mtime": 1780223540.067332,
+    "ast_hash": "741c6e60f2fd9c0d0780acdbfe6bf3b5",
+    "semantic_hash": "741c6e60f2fd9c0d0780acdbfe6bf3b5"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\(auth)\\login\\page.tsx": {
+    "mtime": 1780231057.9766257,
+    "ast_hash": "2c5e737ff6801b6d1fac12fbf361af72",
+    "semantic_hash": "2c5e737ff6801b6d1fac12fbf361af72"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\(auth)\\register\\page.tsx": {
+    "mtime": 1779707711.886013,
+    "ast_hash": "4936edfc8daaafa0750d86862a69767c",
+    "semantic_hash": "4936edfc8daaafa0750d86862a69767c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\layout.tsx": {
+    "mtime": 1779901567.4520118,
+    "ast_hash": "e5c932e6d13338e9a288c86abe2f903d",
+    "semantic_hash": "e5c932e6d13338e9a288c86abe2f903d"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\loading.tsx": {
+    "mtime": 1779746265.1953301,
+    "ast_hash": "68c296e6fba44c853c34a6316efa5886",
+    "semantic_hash": "68c296e6fba44c853c34a6316efa5886"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\page.tsx": {
+    "mtime": 1779851784.257877,
+    "ast_hash": "e1cb13362568e86af5a4f34267b87152",
+    "semantic_hash": "e1cb13362568e86af5a4f34267b87152"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\customers\\customers-list.tsx": {
+    "mtime": 1779863582.1704125,
+    "ast_hash": "7399218bc3a5ded4f4e33742939d5010",
+    "semantic_hash": "7399218bc3a5ded4f4e33742939d5010"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\customers\\page.tsx": {
+    "mtime": 1779844480.4644694,
+    "ast_hash": "b7151435221857ac34ee3035b6e20969",
+    "semantic_hash": "b7151435221857ac34ee3035b6e20969"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\employees\\loading.tsx": {
+    "mtime": 1779746334.8678312,
+    "ast_hash": "f08f062589a0d2f467f8769a6bf78a1b",
+    "semantic_hash": "f08f062589a0d2f467f8769a6bf78a1b"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\employees\\manager.tsx": {
+    "mtime": 1779821872.303551,
+    "ast_hash": "4b96a76907c502b7b6dbb0efa39318af",
+    "semantic_hash": "4b96a76907c502b7b6dbb0efa39318af"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\employees\\page.tsx": {
+    "mtime": 1779757565.3526044,
+    "ast_hash": "0e6c077693af891c1d286c75477334eb",
+    "semantic_hash": "0e6c077693af891c1d286c75477334eb"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\ingredients\\loading.tsx": {
+    "mtime": 1779746305.7414007,
+    "ast_hash": "c58e61ada07a093e8807d2c370dc28dc",
+    "semantic_hash": "c58e61ada07a093e8807d2c370dc28dc"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\ingredients\\manager.tsx": {
+    "mtime": 1779844420.2817774,
+    "ast_hash": "6fd6037efa1f7e35c6c1b19650f0877c",
+    "semantic_hash": "6fd6037efa1f7e35c6c1b19650f0877c"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\ingredients\\page.tsx": {
+    "mtime": 1779844214.0762527,
+    "ast_hash": "86565cede39c12f8b053a93eeb3799a1",
+    "semantic_hash": "86565cede39c12f8b053a93eeb3799a1"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\menu\\loading.tsx": {
+    "mtime": 1779746290.6436162,
+    "ast_hash": "b53cf240ef864f43c3114e45b8e8dac0",
+    "semantic_hash": "b53cf240ef864f43c3114e45b8e8dac0"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\menu\\menu-form.tsx": {
+    "mtime": 1779738485.8712933,
+    "ast_hash": "2c136234507f343e9b2f5c7ea21f6e6b",
+    "semantic_hash": "2c136234507f343e9b2f5c7ea21f6e6b"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\menu\\page.tsx": {
+    "mtime": 1779821594.0138097,
+    "ast_hash": "5aa3443c12020d2d816da66986c3d03a",
+    "semantic_hash": "5aa3443c12020d2d816da66986c3d03a"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\menu\\row-actions.tsx": {
+    "mtime": 1779821597.9550383,
+    "ast_hash": "7be1774997320276c0dc1986a72edc95",
+    "semantic_hash": "7be1774997320276c0dc1986a72edc95"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\menu\\new\\page.tsx": {
+    "mtime": 1779738328.2514045,
+    "ast_hash": "cf6b0b4c7246d30cb8445d8c69af0551",
+    "semantic_hash": "cf6b0b4c7246d30cb8445d8c69af0551"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\menu\\[id]\\page.tsx": {
+    "mtime": 1779738407.1207263,
+    "ast_hash": "d561ffc2c209bb9a416549d2667302f9",
+    "semantic_hash": "d561ffc2c209bb9a416549d2667302f9"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\orders\\loading.tsx": {
+    "mtime": 1779844021.5878594,
+    "ast_hash": "0252abaf24ac71977ff6983b2cf2a71a",
+    "semantic_hash": "0252abaf24ac71977ff6983b2cf2a71a"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\orders\\orders-panel.tsx": {
+    "mtime": 1779861651.9868543,
+    "ast_hash": "da82ed998e0beb2bc0ba7fcde90c5e12",
+    "semantic_hash": "da82ed998e0beb2bc0ba7fcde90c5e12"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\orders\\page.tsx": {
+    "mtime": 1779843967.6345038,
+    "ast_hash": "d8e05f0dbf567f9b6a1061ff38a96bc0",
+    "semantic_hash": "d8e05f0dbf567f9b6a1061ff38a96bc0"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\admin\\revenue\\page.tsx": {
+    "mtime": 1779859750.0200398,
+    "ast_hash": "84a37a145649a475dc3559d3a43e2a01",
+    "semantic_hash": "84a37a145649a475dc3559d3a43e2a01"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\chat\\route.ts": {
+    "mtime": 1779879749.661765,
+    "ast_hash": "a2b723a36920bb6e61fd5cd8b4e4e61a",
+    "semantic_hash": "a2b723a36920bb6e61fd5cd8b4e4e61a"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\chat\\extract-insights\\route.ts": {
+    "mtime": 1779862887.3619854,
+    "ast_hash": "83bdbef527f5b95e6a11bd028e21249b",
+    "semantic_hash": "83bdbef527f5b95e6a11bd028e21249b"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\insights\\route.ts": {
+    "mtime": 1779863071.920372,
+    "ast_hash": "03142cd845e72d560e516f894734de09",
+    "semantic_hash": "03142cd845e72d560e516f894734de09"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\menu\\route.ts": {
+    "mtime": 1779773681.796904,
+    "ast_hash": "f956d900be2a41ef7c2b10ed2a477f48",
+    "semantic_hash": "f956d900be2a41ef7c2b10ed2a477f48"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\menu\\[id]\\ingredients\\route.ts": {
+    "mtime": 1779773692.7748542,
+    "ast_hash": "d5879d1e0bd82c57edd8de5770edc7ad",
+    "semantic_hash": "d5879d1e0bd82c57edd8de5770edc7ad"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\orders\\route.ts": {
+    "mtime": 1779879676.070688,
+    "ast_hash": "48304d19b2abc98077fdf962c91459b0",
+    "semantic_hash": "48304d19b2abc98077fdf962c91459b0"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\orders\\[id]\\route.ts": {
+    "mtime": 1779773697.2662938,
+    "ast_hash": "73ffdbe80031eb84fdcd650f6e3fd957",
+    "semantic_hash": "73ffdbe80031eb84fdcd650f6e3fd957"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\orders-refresh\\route.ts": {
+    "mtime": 1779748576.354631,
+    "ast_hash": "21576ecf57144e8a4c54529aa9e05cfa",
+    "semantic_hash": "21576ecf57144e8a4c54529aa9e05cfa"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\api\\storage\\sign-upload\\route.ts": {
+    "mtime": 1780222939.7012997,
+    "ast_hash": "441e5f0c720d416a09fcab711836f57f",
+    "semantic_hash": "441e5f0c720d416a09fcab711836f57f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\auth\\callback\\route.ts": {
+    "mtime": 1779924002.9885592,
+    "ast_hash": "28f2205610f7fb7a5ac9117fb066ea81",
+    "semantic_hash": "28f2205610f7fb7a5ac9117fb066ea81"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\cashier\\layout.tsx": {
+    "mtime": 1779748340.1350448,
+    "ast_hash": "51fb093751efe4b2c97093ce4b5e93ff",
+    "semantic_hash": "51fb093751efe4b2c97093ce4b5e93ff"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\cashier\\orders-panel.tsx": {
+    "mtime": 1779861733.0971737,
+    "ast_hash": "be8b58b33f23cd569b98fb3e07947e73",
+    "semantic_hash": "be8b58b33f23cd569b98fb3e07947e73"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\cashier\\page.tsx": {
+    "mtime": 1779748372.1510584,
+    "ast_hash": "d45c866b1e2d47ca988d448d77ba10a5",
+    "semantic_hash": "d45c866b1e2d47ca988d448d77ba10a5"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\cashier\\new-order\\order-form.tsx": {
+    "mtime": 1779770928.7874062,
+    "ast_hash": "28243d98a392c4a0f3cb705036815497",
+    "semantic_hash": "28243d98a392c4a0f3cb705036815497"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\cashier\\new-order\\page.tsx": {
+    "mtime": 1779748642.3904743,
+    "ast_hash": "336751023dfebdb471436953d03a5003",
+    "semantic_hash": "336751023dfebdb471436953d03a5003"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\delivery\\delivery-panel.tsx": {
+    "mtime": 1779861799.4047716,
+    "ast_hash": "5e7914612d208ac8ccc4aa8f91ba7d18",
+    "semantic_hash": "5e7914612d208ac8ccc4aa8f91ba7d18"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\delivery\\layout.tsx": {
+    "mtime": 1779756509.2428577,
+    "ast_hash": "a9c1a15923c3012bde830ecdaad55d54",
+    "semantic_hash": "a9c1a15923c3012bde830ecdaad55d54"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\delivery\\loading.tsx": {
+    "mtime": 1779757632.836715,
+    "ast_hash": "d594ea89c676cece75d6ca48fe6f087a",
+    "semantic_hash": "d594ea89c676cece75d6ca48fe6f087a"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\delivery\\page.tsx": {
+    "mtime": 1779841008.6956432,
+    "ast_hash": "29ef70708a09d52a16169330de3fb76e",
+    "semantic_hash": "29ef70708a09d52a16169330de3fb76e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\menu\\page.tsx": {
+    "mtime": 1780240357.957304,
+    "ast_hash": "db6ffac1f15ecae4db40af26763a7b98",
+    "semantic_hash": "db6ffac1f15ecae4db40af26763a7b98"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\profile\\page.tsx": {
+    "mtime": 1779927906.4037924,
+    "ast_hash": "cdd9de05c0d153d82552a60a7a6e74ac",
+    "semantic_hash": "cdd9de05c0d153d82552a60a7a6e74ac"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\app\\profile\\profile-form.tsx": {
+    "mtime": 1779887235.7165766,
+    "ast_hash": "9ff4329c8cf6ce292412f4fe3e6106f8",
+    "semantic_hash": "9ff4329c8cf6ce292412f4fe3e6106f8"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\admin\\sidebar.tsx": {
+    "mtime": 1779844626.4749117,
+    "ast_hash": "d06ff073dd89d99d302b55f5dff762d4",
+    "semantic_hash": "d06ff073dd89d99d302b55f5dff762d4"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\public\\cart-widget.tsx": {
+    "mtime": 1779842386.8163447,
+    "ast_hash": "cf7201c1106466d81a6b8eaf75ab7d11",
+    "semantic_hash": "cf7201c1106466d81a6b8eaf75ab7d11"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\public\\chatbot-widget.tsx": {
+    "mtime": 1779887235.721248,
+    "ast_hash": "05810892cb2db464b7fb4b32d8b8cd57",
+    "semantic_hash": "05810892cb2db464b7fb4b32d8b8cd57"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\public\\checkout-modal.tsx": {
+    "mtime": 1779814780.7409172,
+    "ast_hash": "05025f944771c254a61439bab994f3c0",
+    "semantic_hash": "05025f944771c254a61439bab994f3c0"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\public\\first-time-login-dialog.tsx": {
+    "mtime": 1779926269.5910327,
+    "ast_hash": "713adc9e0c1b89af1962e537d8e3cab6",
+    "semantic_hash": "713adc9e0c1b89af1962e537d8e3cab6"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\public\\public-menu.tsx": {
+    "mtime": 1779893221.2074296,
+    "ast_hash": "b31af5f0b1ed76d89f07d5b8cc6a913e",
+    "semantic_hash": "b31af5f0b1ed76d89f07d5b8cc6a913e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\public\\service-landing.tsx": {
+    "mtime": 1780238173.95318,
+    "ast_hash": "282cb1cea978d83fff56277076f4aefe",
+    "semantic_hash": "282cb1cea978d83fff56277076f4aefe"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\public\\site-header.tsx": {
+    "mtime": 1779842948.328606,
+    "ast_hash": "c64b2e5a14fb7d5901f3ba111b652437",
+    "semantic_hash": "c64b2e5a14fb7d5901f3ba111b652437"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\alert.tsx": {
+    "mtime": 1779768919.2568944,
+    "ast_hash": "8eabbbffad5cb65cd8bf670c21c0c089",
+    "semantic_hash": "8eabbbffad5cb65cd8bf670c21c0c089"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\badge.tsx": {
+    "mtime": 1779768708.11457,
+    "ast_hash": "98199dde35d8946eb55a1c22478c693f",
+    "semantic_hash": "98199dde35d8946eb55a1c22478c693f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\button.tsx": {
+    "mtime": 1779768707.953063,
+    "ast_hash": "ea77c113a2a2d78a8b6d10c4a2de0d20",
+    "semantic_hash": "ea77c113a2a2d78a8b6d10c4a2de0d20"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\BypassExtensionHydration.tsx": {
+    "mtime": 1779816322.1772854,
+    "ast_hash": "8328adf00831779cb8460893454eb9f5",
+    "semantic_hash": "8328adf00831779cb8460893454eb9f5"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\card.tsx": {
+    "mtime": 1779768754.954582,
+    "ast_hash": "792eeaded5b247f5e8187d596c0f953d",
+    "semantic_hash": "792eeaded5b247f5e8187d596c0f953d"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\checkbox.tsx": {
+    "mtime": 1779768811.2065897,
+    "ast_hash": "284cf308925b91d5cf6e6277e1c7ce08",
+    "semantic_hash": "284cf308925b91d5cf6e6277e1c7ce08"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\input.tsx": {
+    "mtime": 1779768754.9211597,
+    "ast_hash": "4d2d526c907f11ebd75e848381967e39",
+    "semantic_hash": "4d2d526c907f11ebd75e848381967e39"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\label.tsx": {
+    "mtime": 1779803256.291826,
+    "ast_hash": "74ddaaa51f16fb991ee913d2ee45ddbe",
+    "semantic_hash": "74ddaaa51f16fb991ee913d2ee45ddbe"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\modal.tsx": {
+    "mtime": 1779768919.0918393,
+    "ast_hash": "1bcb2225c0cc7053e02f45794d697481",
+    "semantic_hash": "1bcb2225c0cc7053e02f45794d697481"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\radio.tsx": {
+    "mtime": 1779768811.2321014,
+    "ast_hash": "96936ce1732c8a8be00fdce34966d095",
+    "semantic_hash": "96936ce1732c8a8be00fdce34966d095"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\select.tsx": {
+    "mtime": 1779768764.9098372,
+    "ast_hash": "a92f22c7ef90aa1ce448645de72654a8",
+    "semantic_hash": "a92f22c7ef90aa1ce448645de72654a8"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\states.tsx": {
+    "mtime": 1779768943.650767,
+    "ast_hash": "95234bd5aa11f52e8b3564c98075950d",
+    "semantic_hash": "95234bd5aa11f52e8b3564c98075950d"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\table.tsx": {
+    "mtime": 1779768943.6196308,
+    "ast_hash": "38c26aceffc5cab7207481ed6d0bb2a5",
+    "semantic_hash": "38c26aceffc5cab7207481ed6d0bb2a5"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\textarea.tsx": {
+    "mtime": 1779768764.8694983,
+    "ast_hash": "31ac0c2196e29538344d2b6d305b9989",
+    "semantic_hash": "31ac0c2196e29538344d2b6d305b9989"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\components\\ui\\toggle.tsx": {
+    "mtime": 1779768860.1049466,
+    "ast_hash": "9c8d8111fa5d6cc52c4a0d05a9ce2773",
+    "semantic_hash": "9c8d8111fa5d6cc52c4a0d05a9ce2773"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\docs\\project-structure.json": {
+    "mtime": 1779769808.4693084,
+    "ast_hash": "f7c9b88f163e8c73fa74f668578cde1e",
+    "semantic_hash": "f7c9b88f163e8c73fa74f668578cde1e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\time.ts": {
+    "mtime": 1779851573.324506,
+    "ast_hash": "11881f34b1fc96770cfc98853ff99bf5",
+    "semantic_hash": "11881f34b1fc96770cfc98853ff99bf5"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\actions\\admin.ts": {
+    "mtime": 1779863539.9745066,
+    "ast_hash": "ec32575d2ac701f3a1c281b610db86e3",
+    "semantic_hash": "ec32575d2ac701f3a1c281b610db86e3"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\actions\\auth.ts": {
+    "mtime": 1780234293.1804085,
+    "ast_hash": "a015368ef3a11300eb43bc00c4d9db98",
+    "semantic_hash": "a015368ef3a11300eb43bc00c4d9db98"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\actions\\cashier.ts": {
+    "mtime": 1779770956.710618,
+    "ast_hash": "212f356c65a084d56df1e06468cdb3f0",
+    "semantic_hash": "212f356c65a084d56df1e06468cdb3f0"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\actions\\delivery.ts": {
+    "mtime": 1779887235.7231417,
+    "ast_hash": "c90f7cb58d07e374032a6fb17e32d11f",
+    "semantic_hash": "c90f7cb58d07e374032a6fb17e32d11f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\actions\\profile.ts": {
+    "mtime": 1779863348.5190024,
+    "ast_hash": "6981d538c0f82e954866b611004684c1",
+    "semantic_hash": "6981d538c0f82e954866b611004684c1"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\actions\\request-site.ts": {
+    "mtime": 1780223066.2519202,
+    "ast_hash": "3b8cd9a66241d63fee634ed94e419498",
+    "semantic_hash": "3b8cd9a66241d63fee634ed94e419498"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\chatbot\\system-prompt.ts": {
+    "mtime": 1779862746.9237177,
+    "ast_hash": "a7b308e54e90948f223ae5de4e671059",
+    "semantic_hash": "a7b308e54e90948f223ae5de4e671059"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\hooks\\use-cart-sync.ts": {
+    "mtime": 1779841239.076186,
+    "ast_hash": "1eeb859ab7e50cc06e23a2abe34254ed",
+    "semantic_hash": "1eeb859ab7e50cc06e23a2abe34254ed"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\store\\cart.ts": {
+    "mtime": 1779840452.2892964,
+    "ast_hash": "b9c34bc4ec8335ef43d8a295b0af4e6e",
+    "semantic_hash": "b9c34bc4ec8335ef43d8a295b0af4e6e"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\supabase\\client.ts": {
+    "mtime": 1779707364.5012352,
+    "ast_hash": "5453d99289cf630306e5030428c0fc33",
+    "semantic_hash": "5453d99289cf630306e5030428c0fc33"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\lib\\supabase\\server.ts": {
+    "mtime": 1779707390.929639,
+    "ast_hash": "7676d1fae97bca908662b6281a67a22f",
+    "semantic_hash": "7676d1fae97bca908662b6281a67a22f"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\scratch\\check-images.mjs": {
+    "mtime": 1779842968.3746476,
+    "ast_hash": "044f244bf35199de18298e542992429d",
+    "semantic_hash": "044f244bf35199de18298e542992429d"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\scratch\\check-single-hummus.mjs": {
+    "mtime": 1779845483.791022,
+    "ast_hash": "cde0c6bec54b0ee61dd69d22f28af085",
+    "semantic_hash": "cde0c6bec54b0ee61dd69d22f28af085"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\scratch\\image-check-report.json": {
+    "mtime": 1779842977.6611133,
+    "ast_hash": "112b564343c4b1d421d54cbc1afaea79",
+    "semantic_hash": "112b564343c4b1d421d54cbc1afaea79"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\scratch\\patch-hummus.mjs": {
+    "mtime": 1779845677.0615013,
+    "ast_hash": "93c990280aae5e7517639665dfce08eb",
+    "semantic_hash": "93c990280aae5e7517639665dfce08eb"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\scratch\\test-unsplash.mjs": {
+    "mtime": 1779843062.973555,
+    "ast_hash": "fa888ad151440aad91ebc7738c0ecdfa",
+    "semantic_hash": "fa888ad151440aad91ebc7738c0ecdfa"
+  },
+  "E:\\root\\Programming\\web-development\\stockify\\supabase\\schema.sql": {
+    "mtime": 1779877208.0070312,
+    "ast_hash": "43f9570c8af34a717c378df8a763c94f",
+    "semantic_hash": "43f9570c8af34a717c378df8a763c94f"
+  }
+}

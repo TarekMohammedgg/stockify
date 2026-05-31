@@ -1,4 +1,39 @@
 {
-  "suggestions": [],
-  "generated_at": null
+  "generated_at": "2026-05-31T16:49:43.354Z",
+  "achievements": [
+    "Full 4-role auth system (Admin/Cashier/Delivery/Customer) with Google OAuth gating, role-based redirects, and server-side guards — Phases 1–1.3.D complete",
+    "Admin dashboard fully built: KPI cards, menu CRUD, ingredient stock, employee management (cashier + delivery roles), orders view, customers list, revenue page, 'Suq Editorial' visual design",
+    "Cashier dashboard: live orders panel with realtime subscription, new-order flow (dine-in/takeaway/delivery), inventory alert banner, correct 4-value status enum",
+    "Delivery dashboard (Phase 3.5): mobile-first panel, optimistic UI, per-card errors, RLS policies audited and confirmed, realtime subscription",
+    "Chatbot order flow E2E verified: two-phase AI extraction, name→UUID resolution, order+order_items insert, users_insights upsert, success card with real orderId",
+    "Customer-facing: landing page, /menu with cart, profile page with order history + status filter chips, site header with avatar dropdown",
+    "SaaS service landing page at root / (hero, features, pricing, request form with PDF upload to Supabase Storage)",
+    "Auth hardening: fixed Google OAuth redirect URL (host-derived, not env-var), reset 6 test account passwords, fixed admin layout role guard (DB query not RPC)",
+    "n8n WhatsApp workflow corrected to match real schema (v_menu view, order_items table, users_insights rename)"
+  ],
+  "improvements": [
+    "anatomy.md is nearly empty — only 6 files described out of ~60+ files in the project. Run a scan to populate it so future sessions can navigate efficiently without cold reads",
+    "cerebrum.md shows 'Last updated: 2026-05-24' but major learnings (users_insights rename, host-derived OAuth URL, admin layout RPC bug) happened after that. Update the header date and add missing learnings",
+    "test-tasks.md was created 2026-05-31 with QA findings but sections 3+ (Cashier, Delivery, Chatbot, Admin) are untested — consolidate findings before they go stale",
+    "app/api/storage/sign-upload/route.ts is duplicated in anatomy.md (two entries, same directory). Clean up the stale entry",
+    "The root app/page.tsx redirects staff to dashboards and shows ServiceLandingPage to unauthenticated users — customers are redirected to /menu. Verify this dual-purpose root does not break the Back-to-form button on /login?back=1 that the landing page sets up",
+    "Admin revenue page (app/admin/revenue/page.tsx) was created but never explicitly QA'd — confirm the timezone handling via lib/time.ts renders correctly in Egypt (Africa/Cairo, UTC+2/+3)",
+    "Loading skeletons exist for admin pages but not for /cashier, /delivery, or /profile — add them for consistent perceived performance"
+  ],
+  "next_tasks": [
+    "Phase 7.1 E2E QA: run through all 12 unchecked test scenarios in tasks.md (all 4 role login flows, admin CRUD, cashier order lifecycle, chatbot delivery order, delivery cancel path) using Chrome DevTools MCP",
+    "Phase 7.2 RTL/i18n audit: verify English toggle on delivery and profile pages, check chevron/arrow icon mirroring, audit allergen badges in RTL",
+    "Phase 7.3 Security audit: confirm no secrets in client bundle (especially SUPABASE_SERVICE_ROLE_KEY), audit /api/orders and /api/chat for auth checks, verify RLS blocks cross-role reads via Supabase SQL editor",
+    "Phase 7.4 Deployment: configure Vercel project, set production env vars (Supabase, OpenRouter, Google OAuth redirect), configure next.config.ts images.remotePatterns for Unsplash, deploy and smoke test",
+    "Complete test-tasks.md sections 3–5 (Cashier dashboard QA, Delivery dashboard QA, Chatbot order flow QA) — annotate pass/fail and fix any regressions before deploying",
+    "Update CLAUDE.md and AGENTS.md to reflect the SaaS service landing page addition and the users_insights rename (still references 'chatbot_insights' in some places)"
+  ],
+  "risks": [
+    "CRITICAL — users_insights rename: the n8n WhatsApp workflow was fixed 2026-05-27 to reference users_insights, but it was never E2E tested end-to-end in a real WhatsApp flow. If the table name or field names diverge, orders placed via WhatsApp will silently fail to insert",
+    "HIGH — No automated tests: the entire test suite is manual (test-tasks.md). Any regression introduced during Phase 7 deployment prep will only be caught by a manual QA pass — there is no safety net",
+    "HIGH — Service landing page + restaurant app share the root route: the proxy.ts was patched to allow anonymous access to `/` but the restaurant customer flow (auth → /menu) depends on correct redirects. A proxy logic bug could expose the restaurant app to unauthenticated users or break customer login",
+    "MEDIUM — Chatbot delivery guard (Task 5.2.A marked done) and editable prefill (5.2.B marked done) have no E2E verification screenshot in memory — the checkmarks may be optimistic. Task 5.2.C E2E verification is also marked done but no screenshot evidence exists in memory log",
+    "MEDIUM — SUPABASE_SERVICE_ROLE_KEY is used server-side in lib/actions/admin.ts for employee creation/deletion. If this ever leaks to the client bundle (e.g., through an accidental 'use client' import), it would give full DB access to anyone. Phase 7.3 security audit must explicitly check this",
+    "LOW — Unsplash remote images: next.config.ts images.remotePatterns for Unsplash is listed as a deployment task (7.4) but is not yet configured. Production build may fail or images may be blocked if this is missed"
+  ]
 }
